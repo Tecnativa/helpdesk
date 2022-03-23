@@ -176,8 +176,8 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_graph_preview', function(requi
         },
 
         renderChart: function() {
+            const scales = {}
             if (this.recordData.ks_chart_measure_field_2.count && this.recordData.ks_dashboard_item_type === 'ks_bar_chart') {
-                const scales = {}
                 scales.yAxes = [{
                         type: "linear",
                         display: true,
@@ -217,7 +217,6 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_graph_preview', function(requi
                         }
                     }
                 ]
-
             }
             let chart_plugin = [];
             if (this.recordData.ks_show_data_value) {
@@ -381,7 +380,7 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_graph_preview', function(requi
                 }
             }
 
-            const options = ksMyChart.config.options;
+            let options = ksMyChart.config.options;
             options.legend.labels.usePointStyle = true;
             if (ksChartFamily == "circle") {
                 if (ks_show_data_value) {
@@ -411,10 +410,10 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_graph_preview', function(requi
                         } else if (ks_selection === 'custom') {
                             const ks_field = this.chart_data.ks_field;
                             //                                                        ks_type = field_utils.format.char(ks_field);
-                            k_amount = field_utils.format.float(k_amount, Float64Array, {digits: [0, self.recordData.ks_precision_digits]});
+                            k_amount = field_utils.format.float(k_amount, Float64Array, {digits: [0, this.recordData.ks_precision_digits]});
                             return data.datasets[tooltipItem[0].datasetIndex]['label'] + " : " + k_amount + " " + ks_field;
                         } else {
-                            k_amount = field_utils.format.float(k_amount, Float64Array, {digits: [0, self.recordData.ks_precision_digits]});
+                            k_amount = field_utils.format.float(k_amount, Float64Array, {digits: [0, this.recordData.ks_precision_digits]});
                             return data.datasets[tooltipItem[0].datasetIndex]['label'] + " : " + k_amount
                         }
                     },
@@ -458,17 +457,17 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_graph_preview', function(requi
                 }
                 if (chartType === "horizontalBar") {
                     options.scales.xAxes[0].ticks.callback = (value, index, values) => {
-                        const ks_selection = self.chart_data.ks_selection;
+                        const ks_selection = this.chart_data.ks_selection;
                         if (ks_selection === 'monetary') {
-                            const ks_currency_id = self.chart_data.ks_currency;
-                            let ks_data = KsGlobalFunction._onKsGlobalFormatter(value, self.recordData.ks_data_format, self.recordData.ks_precision_digits);
+                            const ks_currency_id = this.chart_data.ks_currency;
+                            let ks_data = KsGlobalFunction._onKsGlobalFormatter(value, this.recordData.ks_data_format, this.recordData.ks_precision_digits);
                                 ks_data = KsGlobalFunction.ks_monetary(ks_data, ks_currency_id);
                             return ks_data;
                         } else if (ks_selection === 'custom') {
-                            const ks_field = self.chart_data.ks_field;
-                            return `${KsGlobalFunction._onKsGlobalFormatter(value, self.recordData.ks_data_format, self.recordData.ks_precision_digits)} ${ks_field}`;
+                            const ks_field = this.chart_data.ks_field;
+                            return `${KsGlobalFunction._onKsGlobalFormatter(value, this.recordData.ks_data_format, this.recordData.ks_precision_digits)} ${ks_field}`;
                         }else {
-                            return KsGlobalFunction._onKsGlobalFormatter(value, self.recordData.ks_data_format, self.recordData.ks_precision_digits);
+                            return KsGlobalFunction._onKsGlobalFormatter(value, this.recordData.ks_data_format, this.recordData.ks_precision_digits);
                         }
                     }
                     options.scales.xAxes[0].ticks.beginAtZero = true;
@@ -476,15 +475,15 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_graph_preview', function(requi
                     options.scales.yAxes[0].ticks.callback = (value, index, values) => {
                         const ks_selection = this.chart_data.ks_selection;
                         if (ks_selection === 'monetary') {
-                            const ks_currency_id = self.chart_data.ks_currency;
-                            let ks_data = KsGlobalFunction._onKsGlobalFormatter(value, self.recordData.ks_data_format, self.recordData.ks_precision_digits);
+                            const ks_currency_id = this.chart_data.ks_currency;
+                            let ks_data = KsGlobalFunction._onKsGlobalFormatter(value, this.recordData.ks_data_format, this.recordData.ks_precision_digits);
                                 ks_data = KsGlobalFunction.ks_monetary(ks_data, ks_currency_id);
                             return ks_data;
                         } else if (ks_selection === 'custom') {
-                            const ks_field = self.chart_data.ks_field;
-                            return `${KsGlobalFunction._onKsGlobalFormatter(value, self.recordData.ks_data_format, self.recordData.ks_precision_digits)} ${ks_field}`;
+                            const ks_field = this.chart_data.ks_field;
+                            return `${KsGlobalFunction._onKsGlobalFormatter(value, this.recordData.ks_data_format, this.recordData.ks_precision_digits)} ${ks_field}`;
                         }else {
-                            return KsGlobalFunction._onKsGlobalFormatter(value, self.recordData.ks_data_format, self.recordData.ks_precision_digits);
+                            return KsGlobalFunction._onKsGlobalFormatter(value, this.recordData.ks_data_format, this.recordData.ks_precision_digits);
                         }
                     }
                 }
@@ -498,10 +497,10 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_graph_preview', function(requi
                             return `${data.datasets[tooltipItem.datasetIndex]['label']} : ${k_amount}`;
                         } else if (ks_selection === 'custom') {
                             const ks_field = this.chart_data.ks_field;
-                            k_amount = field_utils.format.float(k_amount, Float64Array, {digits: [0, self.recordData.ks_precision_digits]});
+                            k_amount = field_utils.format.float(k_amount, Float64Array, {digits: [0, this.recordData.ks_precision_digits]});
                             return `${data.datasets[tooltipItem.datasetIndex]['label']} : ${k_amount} ${ks_field}`;
                         } else {
-                            k_amount = field_utils.format.float(k_amount, Float64Array, {digits: [0, self.recordData.ks_precision_digits]});
+                            k_amount = field_utils.format.float(k_amount, Float64Array, {digits: [0, this.recordData.ks_precision_digits]});
                             return `${data.datasets[tooltipItem.datasetIndex]['label']} : ${k_amount}`;
                         }
                     }
