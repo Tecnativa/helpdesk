@@ -222,7 +222,7 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_graph_preview', function(requi
             if (this.recordData.ks_show_data_value) {
                 chart_plugin.push(ChartDataLabels);
             }
-            this.ksMyChart = new Chart($.find('#ksMyChart')[0], {
+            this.ksMyChart = new Chart(this.$('#ksMyChart')[0], {
                 type: this.chart_type === "area" ? "line" : this.chart_type,
                 plugins: chart_plugin,
                 data: {
