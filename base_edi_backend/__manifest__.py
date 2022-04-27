@@ -12,7 +12,7 @@
     "application": False,
     "installable": True,
     "external_dependencies": {"python": ["xlrd", "openupgradelib"]},
-    "depends": ["queue_job", "l10n_es_aeat"],  # TODO: Break dependency
+    "depends": ["base_edi", "queue_job", "l10n_es_aeat"],  # TODO: Break dependency
     "data": [
         "security/ir.model.access.csv",
         "views/edi_backend_configuration_view.xml",
