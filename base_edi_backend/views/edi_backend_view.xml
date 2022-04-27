@@ -94,7 +94,7 @@
                         strin="E-Mail"
                         attrs="{'invisible': [('communication_type', '!=', 'email')]}"
                     >
-                        <field name="destination_partners" widget="many2many_tags" />
+                        <field name="destination_partner_ids" widget="many2many_tags" />
                         <field
                             name="email_author"
                             attrs="{'required': [('communication_type', '=', 'email')]}"

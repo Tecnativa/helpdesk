@@ -102,7 +102,7 @@ class EdiBackend(models.Model):
     )
     remote_path = fields.Char(string="Remote path")
     # Mail data
-    destination_partners = fields.Many2one(
+    destination_partner_ids = fields.Many2many(
         comodel_name="res.partner",
         help="When mailing is enabled these will be the partners we'll communicate to",
     )
@@ -346,7 +346,7 @@ class EdiBackend(models.Model):
     def _prepare_mail_values(self, file, file_name):
         return {
             "author_id": self.email_author.id,
-            "partner_ids": self.destination_partners.ids,
+            "partner_ids": self.destination_partner_ids.ids,
             "subject": "Exportation of {}".format(file_name),
             "body_html": """
                 <body>
@@ -370,7 +370,7 @@ class EdiBackend(models.Model):
         }
 
     def send_file_by_email(self, file, file_name):
-        if not self.destination_partners:
+        if not self.destination_partner_ids:
             return
         self.env["mail.mail"].create(self._prepare_mail_values(file, file_name)).send()
 
