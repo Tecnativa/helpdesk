@@ -27,16 +27,16 @@
             <form string="EDI Backend History" create="false">
                 <header>
                     <button
-                        name="action_set_no_send"
-                        type="object"
-                        string="Set no send"
-                    />
+            name="action_set_no_send"
+            type="object"
+            string="Set no send"
+          />
                     <button name="action_rebuild_file" type="object" string="Rebuild" />
                     <button
-                        name="action_open_applied_records"
-                        type="object"
-                        string="Open records"
-                    />
+            name="action_open_applied_records"
+            type="object"
+            string="Open records"
+          />
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -49,10 +49,10 @@
                     <group>
                         <field name="model_name" invisible="1" />
                         <field
-                            name="applied_domain"
-                            widget="domain"
-                            options="{'model': 'model_name'}"
-                        />
+              name="applied_domain"
+              widget="domain"
+              options="{'model': 'model_name'}"
+            />
                         <field name="applied_records" />
                     </group>
                     <group>

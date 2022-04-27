@@ -15,6 +15,7 @@
     "depends": ["base_edi", "queue_job", "l10n_es_aeat"],  # TODO: Break dependency
     "data": [
         "security/ir.model.access.csv",
+        "security/edi_backend_security.xml",
         "views/edi_backend_configuration_view.xml",
         "views/edi_backend_view.xml",
         "views/edi_backend_communication_history_view.xml",

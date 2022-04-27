@@ -7,19 +7,17 @@
         <field name="model_id" ref="model_edi_backend" />
         <field name="global" eval="True" />
         <field
-                name="domain_force"
-            >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        name="domain_force"
+      >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
     </record>
 
     <record model="ir.rule" id="edi_backend_communication_history_multi_comapny">
-        <field
-                name="name"
-            >Edi backend communication history multi-company</field>
+        <field name="name">Edi backend communication history multi-company</field>
         <field name="model_id" ref="model_edi_backend_communication_history" />
         <field name="global" eval="True" />
         <field
-                name="domain_force"
-            >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        name="domain_force"
+      >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
     </record>
 
 </data>

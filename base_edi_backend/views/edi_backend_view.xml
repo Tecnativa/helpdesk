@@ -16,35 +16,35 @@
             <form string="Edi Backend">
                 <header>
                     <button
-                        name="action_ftp_test_connection"
-                        type="object"
-                        string="Test FTP"
-                        groups="base.group_no_one"
-                        attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
-                    />
+            name="action_ftp_test_connection"
+            type="object"
+            string="Test FTP"
+            groups="base.group_no_one"
+            attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
+          />
                     <button name="action_export" type="object" string="Export" />
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button
-                            class="oe_stat_button"
-                            name="create_cron"
-                            icon="fa-th-list"
-                            type="object"
-                        >
+              class="oe_stat_button"
+              name="create_cron"
+              icon="fa-th-list"
+              type="object"
+            >
                             <span class="o_stat_text">Cron</span>
                         </button>
                         <button
-                            class="oe_stat_button"
-                            name="action_communication_history"
-                            icon="fa-th-list"
-                            type="object"
-                        >
+              class="oe_stat_button"
+              name="action_communication_history"
+              icon="fa-th-list"
+              type="object"
+            >
                             <field
-                                string="History"
-                                name="history_count"
-                                widget="statinfo"
-                            />
+                string="History"
+                name="history_count"
+                widget="statinfo"
+              />
                         </button>
                     </div>
                     <group>
@@ -60,18 +60,18 @@
                     <group>
                         <field name="model_name" invisible="1" />
                         <field
-                            name="filter_domain"
-                            widget="domain"
-                            options="{'model': 'model_name'}"
-                        />
+              name="filter_domain"
+              widget="domain"
+              options="{'model': 'model_name'}"
+            />
                         <field
-                            name="date_field"
-                            domain="[('model_id', '=', model_id), ('ttype', 'in', ['datetime', 'date'])]"
-                        />
+              name="date_field"
+              domain="[('model_id', '=', model_id), ('ttype', 'in', ['datetime', 'date'])]"
+            />
                         <field
-                            name="date_range"
-                            attrs="{'invisible': [('date_field', '=', False)]}"
-                        />
+              name="date_range"
+              attrs="{'invisible': [('date_field', '=', False)]}"
+            />
                         <field name="special_domain" />
                     </group>
                     <group>
@@ -81,9 +81,9 @@
                         <field name="data" readonly="1" filename="file_name" />
                     </group>
                     <group
-                        string="FTP transfer"
-                        attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
-                    >
+            string="FTP transfer"
+            attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
+          >
                         <field name="ftp_host" />
                         <field name="ftp_user" />
                         <field name="ftp_password" widget="password" />
@@ -91,14 +91,14 @@
                         <field name="ftp_file_special_name" />
                     </group>
                     <group
-                        strin="E-Mail"
-                        attrs="{'invisible': [('communication_type', '!=', 'email')]}"
-                    >
+            strin="E-Mail"
+            attrs="{'invisible': [('communication_type', '!=', 'email')]}"
+          >
                         <field name="destination_partner_ids" widget="many2many_tags" />
                         <field
-                            name="email_author"
-                            attrs="{'required': [('communication_type', '=', 'email')]}"
-                        />
+              name="email_author"
+              attrs="{'required': [('communication_type', '=', 'email')]}"
+            />
                     </group>
                 </sheet>
             </form>
