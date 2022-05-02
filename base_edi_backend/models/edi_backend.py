@@ -242,12 +242,9 @@ class EdiBackend(models.Model):
         contents += wiz_export.with_context(
             applied_domain=domain
         ).action_get_file_from_config(self)
-        lines_count = contents.count(b"\n")
         # Generate the file and save as attachment
         file = base64.b64encode(contents)
-        file_name = "{}{}{}{}".format(
-            self.code, lines_count, sequence_file, self.extension,
-        )
+        file_name = self._get_backend_filename(contents, sequence_file, records)
         if not history_line:
             self.write(
                 {
@@ -286,8 +283,11 @@ class EdiBackend(models.Model):
         ):
             getattr(records, "%s_action_backend_sent" % self.provider)()
 
-    # FTP Connection methods
+    def _get_backend_filename(self, contents, sequence_file, records):
+        lines_count = contents.count(b"\n")
+        return "{}{}{}{}".format(self.code, lines_count, sequence_file, self.extension,)
 
+    # FTP Connection methods
     def _ftp_connection_params(self):
         return {
             "host": self.ftp_host,
@@ -337,7 +337,7 @@ class EdiBackend(models.Model):
     def _prepare_mail_values(self, file, file_name):
         return {
             "author_id": self.email_author.id,
-            "partner_ids": self.destination_partner_ids.ids,
+            "recipient_ids": [(4, p.id) for p in self.destination_partner_ids],
             "subject": "Exportation of {}".format(file_name),
             "body_html": """
                 <body>
@@ -354,7 +354,9 @@ class EdiBackend(models.Model):
     def send_file_by_email(self, file, file_name):
         if not self.destination_partner_ids:
             return
-        self.env["mail.mail"].create(self._prepare_mail_values(file, file_name)).send()
+        vals = self._prepare_mail_values(file, file_name)
+        mail = self.env["mail.mail"].create(vals)
+        mail.send()
 
     @api.model
     def _create_sequence(self, vals):
@@ -424,7 +426,9 @@ class EdiBackendCommunicationHistory(models.Model):
     def action_set_no_send(self):
         records = self.get_applied_records()
         if records:
-            records.action_export_not_sent()
+            getattr(
+                records, "%s_action_backend_not_sent" % self.edi_backend_id.provider
+            )()
 
     def action_rebuild_file(self):
         self.data = False

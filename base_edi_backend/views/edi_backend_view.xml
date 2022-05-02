@@ -91,7 +91,7 @@
                         <field name="ftp_file_special_name" />
                     </group>
                     <group
-            strin="E-Mail"
+            string="E-Mail"
             attrs="{'invisible': [('communication_type', '!=', 'email')]}"
           >
                         <field name="destination_partner_ids" widget="many2many_tags" />

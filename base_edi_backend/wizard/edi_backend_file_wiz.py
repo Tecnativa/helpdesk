@@ -303,7 +303,7 @@ class EdiBackendFileWiz(models.TransientModel):
                 + line.decimal_size
                 + (line.apply_sign and len(sign or "") or 0)
             )
-            if line.export_type == "float":
+            if line.export_type == "float" and line.decimal_size:
                 # Decimal point position
                 line_size += 1
         return line_size
