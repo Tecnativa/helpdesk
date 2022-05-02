@@ -23,6 +23,10 @@ class EdiBackendConfig(models.Model):
     filler_zero_with = fields.Selection(
         [("zero", "Zeros"), ("blank", "Blank")], string="Fill left zeros with...",
     )
+    columns_definition = fields.Selection(
+        [("positional", "Positional"), ("separator", "Separator")], default="positional"
+    )
+    separator_char = fields.Char(default=";")
 
 
 class EdiBackendConfigLine(models.Model):
@@ -41,3 +45,4 @@ class EdiBackendConfigLine(models.Model):
         [("zero", "Zeros"), ("blank", "Blank")], string="Filler left zeros with ...",
     )
     negative_sign = fields.Char(default="-")
+    apply_separator_char = fields.Boolean(default=True)

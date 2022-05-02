@@ -28,6 +28,8 @@
             </xpath>
             <field name="model_id" position="after">
                 <field name="filler_zero_with" />
+                <field name="columns_definition" />
+                <field name="separator_char" />
             </field>
         </field>
     </record>
@@ -61,6 +63,9 @@
             </xpath>
             <field name="name" position="before">
                 <field name="export_config_id" />
+            </field>
+            <field name="size" position="after">
+                <field name="apply_separator_char" />
             </field>
         </field>
     </record>

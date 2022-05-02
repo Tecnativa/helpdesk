@@ -217,6 +217,7 @@ class EdiBackendFileWiz(models.TransientModel):
                     "today": fields.Date.today(),
                     "format_date": self.format_custom_date,
                     "format_date_sp": self.format_custom_date_sp,
+                    "format_hour": self.format_custom_hour,
                 },
             )
 
@@ -248,34 +249,73 @@ class EdiBackendFileWiz(models.TransientModel):
         return val
 
     def _export_simple_record(self, line, val):
+        line_size = self._get_line_size(line, val)
         if line.export_type == "string":
             # Modify to adjust val to size
-            if val and len(val) > line.size:
-                val = val[: line.size]
+            if val and len(val) > line_size:
+                val = val[:line_size]
             align = ">" if line.alignment == "right" else "<"
-            return self._format_string(val or "", line.size, align=align)
+            value = self._format_string(val or "", line_size, align=align)
         elif line.export_type == "boolean":
-            return self._format_boolean(val, line.bool_yes, line.bool_no)
+            value = self._format_boolean(val, line.bool_yes, line.bool_no)
         elif line.export_type == "alphabetic":
             align = ">" if line.alignment == "right" else "<"
-            return self._format_alphabetic_string(val or "", line.size, align=align)
+            value = self._format_alphabetic_string(val or "", line_size, align=align)
         else:  # float or integer
             decimal_size = 0 if line.export_type == "integer" else line.decimal_size
             fill_with = line.filler_zero_with or line.export_config_id.filler_zero_with
             number = float(val or 0)
             sign = line.negative_sign if number < 0.0 else line.positive_sign
-            return self._format_number(
+            value = self._format_number(
                 number,
-                line.size - decimal_size - (line.apply_sign and len(sign) or 0),
+                line_size - decimal_size - (line.apply_sign and len(sign or "") or 0),
                 decimal_size,
                 line.apply_sign,
-                positive_sign=line.positive_sign,
+                positive_sign=line.positive_sign or "",
                 negative_sign=line.negative_sign,
                 fill_with=fill_with,
             )
+        return self._post_processed_value(line, value)
 
     def format_custom_date(self, date):
-        return date.replace("-", "")[:8]
+        date_str = fields.Date.to_string(date)
+        return date_str.replace("-", "")[:8]
+
+    def format_custom_hour(self, date):
+        date_str = fields.Datetime.to_string(date)
+        return date_str.replace(":", "")[-6:]
 
     def format_custom_date_sp(self, date):
-        return "{0[8]}{0[9]}{0[5]}{0[6]}{0[0]}{0[1]}{0[2]}{0[3]}".format(date)
+        date_str = fields.Date.to_string(date)
+        return "{0[8]}{0[9]}{0[5]}{0[6]}{0[0]}{0[1]}{0[2]}{0[3]}".format(date_str)
+
+    def _get_line_size(self, line, val):
+        if not line.export_config_id.columns_definition == "separator":
+            return line.size
+        line_size = line.size
+        if line.export_type in ["string", "alphabetic"]:
+            line_size = len(val)
+        if line.export_type in ["integer", "float"]:
+            len_int_part = len(str(abs(int(float(val or 0)))))
+            sign = line.negative_sign if float(val or 0) < 0.0 else line.positive_sign
+            line_size = (
+                len_int_part
+                + line.decimal_size
+                + (line.apply_sign and len(sign or "") or 0)
+            )
+            if line.export_type == "float":
+                # Decimal point position
+                line_size += 1
+        return line_size
+
+    def _post_processed_value(self, line, value):
+        if (
+            line.export_config_id.columns_definition == "separator"
+            and line.export_config_id.separator_char
+            and line.apply_separator_char
+        ):
+            if isinstance(value, bytes):
+                value += line.export_config_id.separator_char.encode()
+            else:
+                value += line.export_config_id.separator_char
+        return value

@@ -36,7 +36,7 @@ class EdiBackend(models.Model):
     name = fields.Char(string="Name")
     code = fields.Char(string="Code")
     company_id = fields.Many2one(
-        comodel_name="res.company", default=lambda self: self.env.company.id,
+        comodel_name="res.company", default=lambda self: self.env.company,
     )
     sequence_id = fields.Many2one(comodel_name="ir.sequence", string="Sequence file",)
     # The module will work as it is. However, some providers might override some things
@@ -153,6 +153,11 @@ class EdiBackend(models.Model):
             self.env.context.get("applied_domain", False) or self.get_complete_domain()
         )
         records = self.env[self.model_id.model].search(domain)
+        return records
+
+    def get_mapped_records(self, mapped_field):
+        records = self.get_records()
+        records = records.mapped(mapped_field)
         return records
 
     @api.onchange("model_id")
@@ -378,6 +383,13 @@ class EdiBackendCommunicationHistory(models.Model):
 
     edi_backend_id = fields.Many2one(
         comodel_name="edi.backend", string="EDI Backend", required=True,
+    )
+    company_id = fields.Many2one(
+        related="edi_backend_id.company_id",
+        string="Company",
+        store=True,
+        readonly=True,
+        index=True,
     )
     state = fields.Selection(
         selection=[
