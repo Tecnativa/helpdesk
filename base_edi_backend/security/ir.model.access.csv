@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_edi_backend_export_config_admin,edi.backend.export.config admin,model_edi_backend_config,base.group_system,1,1,1,1
+access_edi_backend_export_config_line_admin,edi.backend.export.config admin,model_edi_backend_config_line,base.group_system,1,1,1,1
+access_edi_backend_admin,edi.backend admin,model_edi_backend,base.group_system,1,1,1,1
+access_edi_backend_communication_history_admin,edi.backend.communication.history admin,model_edi_backend_communication_history,base.group_system,1,1,1,1

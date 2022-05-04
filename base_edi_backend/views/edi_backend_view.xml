@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="edi_backend_tree" model="ir.ui.view">
+        <field name="model">edi.backend</field>
+        <field name="arch" type="xml">
+            <tree string="Edi Backend">
+                <field name="name" />
+                <field name="last_sync_date" />
+                <field name="export_config_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="edi_backend_form" model="ir.ui.view">
+        <field name="model">edi.backend</field>
+        <field name="arch" type="xml">
+            <form string="Edi Backend">
+                <header>
+                    <button
+            name="action_ftp_test_connection"
+            type="object"
+            string="Test FTP"
+            groups="base.group_no_one"
+            attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
+          />
+                    <button name="action_export" type="object" string="Export" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+              class="oe_stat_button"
+              name="create_cron"
+              icon="fa-th-list"
+              type="object"
+            >
+                            <span class="o_stat_text">Cron</span>
+                        </button>
+                        <button
+              class="oe_stat_button"
+              name="action_communication_history"
+              icon="fa-th-list"
+              type="object"
+            >
+                            <field
+                string="History"
+                name="history_count"
+                widget="statinfo"
+              />
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="communication_type" />
+                        <field name="provider" />
+                        <field name="extension" />
+                        <field name="last_sync_date" invisible="1" />
+                        <field name="export_config_id" />
+                        <field name="model_id" />
+                    </group>
+                    <group>
+                        <field name="model_name" invisible="1" />
+                        <field
+              name="filter_domain"
+              widget="domain"
+              options="{'model': 'model_name'}"
+            />
+                        <field
+              name="date_field"
+              domain="[('model_id', '=', model_id), ('ttype', 'in', ['datetime', 'date'])]"
+            />
+                        <field
+              name="date_range"
+              attrs="{'invisible': [('date_field', '=', False)]}"
+            />
+                        <field name="special_domain" />
+                    </group>
+                    <group>
+                        <field name="sequence_id" />
+                        <field name="sequence_number_next" />
+                        <field name="file_name" invisible="1" />
+                        <field name="data" readonly="1" filename="file_name" />
+                    </group>
+                    <group
+            string="FTP transfer"
+            attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
+          >
+                        <field name="ftp_host" />
+                        <field name="ftp_user" />
+                        <field name="ftp_password" widget="password" />
+                        <field name="remote_path" />
+                        <field name="ftp_file_special_name" />
+                    </group>
+                    <group
+            string="E-Mail"
+            attrs="{'invisible': [('communication_type', '!=', 'email')]}"
+          >
+                        <field name="destination_partner_ids" widget="many2many_tags" />
+                        <field
+              name="email_author"
+              attrs="{'required': [('communication_type', '=', 'email')]}"
+            />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_edi_backend">
+        <field name="name">Edi Backend</field>
+        <field name="res_model">edi.backend</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
