@@ -175,7 +175,7 @@ class EdiBackend(models.Model):
             name = "[{}] EDI Backend {}".format(self.provider.upper(), self.name)
         else:
             name = "EDI Backend {}".format(self.name)
-        ir_cron = IrCron.search([("name", "=", name)])
+        ir_cron = IrCron.with_context(active_test=False).search([("name", "=", name)])
         if not ir_cron:
             ir_cron = self.env["ir.cron"].create(
                 {
