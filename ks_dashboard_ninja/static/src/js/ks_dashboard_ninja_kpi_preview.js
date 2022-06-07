@@ -227,6 +227,8 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_kpi_preview', function(require
             let acheive = false;
             let pre_acheive = false;
             let pre_deviation = '100%';
+            let deviation = null;
+            let previous_period_data = null;
 
             if (field.ks_goal_enable) {
                 let diffrence = 0.0;
@@ -237,11 +239,11 @@ odoo.define('ks_dashboard_ninja_list.ks_dashboard_kpi_preview', function(require
                 }
                 acheive = diffrence >= 0;
                 diffrence = Math.abs(diffrence);
-                const deviation = Math.round((diffrence / target_1) * 100)
+                deviation = Math.round((diffrence / target_1) * 100)
                 if (deviation !== Infinity) deviation = deviation ? field_utils.format.integer(deviation) + '%' : 0 + '%';
             }
             if (field.ks_previous_period && ks_valid_date_selection.indexOf(field.ks_date_filter_selection) >= 0) {
-                let previous_period_data = kpi_data[0].previous_period;
+                previous_period_data = kpi_data[0].previous_period;
                 let pre_diffrence = (count_1 - previous_period_data);
                 if (field.ks_multiplier_active){
                     previous_period_data = kpi_data[0].previous_period * field.ks_multiplier;
