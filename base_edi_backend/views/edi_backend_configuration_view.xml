@@ -47,6 +47,9 @@
             <field name="name" position="before">
                 <field name="export_config_id" />
             </field>
+            <field name="conditional" position="after">
+                <field name="anonymize_value" widget="boolean_toggle"/>
+            </field>
         </field>
     </record>
     <record id="edi_backend_config_line_form" model="ir.ui.view">

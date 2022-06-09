@@ -242,26 +242,33 @@ class EdiBackendFileWiz(models.TransientModel):
                     field_val = EXPRESSION_PATTERN.sub(merge, line.expression)
                 else:
                     field_val = line.fixed_value
-                record = self._export_simple_record(line, field_val)
+                anonymized = line.anonymize_value and obj_merge.id in self.env.context.get("anonymized_records", [])
+                record = self._export_simple_record(line, field_val, anonymized=anonymized, anonymize_char=self.env.context.get("anonymize_char", " "))
                 if isinstance(record, str):
                     record = record.encode("iso-8859-1")
                 val += record
         return val
 
-    def _export_simple_record(self, line, val):
+    def _export_simple_record(self, line, val, anonymized=False, anonymize_char=" "):
         line_size = self._get_line_size(line, val)
         if line.export_type == "string":
             # Modify to adjust val to size
-            if val and len(val) > line_size:
+            if anonymized:
+                val = anonymize_char * line_size
+            elif val and len(val) > line_size:
                 val = val[:line_size]
             align = ">" if line.alignment == "right" else "<"
             value = self._format_string(val or "", line_size, align=align)
         elif line.export_type == "boolean":
             value = self._format_boolean(val, line.bool_yes, line.bool_no)
         elif line.export_type == "alphabetic":
+            if anonymized:
+                val = anonymize_char * line_size
             align = ">" if line.alignment == "right" else "<"
             value = self._format_alphabetic_string(val or "", line_size, align=align)
         else:  # float or integer
+            if anonymized:
+                val = 0
             decimal_size = 0 if line.export_type == "integer" else line.decimal_size
             fill_with = line.filler_zero_with or line.export_config_id.filler_zero_with
             number = float(val or 0)

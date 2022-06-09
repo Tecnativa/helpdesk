@@ -46,3 +46,4 @@ class EdiBackendConfigLine(models.Model):
     )
     negative_sign = fields.Char(default="-")
     apply_separator_char = fields.Boolean(default=True)
+    anonymize_value = fields.Boolean()

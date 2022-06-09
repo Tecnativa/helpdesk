@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 19:14+0000\n"
-"PO-Revision-Date: 2022-05-02 21:24+0200\n"
+"POT-Creation-Date: 2022-06-09 13:13+0000\n"
+"PO-Revision-Date: 2022-06-09 15:16+0200\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
-"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
-"Language: es\n"
 
 #. module: base_edi_backend
 #: code:addons/base_edi_backend/wizard/edi_backend_file_wiz.py:0
@@ -38,6 +38,26 @@ msgstr "Activo"
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__alignment
 msgid "Alignment"
 msgstr "Alineación"
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid "Anonimize"
+msgstr "Anonimizar"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__anonymize_entries
+msgid "Anonymize Entries"
+msgstr "Anonimizar registros"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__anonymize_value
+msgid "Anonymize Value"
+msgstr "Valor anónimo"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__anonymized_domain
+msgid "Anonymized Domain"
+msgstr "Dominio de anonimizado"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_communication_history__applied_domain
@@ -91,6 +111,11 @@ msgstr "Blanco"
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend_mixin__backend_state_base__cancelled
 msgid "Cancelled"
 msgstr "Cancelado"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__char_for_anonymize
+msgid "Char For Anonymize"
+msgstr "Carácter para anonimizar"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__code
@@ -190,6 +215,7 @@ msgstr "Nombre a mostrar"
 
 #. module: base_edi_backend
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__communication_type__email
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
 msgid "E-Mail"
 msgstr "Email"
 
@@ -211,9 +237,8 @@ msgstr "Línea configuración del backend"
 
 #. module: base_edi_backend
 #: model:ir.model,name:base_edi_backend.model_edi_backend_file_wiz
-#, fuzzy
 msgid "EDI Backend File Wizard"
-msgstr "Asistente para comparar archivo BOE"
+msgstr "Asistente ficheros EDI backend"
 
 #. module: base_edi_backend
 #: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend_communication_history
@@ -587,6 +612,13 @@ msgstr "Proveedor"
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_communication_history_form
 msgid "Rebuild"
 msgstr "Regenerar"
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+#, fuzzy
+#| msgid "Applied Records"
+msgid "Records"
+msgstr "Registros afectados"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__register_record_state
