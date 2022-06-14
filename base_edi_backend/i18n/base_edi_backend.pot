@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 19:14+0000\n"
-"PO-Revision-Date: 2022-05-02 19:14+0000\n"
+"POT-Creation-Date: 2022-06-09 13:13+0000\n"
+"PO-Revision-Date: 2022-06-09 13:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -35,6 +35,26 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__alignment
 msgid "Alignment"
+msgstr ""
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid "Anonimize"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__anonymize_entries
+msgid "Anonymize Entries"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__anonymize_value
+msgid "Anonymize Value"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__anonymized_domain
+msgid "Anonymized Domain"
 msgstr ""
 
 #. module: base_edi_backend
@@ -88,6 +108,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend_communication_history__state__cancelled
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend_mixin__backend_state_base__cancelled
 msgid "Cancelled"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__char_for_anonymize
+msgid "Char For Anonymize"
 msgstr ""
 
 #. module: base_edi_backend
@@ -189,6 +214,7 @@ msgstr ""
 
 #. module: base_edi_backend
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__communication_type__email
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
 msgid "E-Mail"
 msgstr ""
 
@@ -578,6 +604,11 @@ msgstr ""
 #. module: base_edi_backend
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_communication_history_form
 msgid "Rebuild"
+msgstr ""
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid "Records"
 msgstr ""
 
 #. module: base_edi_backend

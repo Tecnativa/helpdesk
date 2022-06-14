@@ -55,24 +55,6 @@
                         <field name="extension" />
                         <field name="last_sync_date" invisible="1" />
                         <field name="export_config_id" />
-                        <field name="model_id" />
-                    </group>
-                    <group>
-                        <field name="model_name" invisible="1" />
-                        <field
-              name="filter_domain"
-              widget="domain"
-              options="{'model': 'model_name'}"
-            />
-                        <field
-              name="date_field"
-              domain="[('model_id', '=', model_id), ('ttype', 'in', ['datetime', 'date'])]"
-            />
-                        <field
-              name="date_range"
-              attrs="{'invisible': [('date_field', '=', False)]}"
-            />
-                        <field name="special_domain" />
                     </group>
                     <group>
                         <field name="sequence_id" />
@@ -100,6 +82,35 @@
               attrs="{'required': [('communication_type', '=', 'email')]}"
             />
                     </group>
+                    <notebook>
+                        <page name="records_tab" string="Records">
+                            <group>
+                                <field name="model_id" />
+                                <field name="model_name" invisible="1" />
+                                <field
+                                  name="filter_domain"
+                                  widget="domain"
+                                  options="{'model': 'model_name'}"
+                                />
+                                <field
+                                  name="date_field"
+                                  domain="[('model_id', '=', model_id), ('ttype', 'in', ['datetime', 'date'])]"
+                                />
+                                <field
+                                  name="date_range"
+                                  attrs="{'invisible': [('date_field', '=', False)]}"
+                                />
+                                <field name="special_domain" />
+                            </group>
+                        </page>
+                        <page name="anonymize_tab" string="Anonimize">
+                            <group>
+                                <field name="anonymize_entries"/>
+                                <field name="char_for_anonymize"/>
+                                <field name="anonymized_domain" widget="domain" options="{'model': 'model_name'}"/>
+                            </group>
+                        </page>
+                </notebook>
                 </sheet>
             </form>
         </field>

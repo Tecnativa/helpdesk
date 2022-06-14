@@ -97,6 +97,9 @@ class EdiBackend(models.Model):
     # Communication history
     history_count = fields.Integer(compute="_compute_history_count")
     group_key = fields.Char(string="Group key",)
+    anonymize_entries = fields.Boolean()
+    anonymized_domain = fields.Char()
+    char_for_anonymize = fields.Char(default="x", size=1)
 
     @api.depends("date_field", "date_range", "last_sync_date", "security_days")
     def _compute_special_domain(self):
@@ -213,6 +216,16 @@ class EdiBackend(models.Model):
             domain.extend(safe_eval(self.special_domain))
         return domain
 
+    def get_anonymize_domain(self):
+        return safe_eval(self.anonymized_domain)
+
+    def _get_anonymized_records(self):
+        anonymized_records = []
+        if self.anonymize_entries:
+            domain = self.get_anonymize_domain()
+            anonymized_records = self.env[self.model_name].search(domain).ids
+        return anonymized_records
+
     @job
     def action_export_run(self, history_line=False):
         if not self.export_config_id:
@@ -225,6 +238,7 @@ class EdiBackend(models.Model):
         now = fields.Datetime.now()
         if not records:
             return
+        anonymized_records = self._get_anonymized_records()
         # Get sequence and write it in context to be used in content file
         sequence_file = (
             history_line
@@ -237,6 +251,8 @@ class EdiBackend(models.Model):
             active_id=self.id,
             today=fields.Date.today(),
             sequence_file=sequence_file,
+            anonymized_records=anonymized_records,
+            anonymize_char=self.char_for_anonymize,
         ).create({"name": "File {}".format(self.name)})
         contents = b""
         contents += wiz_export.with_context(
@@ -265,7 +281,7 @@ class EdiBackend(models.Model):
                 }
             )
         else:
-            self.env["edi.backend.communication.history"].create(
+            history_line = self.env["edi.backend.communication.history"].create(
                 {
                     "edi_backend_id": self.id,
                     "state": "sent",
@@ -282,6 +298,7 @@ class EdiBackend(models.Model):
             records, "%s_action_backend_sent" % self.provider
         ):
             getattr(records, "%s_action_backend_sent" % self.provider)()
+        return history_line
 
     def _get_backend_filename(self, contents, sequence_file, records):
         lines_count = contents.count(b"\n")
