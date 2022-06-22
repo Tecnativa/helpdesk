@@ -116,7 +116,7 @@ class EdiBackend(models.Model):
                 dates = edi.get_relative_date()
                 domain.extend(
                     [
-                        (edi.date_field.name, ">", dates[0]),
+                        (edi.date_field.name, ">=", dates[0]),
                         (edi.date_field.name, "<", dates[1]),
                     ]
                 )
