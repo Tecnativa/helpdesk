@@ -207,11 +207,14 @@ class EdiBackendFileWiz(models.TransientModel):
         obj_merge = obj
 
         def merge_eval(exp):
+            especific_obj = obj_merge
+            if not isinstance(obj_merge, dict):
+                especific_obj = obj_merge.with_context(self.env.context)
             return safe_eval(
                 exp,
                 {
                     "user": self.env.user,
-                    "object": obj_merge.with_context(self.env.context),
+                    "object": especific_obj,
                     # copy context to prevent side-effects of eval
                     "context": self.env.context.copy(),
                     "today": fields.Date.today(),
@@ -242,8 +245,18 @@ class EdiBackendFileWiz(models.TransientModel):
                     field_val = EXPRESSION_PATTERN.sub(merge, line.expression)
                 else:
                     field_val = line.fixed_value
-                anonymized = line.anonymize_value and obj_merge.id in self.env.context.get("anonymized_records", [])
-                record = self._export_simple_record(line, field_val, anonymized=anonymized, anonymize_char=self.env.context.get("anonymize_char", " "))
+                anonymized = False
+                if not isinstance(obj_merge, dict):
+                    anonymized = (
+                        line.anonymize_value
+                        and obj_merge.id in self.env.context.get("anonymized_records", [])
+                    )
+                record = self._export_simple_record(
+                    line,
+                    field_val,
+                    anonymized=anonymized,
+                    anonymize_char=self.env.context.get("anonymize_char", " "),
+                )
                 if isinstance(record, str):
                     record = record.encode("iso-8859-1")
                 val += record
