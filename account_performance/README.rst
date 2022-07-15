@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=====================
-Licores Reyes Product
-=====================
+===================
+Account performance
+===================
 
-Custom fields for products.
+Custom improvements for account module.
 
 Credits
 =======
@@ -16,7 +16,7 @@ Contributors
 
 * `Tecnativa <https://www.tecnativa.com>`_:
 
-  * Carlos Dauden
+  * Sergio Teruel
 
 Maintainer
 ----------
