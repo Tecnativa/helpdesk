@@ -5,6 +5,7 @@ import base64
 import json
 import logging
 from io import BytesIO
+import pysftp
 
 from dateutil.relativedelta import relativedelta
 
@@ -42,7 +43,11 @@ class EdiBackend(models.Model):
     # The module will work as it is. However, some providers might override some things
     provider = fields.Selection(selection=[("base", "Generic")], required=True)
     communication_type = fields.Selection(
-        selection=[("ftp", "FTP"), ("email", "E-Mail")], default="ftp", required=True,
+        selection=[("ftp", "FTP"), ("sftp", "SFTP"), ("email", "E-Mail")], default="ftp", required=True,
+    )
+    action_type = fields.Selection(
+        selection=[("export", "Export"), ("import", "Import")], default="export",
+        required=True,
     )
     register_record_state = fields.Boolean(
         help="If set the record state will be set on every backend communication",
@@ -59,7 +64,11 @@ class EdiBackend(models.Model):
         comodel_name="edi.backend.config",
         string="Export config",
         ondelete="cascade",
-        required=True,
+    )
+    import_config_id = fields.Many2one(
+        comodel_name="edi.backend.config",
+        string="Import config",
+        ondelete="cascade",
     )
     model_id = fields.Many2one(comodel_name="ir.model", string="Odoo model",)
     filter_domain = fields.Char(string="Apply on")
@@ -85,6 +94,13 @@ class EdiBackend(models.Model):
     ftp_user = fields.Char()
     ftp_password = fields.Char()
     ftp_file_special_name = fields.Char(
+        string="File Special Name", help="File will allways be synced with this name",
+    )
+    # SFTP data
+    sftp_host = fields.Char()
+    sftp_user = fields.Char()
+    sftp_password = fields.Char()
+    sftp_file_special_name = fields.Char(
         string="File Special Name", help="File will allways be synced with this name",
     )
     remote_path = fields.Char(string="Remote path")
@@ -170,6 +186,41 @@ class EdiBackend(models.Model):
     def action_export(self):
         self.data = False
         self.action_export_run()
+
+    def action_import(self):
+        self.data = False
+        self.action_import_run()
+
+    def _get_vals_from_file(self, history=False):
+        vals_list = []
+        if history:
+            file = base64.b64decode(history.data)
+        else:
+            file = base64.b64decode(self.data)
+        file_string = file.decode('utf-8')
+        file_array = file_string.split('\n')
+        lines_config = self.import_config_id.config_line_ids
+        for item in file_array:
+            if not item:
+                continue
+            vals = {}
+            for config in lines_config:
+                vals[config.key] = item[config.position - 1:config.position + config.size - 1]
+            if vals:
+                vals_list.append(vals)
+        return vals_list
+
+    def _fill_data_from_vals(self, vals_list):
+        records = set()
+        for vals in vals_list:
+            res = self.fill_model_data(vals)
+            if res:
+                records.add(res)
+        return list(records)
+
+    def fill_model_data(self, vals):
+        """Overwrite this method to fill the data model."""
+        return False
 
     def create_cron(self):
         IrCron = self.env["ir.cron"]
@@ -300,6 +351,34 @@ class EdiBackend(models.Model):
             getattr(records, "%s_action_backend_sent" % self.provider)()
         return history_line
 
+    @job
+    def action_import_run(self):
+        now = fields.Datetime.now()
+        file_names = getattr(self, "_%s_get_names" % self.communication_type)()
+        for file_name in file_names:
+            file = getattr(self, "_file_from_%s" % self.communication_type)(file_name)
+            self.write(
+                {
+                    "data": file,
+                    "file_name": file_name,
+                    "last_sync_date": self.security_days or now,
+                }
+            )
+            vals_list = self._get_vals_from_file()
+            records = self._fill_data_from_vals(vals_list)
+            self.env["edi.backend.communication.history"].create(
+                {
+                    "edi_backend_id": self.id,
+                    "company_id": self.company_id.id,
+                    "data": file,
+                    "file_name": file_name,
+                    "applied_records": str(records),
+                }
+            )
+        # If no problems found, then delete files from server
+        for file_name in file_names:
+            getattr(self, "_%s_delete_file" % self.communication_type)(file_name)
+
     def _get_backend_filename(self, contents, sequence_file, records):
         lines_count = contents.count(b"\n")
         return "{}{}{}{}".format(self.code, lines_count, sequence_file, self.extension,)
@@ -348,6 +427,90 @@ class EdiBackend(models.Model):
             return
         ftp_file_name = self.ftp_file_special_name or file_name
         self._file_to_ftp(ftp_file_name, file)
+
+    # SFTP Connection methods
+    def _sftp_connection_params(self):
+        cnopts = pysftp.CnOpts()
+        cnopts.hostkeys = None
+        return {
+            "host": self.sftp_host,
+            "username": self.sftp_user,
+            "password": self.sftp_password,
+            "port": 22,
+            "cnopts": cnopts,
+        }
+
+    def action_sftp_test_connection(self):
+        """Check if the ftp settings are correct."""
+        try:
+            with self._sftp_connection() as sftp:
+                if sftp.pwd():
+                    raise exceptions.Warning(_("Connection Test OK!"))
+        except exceptions.Warning:
+            raise exceptions.Warning(_("Connection Test OK!"))
+        except Exception:
+            raise exceptions.ValidationError(
+                _("Connection Test Failed! %s" % Exception)
+            )
+
+    def _sftp_connection(self):
+        """Return a new SFTP connection with found parameters."""
+        values = self._sftp_connection_params()
+        _logger.debug("Trying to connect to sftp://%(user)s@%(host)s", extra=values)
+        sftp = pysftp.Connection(**values)
+        _logger.info("Connected to sftp://{}".format(self.sftp_user))
+        return sftp
+
+    def _file_to_sftp(self, file_name, data):
+        if not (data and self.data):
+            return
+        with self._sftp_connection() as sftp:
+            # sftp.cd(self.remote_path)
+            remote_path = self.remote_path or ""
+            if not self.remote_path or self.remote_path[-1] != "/":
+                remote_path += "/"
+            file = base64.b64decode(data or self.data)
+            sftp.putfo(BytesIO(file), remotepath=remote_path + file_name)
+
+    def _file_from_sftp(self, file_name):
+        with self._sftp_connection() as sftp:
+            remote_path = self.remote_path or ""
+            if not self.remote_path or self.remote_path[-1] != "/":
+                remote_path += "/"
+            try:
+                output_buffer = BytesIO()
+                sftp.getfo(remote_path + file_name, output_buffer)
+                file = base64.b64encode(output_buffer.getvalue())
+            except Exception:
+                exceptions.UserError(
+                    _("An error ocurred when trying to import file: %s" % Exception)
+                )
+            return file
+
+    def _sftp_delete_file(self, file_name):
+        with self._sftp_connection() as sftp:
+            remote_path = self.remote_path or ""
+            if not self.remote_path or self.remote_path[-1] != "/":
+                remote_path += "/"
+            sftp.remove(remote_path + file_name)
+
+    def send_file_by_sftp(self, file, file_name):
+        if not self.sftp_host or not self.sftp_user:
+            return
+        sftp_file_name = self.sftp_file_special_name or file_name
+        self._file_to_sftp(sftp_file_name, file)
+
+    def _sftp_get_names(self):
+        file_names = []
+        with self._sftp_connection() as sftp:
+            remote_path = self.remote_path or ""
+            if not self.remote_path or self.remote_path[-1] != "/":
+                remote_path += "/"
+            all_files = sftp.listdir(remote_path)
+            for file in all_files:
+                if file.startswith(self.sftp_file_special_name):
+                    file_names.append(file)
+        return file_names
 
     # Email connection methods
 
@@ -428,6 +591,7 @@ class EdiBackendCommunicationHistory(models.Model):
     applied_sequence = fields.Char()
     data = fields.Binary(string="Last File", attachment=True, readonly=True)
     file_name = fields.Char(string="File name")
+    action_type = fields.Selection(related="edi_backend_id.action_type")
 
     def get_applied_records(self):
         """
@@ -464,3 +628,9 @@ class EdiBackendCommunicationHistory(models.Model):
                 "domain": [("id", "in", records.ids)],
             }
             return action
+
+    def action_import_run(self):
+        self.ensure_one()
+        vals_list = self.edi_backend_id._get_vals_from_file(history=self)
+        records = self.edi_backend_id._fill_data_from_vals(vals_list)
+        self.applied_records = str(records)

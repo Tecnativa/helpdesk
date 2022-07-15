@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 13:13+0000\n"
-"PO-Revision-Date: 2022-06-09 15:16+0200\n"
+"POT-Creation-Date: 2022-07-15 11:16+0000\n"
+"PO-Revision-Date: 2022-07-15 13:21+0200\n"
 "Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -29,6 +29,11 @@ msgid "<span class=\"o_stat_text\">Cron</span>"
 msgstr "<span class=\"o_stat_text\">Planificador</span>"
 
 #. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__action_type
+msgid "Action Type"
+msgstr "Tipo de acción"
+
+#. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__active
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config__active
 msgid "Active"
@@ -38,6 +43,12 @@ msgstr "Activo"
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__alignment
 msgid "Alignment"
 msgstr "Alineación"
+
+#. module: base_edi_backend
+#: code:addons/base_edi_backend/models/edi_backend.py:0
+#, python-format
+msgid "An error ocurred when trying to import file: %s"
+msgstr "Un error ha ocurrido intentando importar el archivo: %s"
 
 #. module: base_edi_backend
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
@@ -284,10 +295,9 @@ msgid "EDI Backend mixin for records"
 msgstr ""
 
 #. module: base_edi_backend
-#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend
-#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend
 #: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_setting
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_import_tree
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_tree
 msgid "Edi Backend"
 msgstr "Backend"
@@ -296,6 +306,18 @@ msgstr "Backend"
 #: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_export_config
 msgid "Edi Backend Configuration"
 msgstr "Configuración del backend"
+
+#. module: base_edi_backend
+#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend
+#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend
+msgid "Edi Backend Export"
+msgstr "Backend de exportación"
+
+#. module: base_edi_backend
+#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend_import
+#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_import
+msgid "Edi Backend Import"
+msgstr "Backend de importación"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__email_author
@@ -314,6 +336,7 @@ msgid "Errors"
 msgstr "Errores"
 
 #. module: base_edi_backend
+#: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__action_type__export
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
 msgid "Export"
 msgstr "Exportar"
@@ -365,6 +388,7 @@ msgstr "Archivo"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__ftp_file_special_name
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__sftp_file_special_name
 msgid "File Special Name"
 msgstr "Nombre especial de fichero"
 
@@ -377,9 +401,9 @@ msgstr "Nombre de archivo"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend__ftp_file_special_name
-#, fuzzy
+#: model:ir.model.fields,help:base_edi_backend.field_edi_backend__sftp_file_special_name
 msgid "File will allways be synced with this name"
-msgstr "Nombre de archivo"
+msgstr "El archivo se sincronizará siempre con este nombre"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config__filler_zero_with
@@ -445,6 +469,8 @@ msgstr "ID (identificación)"
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend__register_record_state
 msgid "If set the record state will be set on every backend communication"
 msgstr ""
+"Si se establece, el estado del registro se establecerá en cada comunicación "
+"del backend"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend_config_line__repeat_expression
@@ -464,6 +490,17 @@ msgstr ""
 "ser añadida"
 
 #. module: base_edi_backend
+#: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__action_type__import
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid "Import"
+msgstr "Importar"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__import_config_id
+msgid "Import config"
+msgstr "Configuración de importación"
+
+#. module: base_edi_backend
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend_mixin__backend_state_base
 msgid "Indicates the state of the Backend send state"
 msgstr "Indica el estado del envío del backend"
@@ -472,6 +509,11 @@ msgstr "Indica el estado del envío del backend"
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend_communication_history__state
 msgid "Indicates the state of the Export send state"
 msgstr "Indica el estado del envío del backend"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__key
+msgid "Key"
+msgstr "Clave"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__last_sync_date
@@ -641,6 +683,16 @@ msgid "Repeat expression"
 msgstr "Repetir expresión"
 
 #. module: base_edi_backend
+#: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__communication_type__sftp
+msgid "SFTP"
+msgstr "SFTP"
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid "SFTP transfer"
+msgstr "Transferencia SFTP"
+
+#. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__security_days
 msgid "Security days"
 msgstr "Días de seguridad"
@@ -675,6 +727,21 @@ msgstr "Secuencia del fichero"
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_communication_history_form
 msgid "Set no send"
 msgstr "Establecer a no enviado"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__sftp_host
+msgid "Sftp Host"
+msgstr "Servidor SFTP"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__sftp_password
+msgid "Sftp Password"
+msgstr "Constraseña SFTP"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__sftp_user
+msgid "Sftp User"
+msgstr "Usuario SFTP"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__special_domain
@@ -732,6 +799,8 @@ msgstr "Valor para SI"
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend__destination_partner_ids
 msgid "When mailing is enabled these will be the partners we'll communicate to"
 msgstr ""
+"Cuando se habilite el envío de correos, estos serán los socios a los que nos "
+"comunicaremos"
 
 #. module: base_edi_backend
 #: code:addons/base_edi_backend/wizard/edi_backend_file_wiz.py:0

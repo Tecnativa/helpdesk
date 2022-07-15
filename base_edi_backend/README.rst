@@ -27,6 +27,9 @@ Por hacer
 
 - Romper dependencias de l10n_aeat y publicar en OCA
 - Tests
+- Incluir exportación por sftp
+- Incluir importación por ftp
+- Bloquear importación por email
 
 Credits
 =======

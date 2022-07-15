@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 13:13+0000\n"
-"PO-Revision-Date: 2022-06-09 13:13+0000\n"
+"POT-Creation-Date: 2022-07-15 11:16+0000\n"
+"PO-Revision-Date: 2022-07-15 11:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,6 +27,11 @@ msgid "<span class=\"o_stat_text\">Cron</span>"
 msgstr ""
 
 #. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__action_type
+msgid "Action Type"
+msgstr ""
+
+#. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__active
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config__active
 msgid "Active"
@@ -35,6 +40,12 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__alignment
 msgid "Alignment"
+msgstr ""
+
+#. module: base_edi_backend
+#: code:addons/base_edi_backend/models/edi_backend.py:0
+#, python-format
+msgid "An error ocurred when trying to import file: %s"
 msgstr ""
 
 #. module: base_edi_backend
@@ -153,11 +164,14 @@ msgstr ""
 
 #. module: base_edi_backend
 #: code:addons/base_edi_backend/models/edi_backend.py:0
+#: code:addons/base_edi_backend/models/edi_backend.py:0
 #, python-format
 msgid "Connection Test Failed! %s"
 msgstr ""
 
 #. module: base_edi_backend
+#: code:addons/base_edi_backend/models/edi_backend.py:0
+#: code:addons/base_edi_backend/models/edi_backend.py:0
 #: code:addons/base_edi_backend/models/edi_backend.py:0
 #: code:addons/base_edi_backend/models/edi_backend.py:0
 #, python-format
@@ -283,10 +297,9 @@ msgid "EDI Backend mixin for records"
 msgstr ""
 
 #. module: base_edi_backend
-#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend
-#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend
 #: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_setting
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_import_tree
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_tree
 msgid "Edi Backend"
 msgstr ""
@@ -294,6 +307,18 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_export_config
 msgid "Edi Backend Configuration"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend
+#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend
+msgid "Edi Backend Export"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend_import
+#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_import
+msgid "Edi Backend Import"
 msgstr ""
 
 #. module: base_edi_backend
@@ -313,6 +338,7 @@ msgid "Errors"
 msgstr ""
 
 #. module: base_edi_backend
+#: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__action_type__export
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
 msgid "Export"
 msgstr ""
@@ -364,6 +390,7 @@ msgstr ""
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__ftp_file_special_name
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__sftp_file_special_name
 msgid "File Special Name"
 msgstr ""
 
@@ -376,6 +403,7 @@ msgstr ""
 
 #. module: base_edi_backend
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend__ftp_file_special_name
+#: model:ir.model.fields,help:base_edi_backend.field_edi_backend__sftp_file_special_name
 msgid "File will allways be synced with this name"
 msgstr ""
 
@@ -459,6 +487,17 @@ msgid ""
 msgstr ""
 
 #. module: base_edi_backend
+#: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__action_type__import
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid "Import"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__import_config_id
+msgid "Import config"
+msgstr ""
+
+#. module: base_edi_backend
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend_mixin__backend_state_base
 msgid "Indicates the state of the Backend send state"
 msgstr ""
@@ -466,6 +505,11 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend_communication_history__state
 msgid "Indicates the state of the Export send state"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__key
+msgid "Key"
 msgstr ""
 
 #. module: base_edi_backend
@@ -632,6 +676,16 @@ msgid "Repeat expression"
 msgstr ""
 
 #. module: base_edi_backend
+#: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__communication_type__sftp
+msgid "SFTP"
+msgstr ""
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid "SFTP transfer"
+msgstr ""
+
+#. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__security_days
 msgid "Security days"
 msgstr ""
@@ -665,6 +719,21 @@ msgstr ""
 #. module: base_edi_backend
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_communication_history_form
 msgid "Set no send"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__sftp_host
+msgid "Sftp Host"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__sftp_password
+msgid "Sftp Password"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__sftp_user
+msgid "Sftp User"
 msgstr ""
 
 #. module: base_edi_backend
