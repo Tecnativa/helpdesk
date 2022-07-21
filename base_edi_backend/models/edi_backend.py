@@ -217,7 +217,7 @@ class EdiBackend(models.Model):
         return domain
 
     def get_anonymize_domain(self):
-        return safe_eval(self.anonymized_domain)
+        return safe_eval(self.anonymized_domain or "[]")
 
     def _get_anonymized_records(self):
         anonymized_records = []
