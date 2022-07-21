@@ -201,6 +201,17 @@ class EdiBackendFileWiz(models.TransientModel):
             contents += self._export_line_process(obj, line)
         return contents
 
+    def _get_vals_for_safe_eval(self, object):
+        return {
+            "user": self.env.user,
+            "object": object,
+            "context": self.env.context.copy(),
+            "today": fields.Date.today(),
+            "format_date": self.format_custom_date,
+            "format_date_sp": self.format_custom_date_sp,
+            "format_hour": self.format_custom_hour,
+        }
+
     # Modify to include date functions
     def _export_line_process(self, obj, line):
         # usar esta variable para resolver las expresiones
@@ -210,19 +221,7 @@ class EdiBackendFileWiz(models.TransientModel):
             especific_obj = obj_merge
             if not isinstance(obj_merge, dict):
                 especific_obj = obj_merge.with_context(self.env.context)
-            return safe_eval(
-                exp,
-                {
-                    "user": self.env.user,
-                    "object": especific_obj,
-                    # copy context to prevent side-effects of eval
-                    "context": self.env.context.copy(),
-                    "today": fields.Date.today(),
-                    "format_date": self.format_custom_date,
-                    "format_date_sp": self.format_custom_date_sp,
-                    "format_hour": self.format_custom_hour,
-                },
-            )
+            return safe_eval(exp, self._get_vals_for_safe_eval(especific_obj),)
 
         def merge(match):
             exp = str(match.group()[2:-1]).strip()
@@ -249,7 +248,8 @@ class EdiBackendFileWiz(models.TransientModel):
                 if not isinstance(obj_merge, dict):
                     anonymized = (
                         line.anonymize_value
-                        and obj_merge.id in self.env.context.get("anonymized_records", [])
+                        and obj_merge.id
+                        in self.env.context.get("anonymized_records", [])
                     )
                 record = self._export_simple_record(
                     line,
