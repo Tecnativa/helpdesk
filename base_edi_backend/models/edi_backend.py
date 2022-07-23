@@ -5,8 +5,8 @@ import base64
 import json
 import logging
 from io import BytesIO
-import pysftp
 
+import pysftp
 from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, exceptions, fields, models
@@ -43,10 +43,13 @@ class EdiBackend(models.Model):
     # The module will work as it is. However, some providers might override some things
     provider = fields.Selection(selection=[("base", "Generic")], required=True)
     communication_type = fields.Selection(
-        selection=[("ftp", "FTP"), ("sftp", "SFTP"), ("email", "E-Mail")], default="ftp", required=True,
+        selection=[("ftp", "FTP"), ("sftp", "SFTP"), ("email", "E-Mail")],
+        default="ftp",
+        required=True,
     )
     action_type = fields.Selection(
-        selection=[("export", "Export"), ("import", "Import")], default="export",
+        selection=[("export", "Export"), ("import", "Import")],
+        default="export",
         required=True,
     )
     register_record_state = fields.Boolean(
@@ -61,14 +64,10 @@ class EdiBackend(models.Model):
         string="Last Export", default="2000-01-01 00:00:00"
     )
     export_config_id = fields.Many2one(
-        comodel_name="edi.backend.config",
-        string="Export config",
-        ondelete="cascade",
+        comodel_name="edi.backend.config", string="Export config", ondelete="cascade",
     )
     import_config_id = fields.Many2one(
-        comodel_name="edi.backend.config",
-        string="Import config",
-        ondelete="cascade",
+        comodel_name="edi.backend.config", string="Import config", ondelete="cascade",
     )
     model_id = fields.Many2one(comodel_name="ir.model", string="Odoo model",)
     filter_domain = fields.Char(string="Apply on")
@@ -197,15 +196,17 @@ class EdiBackend(models.Model):
             file = base64.b64decode(history.data)
         else:
             file = base64.b64decode(self.data)
-        file_string = file.decode('utf-8')
-        file_array = file_string.split('\n')
+        file_string = file.decode("utf-8")
+        file_array = file_string.split("\n")
         lines_config = self.import_config_id.config_line_ids
         for item in file_array:
             if not item:
                 continue
             vals = {}
             for config in lines_config:
-                vals[config.key] = item[config.position - 1:config.position + config.size - 1]
+                vals[config.key] = item[
+                    config.position - 1 : config.position + config.size - 1
+                ]
             if vals:
                 vals_list.append(vals)
         return vals_list

@@ -20,5 +20,6 @@
         "views/edi_backend_view.xml",
         "views/edi_backend_communication_history_view.xml",
         "views/edi_backend_menu.xml",
+        "views/product_template_view.xml",
     ],
 }
