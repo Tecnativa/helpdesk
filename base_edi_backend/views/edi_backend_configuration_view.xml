@@ -50,6 +50,9 @@
             <field name="conditional" position="after">
                 <field name="anonymize_value" widget="boolean_toggle"/>
             </field>
+            <field name="value" position="after">
+                <field name="key" optional="hide"/>
+            </field>
         </field>
     </record>
     <record id="edi_backend_config_line_form" model="ir.ui.view">
@@ -69,6 +72,9 @@
             </field>
             <field name="size" position="after">
                 <field name="apply_separator_char" />
+            </field>
+            <field name="fixed_value" position="after">
+                <field name="key"/>
             </field>
         </field>
     </record>

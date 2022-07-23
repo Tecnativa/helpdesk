@@ -10,13 +10,21 @@
     id="menu_edi_backend"
     parent="menu_edi_backend_setting"
     action="action_edi_backend"
-    name="Edi Backend"
+    name="Edi Backend Export"
+    sequence="10"
+  />
+    <menuitem
+    id="menu_edi_backend_import"
+    parent="menu_edi_backend_setting"
+    action="action_edi_backend_import"
+    name="Edi Backend Import"
+    sequence="20"
   />
     <menuitem
     id="menu_edi_backend_export_config"
     parent="menu_edi_backend_setting"
     action="action_edi_backend_config"
     name="Edi Backend Configuration"
-    sequence="10"
+    sequence="30"
   />
 </odoo>

@@ -11,7 +11,7 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "external_dependencies": {"python": ["xlrd", "openupgradelib"]},
+    "external_dependencies": {"python": ["xlrd", "pysftp", "openupgradelib"]},
     "depends": ["base_edi", "queue_job", "l10n_es_aeat"],  # TODO: Break dependency
     "data": [
         "security/ir.model.access.csv",
