@@ -313,10 +313,8 @@ class EdiBackendFileWiz(models.TransientModel):
         if not line.export_config_id.columns_definition == "separator":
             return line.size
         line_size = line.size
-        if not val:
-            return 0
         if line.export_type in ["string", "alphabetic"]:
-            line_size = len(val)
+            line_size = len(val or "")
         if line.export_type in ["integer", "float"]:
             len_int_part = len(str(abs(int(float(val or 0)))))
             sign = line.negative_sign if float(val or 0) < 0.0 else line.positive_sign
