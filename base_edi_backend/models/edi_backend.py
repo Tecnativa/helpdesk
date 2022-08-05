@@ -517,7 +517,7 @@ class EdiBackend(models.Model):
 
     def _prepare_mail_values(self, file, file_name):
         return {
-            "author_id": self.email_author.id,
+            "email_from": self.email_author.email,
             "recipient_ids": [(4, p.id) for p in self.destination_partner_ids],
             "subject": "Exportation of {}".format(file_name),
             "body_html": """
