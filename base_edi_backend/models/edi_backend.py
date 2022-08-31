@@ -196,7 +196,7 @@ class EdiBackend(models.Model):
             file = base64.b64decode(history.data)
         else:
             file = base64.b64decode(self.data)
-        file_string = file.decode("utf-8")
+        file_string = file.decode("iso-8859-15")
         file_array = file_string.split("\n")
         lines_config = self.import_config_id.config_line_ids
         for item in file_array:
@@ -204,9 +204,8 @@ class EdiBackend(models.Model):
                 continue
             vals = {}
             for config in lines_config:
-                vals[config.key] = item[
-                    config.position - 1 : config.position + config.size - 1
-                ]
+                value = item[config.position - 1 : config.position + config.size - 1]
+                vals[config.key] = value
             if vals:
                 vals_list.append(vals)
         return vals_list
