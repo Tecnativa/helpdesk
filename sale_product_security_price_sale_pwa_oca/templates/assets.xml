@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+    id="assets_backend"
+    name="Web Widget One2Many Product Picker Sale Product Security Price - Backend Assets"
+    inherit_id="web.assets_backend"
+  >
+        <xpath expr="." position="inside">
+            <script
+        type="text/javascript"
+        src="/sale_product_security_price_sale_pwa_oca/static/src/js/views/One2ManyProductPicker/quick_modif_price_form_view.js"
+      />
+            <script
+        type="text/javascript"
+        src="/sale_product_security_price_sale_pwa_oca/static/src/js/views/One2ManyProductPicker/record.js"
+      />
+        </xpath>
+    </template>
+    <template
+    id="_assets_backend_helpers"
+    inherit_id="web_widget_one2many_product_picker._assets_backend_helpers"
+  >
+        <xpath expr="." position="inside">
+            <link
+        type="text/css"
+        rel="stylesheet"
+        href="/sale_product_security_price_sale_pwa_oca/static/src/scss/_variables.scss"
+      />
+        </xpath>
+    </template>
+</odoo>

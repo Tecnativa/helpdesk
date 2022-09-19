@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_pwa_oca.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+        expr="//field[hasclass('sale_form_product_picker')]/form"
+        position="inside"
+      >
+                <field name="order_partner_security_price_control" invisible="1" />
+                <field name="product_security_price_control" invisible="1" />
+                <field name="security_price" invisible="1" />
+                <field name="security_price_warning" invisible="1" />
+                <field name="price_reduce" invisible="1" />
+                <button
+          name="rise_up_to_security_price"
+          type="js"
+          icon="fa-long-arrow-up btn-success rounded"
+          class="mb-2"
+          title="Raise unit price to product security price"
+          aria-label="Raise unit price to product security price"
+          invisible="1"
+        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

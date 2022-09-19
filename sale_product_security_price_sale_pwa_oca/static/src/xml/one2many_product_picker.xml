@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+    <t t-name="One2ManyProductPicker.SaleProductSecurityPrice.Button">
+        <button
+      type="button"
+      id="rise_up_to_security_price"
+      title="Raise unit price to product security price"
+      aria-label="Raise unit price to product security price"
+      class="btn o_icon_button"
+    >
+                <i
+        class="fa fa-fw o_button_icon fa-long-arrow-up btn-success rounded"
+      />
+        </button>
+    </t>
+</template>

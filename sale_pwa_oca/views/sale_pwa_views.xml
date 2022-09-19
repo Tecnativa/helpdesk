@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="priority">9999</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <!-- All fields are invisible by default + no chatter + no sheet-->
+            <xpath expr="//form[hasclass('o_sale_order')]" position="attributes">
+                <attribute
+          name="class"
+          separator=" "
+          add="oe_pwa_standalone_invisible oe_pwa_standalone_no_chatter oe_pwa_standalone_no_sheet"
+        />
+            </xpath>
+
+            <!-- Set fields omitted in standalone -->
+            <field name="order_line" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_omit" />
+            </field>
+
+            <!-- Add standalone fields -->
+            <xpath expr="//notebook" position="after">
+                <field
+          name="order_line"
+          attrs="{'readonly': [('state', 'in', ('done','cancel'))], 'invisible': [('partner_id', '=', False)]}"
+          nolabel="1"
+          mode="form"
+          class="oe_pwa_standalone_visible oe_pwa_standalone_only sale_form_product_picker"
+          widget="one2many_product_picker"
+          context="{'product_picker': True, 'sale_order_partner_id': partner_id, 'sale_order_partner_shipping_id': partner_shipping_id, 'default_product_uom_qty': 0, 'pwa_force_online': True}"
+          options="{
+                        'edit_discount': True,
+                        'show_discount': True,
+                        'edit_price': False,
+                        'all_domain': [['sale_ok', '=', True]],
+                        'search': [
+                            {'name': _('Contains'), 'name_search_value': '$search' },
+                            {'name': _('Starts With'), 'operator': '=ilike', 'name_search_value': '$search%'},
+                            {'name': _('Category'), 'domain': [('categ_name', 'ilike', '$search')]}
+                        ],
+                        'groups': [
+                            {'name': 'product_history', 'string': _('History'), 'domain': [('sale_order_partner_id_product', '=', True), ('sale_ok', '=', True)], 'order': [{'name': 'categ_id'}], 'records_per_page': 25},
+                            {'name': 'product_history_shipping', 'string': _('History (Shipping)'), 'domain': [('sale_order_partner_id_product', '=', True), ('sale_ok', '=', True)], 'order': [{'name': 'categ_id'}], 'records_per_page': 25}
+                        ]
+                    }"
+        >
+                    <form>
+                        <field name="state" invisible="1" />
+                        <field name="display_type" invisible="1" />
+                        <field name="currency_id" invisible="1" />
+                        <field name="company_id" invisible="1" />
+                        <field
+              name="discount"
+              widget="numeric_step"
+              options="{'max': 100, 'auto_select': 1}"
+              invisible="1"
+            />
+                        <field
+              name="price_unit"
+              widget="numeric_step"
+              options="{'auto_select': 1}"
+              invisible="1"
+            />
+                        <field name="name" invisible="1" />
+                        <field name="product_id" invisible="1" />
+                        <field name="order_id" invisible="1" />
+                        <field name="product_uom_category_id" invisible="1" />
+                        <field
+              name="product_uom_qty"
+              class="mb-1"
+              widget="numeric_step"
+              context="{
+                            'partner_id': parent.partner_id,
+                            'quantity': product_uom_qty,
+                            'pricelist': parent.pricelist_id,
+                            'uom': product_uom,
+                            'company_id': parent.company_id,
+                        }"
+            />
+                        <field
+              name="product_uom"
+              force_save="1"
+              attrs="{
+                            'readonly': [('state', 'in', ('sale','done', 'cancel'))],
+                            'required': [('display_type', '=', False)],
+                        }"
+              context="{'company_id': parent.company_id}"
+              class="mb-2"
+              groups="uom.group_uom"
+              options="{'no_open': True, 'no_create': True, 'no_edit': True}"
+            />
+                    </form>
+                </field>
+                <field
+          name="note"
+          nolabel="1"
+          class="oe_pwa_standalone_visible oe_pwa_standalone_only"
+          placeholder="Terms and conditions..."
+        />
+            </xpath>
+            <xpath expr="//sheet/group[1]/group[1]" position="before">
+                <field name="type_id" invisible="1" />
+                <field
+          name="date_order"
+          class="oe_pwa_standalone_visible oe_pwa_standalone_only"
+          groups="base.group_no_one"
+          attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"
+        />
+                <field
+          name="date_order"
+          class="oe_pwa_standalone_visible oe_pwa_standalone_only"
+          attrs="{'required': [('state', 'in', ['sale', 'done'])], 'invisible': [('state', 'in', ['draft', 'sent'])]}"
+        />
+            </xpath>
+
+            <!-- Apply standalone modifiers -->
+            <xpath expr="//sheet/group[1]" position="attributes">
+                <attribute name="standalone-attrs">{"col": "1"}</attribute>
+            </xpath>
+
+            <!-- Make fields visible -->
+            <xpath expr="//group/field[@name='partner_id']" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute name="default_focus">1</attribute>
+            </xpath>
+            <xpath
+        expr="//group/field[@name='partner_invoice_id']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//group/field[@name='partner_shipping_id']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath expr="//group/field[@name='pricelist_id']" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+            <xpath expr="//group/field[@name='currency_id']" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+            <xpath expr="//group/field[@name='payment_term_id']" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+            <xpath expr="//form/header/field[@name='state']" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//form/header/button[@name='action_confirm'][1]"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//form/header/button[@name='action_confirm'][2]"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//form/header/button[@name='action_cancel']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//form/header/button[@name='action_draft']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//group[@name='sales_person']/field[@name='company_id']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+            <xpath
+        expr="//group[@name='sales_person']/field[@name='user_id']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+            <xpath
+        expr="//group[@name='sales_person']/field[@name='require_signature']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+            <xpath
+        expr="//group[@name='sale_info']/field[@name='fiscal_position_id']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+            <xpath
+        expr="//group[@name='sale_info']/field[@name='invoice_status']"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="attributes">
+                <attribute
+          name="standalone-attrs"
+        >{"modifiers": { "invisible": true }}</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

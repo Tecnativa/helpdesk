@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="partner_priority_custom.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+        expr="//div[@name='partner_priority_div']/label"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//div[@name='partner_priority_div']/span[1]"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//div[@name='partner_priority_div']/span[2]"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath
+        expr="//div[@name='partner_priority_div']/field"
+        position="attributes"
+      >
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

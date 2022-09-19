@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="sale_order_form_tier" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_tier_validation.sale_order_form_tier" />
+        <field name="arch" type="xml">
+            <button name="request_validation" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </button>
+            <button name="restart_validation" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </button>
+            <xpath expr="//div[@role='alert'][1]" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath expr="//div[@role='alert'][1]/p" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath expr="//div[@role='alert'][2]" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath expr="//div[@role='alert'][2]/p" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath expr="//div[@role='alert'][3]" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath expr="//div[@role='alert'][3]/p" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+            <xpath expr="//field[@name='review_ids']" position="attributes">
+                <attribute name="class" separator=" " add="oe_pwa_standalone_visible" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
