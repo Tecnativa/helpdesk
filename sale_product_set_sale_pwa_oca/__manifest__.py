@@ -9,7 +9,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
-    "depends": ["web_pwa_oca", "sale_order_product_recommendation"],
+    "depends": ["web_pwa_oca", "sale_product_set"],
     "data": ["views/sale_pwa_views.xml"],
     "installable": True,
     "auto_install": False,
