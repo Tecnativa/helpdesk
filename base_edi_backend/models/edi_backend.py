@@ -585,7 +585,7 @@ class EdiBackendCommunicationHistory(models.Model):
         copy=False,
         help="Indicates the state of the Export send state",
     )
-    model_name = fields.Char(related="edi_backend_id.model_name", readonly=True,)
+    model_name = fields.Char(related="edi_backend_id.model_id.model", readonly=True,)
     applied_domain = fields.Char()
     applied_records = fields.Char()
     applied_sequence = fields.Char()
