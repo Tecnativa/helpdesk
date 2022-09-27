@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-15 11:16+0000\n"
-"PO-Revision-Date: 2022-07-15 13:21+0200\n"
+"POT-Creation-Date: 2022-09-27 09:54+0000\n"
+"PO-Revision-Date: 2022-09-27 11:56+0200\n"
 "Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -30,7 +30,15 @@ msgstr "<span class=\"o_stat_text\">Planificador</span>"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__action_type
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_communication_history__action_type
 msgid "Action Type"
+msgstr "Tipo de acción"
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_search
+#, fuzzy
+#| msgid "Action Type"
+msgid "Action type"
 msgstr "Tipo de acción"
 
 #. module: base_edi_backend
@@ -107,6 +115,11 @@ msgid "Apply sign"
 msgstr "Aplicar signo"
 
 #. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.product_template_form_view
+msgid "Backend info"
+msgstr "Información del backend"
+
+#. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_mixin__backend_state_base
 msgid "Backend state"
 msgstr "Estado del backend"
@@ -163,6 +176,11 @@ msgstr "Expresión condicional"
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__export_config_id
 msgid "Config parent"
 msgstr "Configuración padre"
+
+#. module: base_edi_backend
+#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_export_config
+msgid "Configuration"
+msgstr "Configuración"
 
 #. module: base_edi_backend
 #: code:addons/base_edi_backend/models/edi_backend.py:0
@@ -295,29 +313,13 @@ msgid "EDI Backend mixin for records"
 msgstr ""
 
 #. module: base_edi_backend
+#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend
 #: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_setting
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_import_tree
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_tree
 msgid "Edi Backend"
 msgstr "Backend"
-
-#. module: base_edi_backend
-#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_export_config
-msgid "Edi Backend Configuration"
-msgstr "Configuración del backend"
-
-#. module: base_edi_backend
-#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend
-#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend
-msgid "Edi Backend Export"
-msgstr "Backend de exportación"
-
-#. module: base_edi_backend
-#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend_import
-#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_import
-msgid "Edi Backend Import"
-msgstr "Backend de importación"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__email_author
@@ -338,6 +340,7 @@ msgstr "Errores"
 #. module: base_edi_backend
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__action_type__export
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_search
 msgid "Export"
 msgstr "Exportar"
 
@@ -380,6 +383,15 @@ msgstr "Transferencia FTP"
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__size
 msgid "Field size"
 msgstr "Tamaño"
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid ""
+"Field used to search on the server the files that start by\n"
+"                            this name"
+msgstr ""
+"Campo usado para buscar en el servidor los archivos que empiezan por\n"
+"                            este nombre"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_file_wiz__data
@@ -492,6 +504,7 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__action_type__import
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_search
 msgid "Import"
 msgstr "Importar"
 
@@ -499,6 +512,11 @@ msgstr "Importar"
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__import_config_id
 msgid "Import config"
 msgstr "Configuración de importación"
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_communication_history_form
+msgid "Import from file"
+msgstr "Importar desde archivo"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,help:base_edi_backend.field_edi_backend_mixin__backend_state_base
@@ -565,8 +583,12 @@ msgid "Lines"
 msgstr "Líneas"
 
 #. module: base_edi_backend
-#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__model_name
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_communication_history__model_name
+msgid "Model"
+msgstr "Modelo"
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__model_name
 msgid "Model Name"
 msgstr "Nombre del modelo"
 
@@ -657,10 +679,8 @@ msgstr "Regenerar"
 
 #. module: base_edi_backend
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
-#, fuzzy
-#| msgid "Applied Records"
 msgid "Records"
-msgstr "Registros afectados"
+msgstr "Registros"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__register_record_state
@@ -706,7 +726,7 @@ msgstr "Enviado"
 #. module: base_edi_backend
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend_config__columns_definition__separator
 msgid "Separator"
-msgstr "Separador:"
+msgstr "Separador"
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config__separator_char
@@ -823,3 +843,12 @@ msgstr "obtener"
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend_file_wiz__state__open
 msgid "open"
 msgstr "abierto"
+
+#~ msgid "Edi Backend Configuration"
+#~ msgstr "Configuración del backend"
+
+#~ msgid "Edi Backend Export"
+#~ msgstr "Backend de exportación"
+
+#~ msgid "Edi Backend Import"
+#~ msgstr "Backend de importación"

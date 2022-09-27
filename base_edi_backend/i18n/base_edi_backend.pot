@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-15 11:16+0000\n"
-"PO-Revision-Date: 2022-07-15 11:16+0000\n"
+"POT-Creation-Date: 2022-09-27 09:54+0000\n"
+"PO-Revision-Date: 2022-09-27 09:54+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,13 @@ msgstr ""
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__action_type
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_communication_history__action_type
 msgid "Action Type"
+msgstr ""
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_search
+msgid "Action type"
 msgstr ""
 
 #. module: base_edi_backend
@@ -105,6 +111,11 @@ msgid "Apply sign"
 msgstr ""
 
 #. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.product_template_form_view
+msgid "Backend info"
+msgstr ""
+
+#. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_mixin__backend_state_base
 msgid "Backend state"
 msgstr ""
@@ -160,6 +171,11 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__export_config_id
 msgid "Config parent"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_export_config
+msgid "Configuration"
 msgstr ""
 
 #. module: base_edi_backend
@@ -297,28 +313,12 @@ msgid "EDI Backend mixin for records"
 msgstr ""
 
 #. module: base_edi_backend
+#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend
 #: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_setting
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_import_tree
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_tree
 msgid "Edi Backend"
-msgstr ""
-
-#. module: base_edi_backend
-#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_export_config
-msgid "Edi Backend Configuration"
-msgstr ""
-
-#. module: base_edi_backend
-#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend
-#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend
-msgid "Edi Backend Export"
-msgstr ""
-
-#. module: base_edi_backend
-#: model:ir.actions.act_window,name:base_edi_backend.action_edi_backend_import
-#: model:ir.ui.menu,name:base_edi_backend.menu_edi_backend_import
-msgid "Edi Backend Import"
 msgstr ""
 
 #. module: base_edi_backend
@@ -340,6 +340,7 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__action_type__export
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_search
 msgid "Export"
 msgstr ""
 
@@ -381,6 +382,13 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_config_line__size
 msgid "Field size"
+msgstr ""
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+msgid ""
+"Field used to search on the server the files that start by\n"
+"                            this name"
 msgstr ""
 
 #. module: base_edi_backend
@@ -489,12 +497,18 @@ msgstr ""
 #. module: base_edi_backend
 #: model:ir.model.fields.selection,name:base_edi_backend.selection__edi_backend__action_type__import
 #: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_form
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_search
 msgid "Import"
 msgstr ""
 
 #. module: base_edi_backend
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__import_config_id
 msgid "Import config"
+msgstr ""
+
+#. module: base_edi_backend
+#: model_terms:ir.ui.view,arch_db:base_edi_backend.edi_backend_communication_history_form
+msgid "Import from file"
 msgstr ""
 
 #. module: base_edi_backend
@@ -562,8 +576,12 @@ msgid "Lines"
 msgstr ""
 
 #. module: base_edi_backend
-#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__model_name
 #: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend_communication_history__model_name
+msgid "Model"
+msgstr ""
+
+#. module: base_edi_backend
+#: model:ir.model.fields,field_description:base_edi_backend.field_edi_backend__model_name
 msgid "Model Name"
 msgstr ""
 
