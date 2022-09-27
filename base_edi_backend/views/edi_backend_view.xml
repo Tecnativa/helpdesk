@@ -4,19 +4,10 @@
         <field name="model">edi.backend</field>
         <field name="arch" type="xml">
             <tree string="Edi Backend">
+                <field name="action_type" />
                 <field name="name" />
                 <field name="last_sync_date" />
                 <field name="export_config_id" />
-            </tree>
-        </field>
-    </record>
-    <record id="edi_backend_import_tree" model="ir.ui.view">
-        <field name="model">edi.backend</field>
-        <field name="arch" type="xml">
-            <tree string="Edi Backend">
-                <field name="name" />
-                <field name="last_sync_date" />
-                <field name="import_config_id" />
             </tree>
         </field>
     </record>
