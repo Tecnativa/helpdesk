@@ -4,19 +4,10 @@
         <field name="model">edi.backend</field>
         <field name="arch" type="xml">
             <tree string="Edi Backend">
+                <field name="action_type" />
                 <field name="name" />
                 <field name="last_sync_date" />
                 <field name="export_config_id" />
-            </tree>
-        </field>
-    </record>
-    <record id="edi_backend_import_tree" model="ir.ui.view">
-        <field name="model">edi.backend</field>
-        <field name="arch" type="xml">
-            <tree string="Edi Backend">
-                <field name="name" />
-                <field name="last_sync_date" />
-                <field name="import_config_id" />
             </tree>
         </field>
     </record>
@@ -165,8 +156,32 @@
             </form>
         </field>
     </record>
+    <record model="ir.ui.view" id="edi_backend_search">
+        <field name="name">Edi Backend Search</field>
+        <field name="model">edi.backend</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <filter
+          string="Action type"
+          name="group_action_type"
+          context="{'group_by':'action_type'}"
+        />
+                <filter
+          name="export"
+          string="Export"
+          domain="[('action_type','=','export')]"
+        />
+                <filter
+          name="import"
+          string="Import"
+          domain="[('action_type','=','import')]"
+        />
+            </search>
+        </field>
+    </record>
     <record model="ir.actions.act_window" id="action_edi_backend">
-        <field name="name">Edi Backend Export</field>
+        <field name="name">Edi Backend</field>
         <field name="res_model">edi.backend</field>
         <field name="view_mode">tree,form</field>
         <field
@@ -176,21 +191,7 @@
             (0, 0, {'view_mode': 'tree', 'view_id': ref('base_edi_backend.edi_backend_tree')}),
             (0, 0, {'view_mode': 'form'})]"
     />
-        <field name="domain">[("action_type", "=", "export")]</field>
-        <field name="context">{"default_action_type": "export"}</field>
-    </record>
-    <record model="ir.actions.act_window" id="action_edi_backend_import">
-        <field name="name">Edi Backend Import</field>
-        <field name="res_model">edi.backend</field>
-        <field name="view_mode">tree,form</field>
-        <field
-      name="view_ids"
-      eval="[
-            (5, 0, 0),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('base_edi_backend.edi_backend_import_tree')}),
-            (0, 0, {'view_mode': 'form'})]"
-    />
-        <field name="domain">[("action_type", "=", "import")]</field>
-        <field name="context">{"default_action_type": "import"}</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
     </record>
 </odoo>
