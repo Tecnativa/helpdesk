@@ -66,7 +66,8 @@ odoo.define("web_widget_one2many_product_picker_edi_unilever.AbstractView", func
           string: _t("Agreement"),
           store: true,
           sortable: false,
-          readonly: false,
+          readonly: true,
+          invisible: true,
           type: "many2one",
         }),
       };
@@ -88,8 +89,10 @@ odoo.define("web_widget_one2many_product_picker_edi_unilever.AbstractView", func
           can_create: "true",
           can_write: "true",
           class: "mb-1",
-          attrs: "{'readonly': [('state', 'in', ('done', 'cancel'))]}",
-          modifiers: '{"readonly": [["state", "in", ["done", "cancel"]]]}',
+          invisible: 1,
+          force_save: "true",
+          attrs: '{"invisible": true, "readonly": true}',
+          modifiers: '{"invisible": true, "readonly": true}',
         }).appendTo($arch);
       }
       viewInfo.viewFields.order_line.views.form.arch = $arch[0].outerHTML;
