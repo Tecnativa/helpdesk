@@ -241,7 +241,14 @@ class EdiBackend(models.Model):
                     "numbercall": -1,
                 }
             )
-        ir_cron.write({"code": "model.browse({}).action_export_job()".format(self.id)})
+        if self.action_type == "export":
+            ir_cron.write(
+                {"code": "model.browse({}).action_export_job()".format(self.id)}
+            )
+        elif self.action_type == "import":
+            ir_cron.write(
+                {"code": "model.browse({}).action_import_job()".format(self.id)}
+            )
         action = self.env.ref("base.ir_cron_act").read()[0]
         if len(ir_cron) == 1:
             form = self.env.ref("base.ir_cron_view_form")
@@ -260,6 +267,9 @@ class EdiBackend(models.Model):
 
     def action_export_job(self):
         self.with_delay().action_export_run()
+
+    def action_import_job(self):
+        self.with_delay().action_import_run()
 
     def get_complete_domain(self):
         domain = safe_eval(self.filter_domain)
