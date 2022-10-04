@@ -34,6 +34,7 @@
                         'edit_discount': True,
                         'show_discount': True,
                         'edit_price': False,
+                        'auto_save': True,
                         'all_domain': [['sale_ok', '=', True]],
                         'search': [
                             {'name': _('Contains'), 'name_search_value': '$search' },
