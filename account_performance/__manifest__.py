@@ -3,11 +3,11 @@
 {
     "name": "Account performances",
     "summary": "Increase performance on account",
-    "version": "13.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Accounting",
     "website": "https://github.com/OCA/account-invoicing",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
     "depends": ["account"],
 }
