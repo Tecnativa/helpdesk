@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_production_lot_form" model="ir.ui.view">
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="model">stock.production.lot</field>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main_group']" position="after">
+                <group name="fishing_info_group" string="Fishing Extra Info">
+                    <field
+            name="fao_fishing_area_id"
+            options="{'no_create': True, 'no_open': True}"
+          />
+                    <field
+            name="fao_fishing_technique_id"
+            options="{'no_create': True, 'no_open': True}"
+          />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_production_lot_tree" model="ir.ui.view">
+        <field name="inherit_id" ref="stock.view_production_lot_tree" />
+        <field name="model">stock.production.lot</field>
+        <field name="arch" type="xml">
+            <field name="last_delivery_partner_id" position="after">
+                <field
+          name="fao_fishing_area_id"
+          options="{'no_create': True, 'no_open': True}"
+          optional="hide"
+        />
+                <field
+          name="fao_fishing_technique_id"
+          options="{'no_create': True, 'no_open': True}"
+          optional="hide"
+        />
+            </field>
+        </field>
+    </record>
+
+    <record id="search_product_lot_filter" model="ir.ui.view">
+        <field name="inherit_id" ref="stock.search_product_lot_filter" />
+        <field name="model">stock.production.lot</field>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="fao_fishing_area_id" />
+                <field name="fao_fishing_technique_id" />
+            </field>
+            <filter name="group_by_product" position="after">
+                <filter
+          name="group_by_fao_fishing_area"
+          string="Fishing Area"
+          context="{'group_by': 'fao_fishing_area_id'}"
+        />
+                <filter
+          name="group_by_fao_fishing_technique"
+          string="Fishing Technique"
+          context="{'group_by': 'fao_fishing_technique_id'}"
+        />
+            </filter>
+        </field>
+    </record>
+
+</odoo>
