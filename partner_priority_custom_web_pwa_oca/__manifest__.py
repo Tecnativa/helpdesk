@@ -12,6 +12,6 @@
     "license": "AGPL-3",
     "depends": ["web_pwa_oca", "partner_priority_custom"],
     "data": ["views/sale_pwa_views.xml"],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }

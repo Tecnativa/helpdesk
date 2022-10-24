@@ -12,6 +12,6 @@
     "depends": ["sale_product_security_price", "sale_pwa_oca"],
     "data": ["templates/assets.xml", "views/sale_pwa_views.xml"],
     "qweb": ["static/src/xml/one2many_product_picker.xml"],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }

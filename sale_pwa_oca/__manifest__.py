@@ -17,6 +17,6 @@
         "sale_order_type",
     ],
     "data": ["views/sale_pwa_views.xml"],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }

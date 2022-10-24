@@ -10,7 +10,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    "installable": False,
     "external_dependencies": {"python": ["xlrd", "pysftp", "openupgradelib"]},
     "depends": ["base_edi", "queue_job", "l10n_es_aeat"],  # TODO: Break dependency
     "data": [

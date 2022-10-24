@@ -11,6 +11,6 @@
     "license": "AGPL-3",
     "depends": ["web_widget_one2many_product_picker", "edi_unilever"],
     "data": ["templates/assets.xml"],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
 }
