@@ -76,9 +76,7 @@ class EdiBackend(models.Model):
         compute="_compute_special_domain", string="Special domain",
     )
     date_field = fields.Many2one(
-        comodel_name="ir.model.fields",
-        string="Date field to filter",
-        ondelete="restrict",
+        comodel_name="ir.model.fields", string="Date field to filter",
     )
     date_range = fields.Selection(
         selection=[("current_month", "Current Month"), ("last_month", "Last Month")],
@@ -249,7 +247,7 @@ class EdiBackend(models.Model):
             ir_cron.write(
                 {"code": "model.browse({}).action_import_job()".format(self.id)}
             )
-        action = self.env.ref("base.ir_cron_act").read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id("base.ir_cron_act")
         if len(ir_cron) == 1:
             form = self.env.ref("base.ir_cron_view_form")
             action["views"] = [(form.id, "form")]
@@ -259,9 +257,9 @@ class EdiBackend(models.Model):
         return action
 
     def action_communication_history(self):
-        action = self.env.ref(
-            "base_edi_backend." "action_edi_backend_communication_history"
-        ).read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "base_edi_backend.action_edi_backend_communication_history"
+        )
         action["domain"] = [("edi_backend_id", "=", self.id)]
         return action
 
