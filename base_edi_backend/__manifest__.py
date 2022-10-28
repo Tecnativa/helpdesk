@@ -3,14 +3,14 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "EDI Backend Base Module",
-    "version": "13.0.1.0.0",
+    "version": "15.0.1.0.0",
     "development_status": "Beta",
     "category": "Product",
     "website": "https://www.tecnativa.com",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
-    "installable": False,
+    "installable": True,
     "external_dependencies": {"python": ["xlrd", "pysftp", "openupgradelib"]},
     "depends": ["base_edi", "queue_job", "l10n_es_aeat"],  # TODO: Break dependency
     "data": [
