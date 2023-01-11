@@ -17,8 +17,7 @@
               options="{'no_create': True, 'no_open': True}"
             />
                         <field name="harvesting_id" />
-                        <field name="ship_name" />
-                        <field name="packaging_date" />
+                        <field name="fishing_ship_id" />
                     </group>
                     <group name="second_column">
                         <field name="country_id" />
@@ -27,6 +26,16 @@
                         <field name="presentation_id" />
                     </group>
                 </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_form_expiry" model="ir.ui.view">
+        <field name="inherit_id" ref="product_expiry.view_move_form_expiry" />
+        <field name="model">stock.production.lot</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='expiration_date']" position="before">
+                <field name="packaging_date" />
             </xpath>
         </field>
     </record>

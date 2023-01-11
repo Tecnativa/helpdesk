@@ -7,115 +7,108 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-11 21:46+0000\n"
-"PO-Revision-Date: 2023-01-11 22:48+0100\n"
-"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"PO-Revision-Date: 2023-01-11 21:46+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__caliber_id
 msgid "Caliber"
-msgstr "Calibre"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__country_id
 msgid "Country"
-msgstr "País"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_fishing_ship__create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_fishing_ship__create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__fao_fishing_area_id
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_info.search_product_lot_filter
 msgid "Fishing Area"
-msgstr "Zona de pesca"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_info.view_production_lot_form
 msgid "Fishing Extra Info"
-msgstr "Información adicional de pesca"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model,name:stock_production_lot_fishing_info.model_fishing_ship
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__fishing_ship_id
 msgid "Fishing Ship"
-msgstr "Barco de pesca"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__fao_fishing_technique_id
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_info.search_product_lot_filter
 msgid "Fishing Technique"
-msgstr "Forma de pesca"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__harvesting_id
 msgid "Harvesting Method"
-msgstr "Método de obtención"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_fishing_ship__id
 msgid "ID"
-msgstr "ID (Identificador)"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_fishing_ship____last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_fishing_ship__write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_fishing_ship__write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_fishing_ship__license_plate
 msgid "License Plate"
-msgstr "Matrícula"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model,name:stock_production_lot_fishing_info.model_stock_production_lot
 msgid "Lot/Serial"
-msgstr "Lote/Serie"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_fishing_ship__name
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__packaging_date
 msgid "Packaging Date"
-msgstr "Fecha de envasado"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__presentation_id
 msgid "Presentation"
-msgstr "Presentación"
+msgstr ""
 
 #. module: stock_production_lot_fishing_info
 #: model:ir.model.fields,field_description:stock_production_lot_fishing_info.field_stock_production_lot__quality
 msgid "Quality"
-msgstr "Calidad"
-
-#, fuzzy
-#~| msgid "Ship Name"
-#~ msgid "Display Name"
-#~ msgstr "Nombre del barco"
+msgstr ""

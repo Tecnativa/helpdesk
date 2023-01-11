@@ -58,7 +58,9 @@ class StockProductionLot(models.Model):
         store=True,
         string="Fishing Technique",
     )
-    ship_name = fields.Char()
+    fishing_ship_id = fields.Many2one(
+        comodel_name="fishing.ship", string="Fishing Ship"
+    )
     quality = fields.Char()
     packaging_date = fields.Datetime()
     presentation_id = fields.Many2one(
