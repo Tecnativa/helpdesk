@@ -7,14 +7,25 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='main_group']" position="after">
                 <group name="fishing_info_group" string="Fishing Extra Info">
-                    <field
-            name="fao_fishing_area_id"
-            options="{'no_create': True, 'no_open': True}"
-          />
-                    <field
-            name="fao_fishing_technique_id"
-            options="{'no_create': True, 'no_open': True}"
-          />
+                    <group name="first_column">
+                        <field
+              name="fao_fishing_area_id"
+              options="{'no_create': True, 'no_open': True}"
+            />
+                        <field
+              name="fao_fishing_technique_id"
+              options="{'no_create': True, 'no_open': True}"
+            />
+                        <field name="harvesting_id" />
+                        <field name="ship_name" />
+                        <field name="packaging_date" />
+                    </group>
+                    <group name="second_column">
+                        <field name="country_id" />
+                        <field name="caliber_id" widget="many2many_tags" />
+                        <field name="quality" />
+                        <field name="presentation_id" />
+                    </group>
                 </group>
             </xpath>
         </field>

@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Stock Production Lot Fishing Info",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.0.2",
     "development_status": "Beta",
     "category": "Inventory",
     "website": "https://www.tecnativa.com",
@@ -10,6 +10,12 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["product_fao_fishing", "stock"],
+    "depends": [
+        "product_fao_fishing",
+        "stock",
+        "product_attribute_value_range",
+        "product_expiry",
+        "product_fishing",
+    ],
     "data": ["views/stock_production_lot_view.xml"],
 }
