@@ -47,7 +47,7 @@ class ProductTemplate(models.Model):
         for template in self:
             template[field_name] = attribute_lines.filtered(
                 lambda att_line: att_line.product_tmpl_id == template
-            )
+            ).value_ids
 
     def _compute_harvesting_method_ids(self):
         self._set_attribute_values(
