@@ -15,35 +15,63 @@ class ProductTemplate(models.Model):
         comodel_name="product.attribute.value",
         compute="_compute_product_presentation_ids",
     )
+    gamma_ids = fields.Many2many(
+        comodel_name="product.attribute.value", compute="_compute_gamma_ids",
+    )
+    allergens_ids = fields.Many2many(
+        comodel_name="product.attribute.value", compute="_compute_allergens_ids"
+    )
+    production_method_ids = fields.Many2many(
+        comodel_name="product.attribute.value", compute="_compute_production_method_ids"
+    )
 
-    def _compute_harvesting_method_ids(self):
+    preservation_condition_ids = fields.Many2many(
+        comodel_name="product.attribute.value",
+        compute="_compute_preservation_condition_ids",
+    )
+
+    def _set_attribute_values(self, attribute_ref, field_name):
         """
         Helper method to retrieve the harvesting method from product attributes
         """
-        harvesting_method_attribute = self.env.ref(
-            "product_fishing.harvesting_method_attribute"
-        )
+        attribute = self.env.ref(attribute_ref)
         ptal_obj = self.env["product.template.attribute.line"]
+        attribute_lines = ptal_obj.search(
+            [("product_tmpl_id", "in", self.ids), ("attribute_id", "=", attribute.id)]
+        )
         for template in self:
-            attribute_line = ptal_obj.search(
-                [
-                    ("product_tmpl_id", "=", template.id),
-                    ("attribute_id", "=", harvesting_method_attribute.id),
-                ]
+            template[field_name] = attribute_lines.filtered(
+                lambda att_line: att_line.product_tmpl_id == template
             )
-            template.harvesting_method_ids = attribute_line.value_ids
+
+    def _compute_harvesting_method_ids(self):
+        self._set_attribute_values(
+            "product_fishing.harvesting_method_attribute", "harvesting_method_ids"
+        )
 
     def _compute_product_presentation_ids(self):
-        """
-        Helper method to retrieve the product presentation from product attributes
-        """
-        presentation_attribute = self.env.ref("product_fishing.presentation_attribute")
-        ptal_obj = self.env["product.template.attribute.line"]
-        for template in self:
-            attribute_line = ptal_obj.search(
-                [
-                    ("product_tmpl_id", "=", template.id),
-                    ("attribute_id", "=", presentation_attribute.id),
-                ]
-            )
-            template.presentation_ids = attribute_line.value_ids
+        self._set_attribute_values(
+            "product_fishing.presentation_attribute", "presentation_ids"
+        )
+
+    def _compute_gamma_ids(self):
+        self._set_attribute_values(
+            "product_fishing.product_gamma_attribute", "gamma_ids"
+        )
+
+    def _compute_allergens_ids(self):
+        self._set_attribute_values(
+            "product_fishing.product_allergens_attribute", "allergens_ids"
+        )
+
+    def _compute_production_method_ids(self):
+        self._set_attribute_values(
+            "product_fishing.product_production_method_attribute",
+            "production_method_ids",
+        )
+
+    def _compute_preservation_condition_ids(self):
+        self._set_attribute_values(
+            "product_fishing.product_preservation_condition_attribute",
+            "preservation_condition_ids",
+        )

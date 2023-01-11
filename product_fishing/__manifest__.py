@@ -10,5 +10,12 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["product"],
-    "data": ["data/product_harvesting_data.xml", "data/product_presentation_data.xml"],
+    "data": [
+        "data/product_allergen_data.xml",
+        "data/product_gamma_data.xml",
+        "data/product_harvesting_data.xml",
+        "data/product_presentation_data.xml",
+        "data/product_preservation_condition_data.xml",
+        "data/product_production_method_data.xml",
+    ],
 }
