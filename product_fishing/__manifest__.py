@@ -17,5 +17,6 @@
         "data/product_presentation_data.xml",
         "data/product_preservation_condition_data.xml",
         "data/product_production_method_data.xml",
+        "views/product_views.xml",
     ],
 }
