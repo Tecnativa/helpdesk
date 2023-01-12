@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-11 18:15+0000\n"
-"PO-Revision-Date: 2023-01-11 18:15+0000\n"
+"POT-Creation-Date: 2023-01-12 20:45+0000\n"
+"PO-Revision-Date: 2023-01-12 20:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_fishing.field_product_template__harvesting_method_ids
 #: model:product.attribute,name:product_fishing.harvesting_method_attribute
 msgid "Harvesting Method"
+msgstr ""
+
+#. module: product_fishing
+#: model:product.attribute,name:product_fishing.product_origin_country_attribute
+msgid "Origin country"
 msgstr ""
 
 #. module: product_fishing
