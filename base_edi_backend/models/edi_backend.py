@@ -213,12 +213,13 @@ class EdiBackend(models.Model):
 
     def create_cron(self):
         IrCron = self.env["ir.cron"]
-        name = "EDI Backend {}"
         if self.provider != "base":
             name = "[{}] EDI Backend {}".format(self.provider.upper(), self.name)
         else:
             name = "EDI Backend {}".format(self.name)
-        ir_cron = IrCron.with_context(active_test=False).search([("name", "=", name)])
+        ir_cron = IrCron.with_context(active_test=False).search(
+            [("edi_backend_id", "=", self.id)]
+        )
         if not ir_cron:
             ir_cron = self.env["ir.cron"].create(
                 {
@@ -228,6 +229,7 @@ class EdiBackend(models.Model):
                     "interval_number": 1,
                     "interval_type": "weeks",
                     "numbercall": -1,
+                    "edi_backend_id": self.id,
                 }
             )
         if self.action_type == "export":
