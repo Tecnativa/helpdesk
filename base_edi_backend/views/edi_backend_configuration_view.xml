@@ -49,6 +49,7 @@
             </field>
             <field name="conditional" position="after">
                 <field name="anonymize_value" widget="boolean_toggle" />
+                <field name="allow_special_character" widget="boolean_toggle" />
             </field>
             <field name="value" position="after">
                 <field name="key" optional="hide" />

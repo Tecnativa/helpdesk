@@ -48,3 +48,4 @@ class EdiBackendConfigLine(models.Model):
     apply_separator_char = fields.Boolean(default=True)
     anonymize_value = fields.Boolean()
     key = fields.Char()
+    allow_special_character = fields.Boolean()
