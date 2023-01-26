@@ -103,6 +103,7 @@ class EdiBackend(models.Model):
     anonymize_entries = fields.Boolean()
     anonymized_domain = fields.Char()
     char_for_anonymize = fields.Char(default="x", size=1)
+    notes = fields.Html()
 
     @api.depends("date_field", "date_range", "last_sync_date", "security_days")
     def _compute_special_domain(self):
@@ -275,6 +276,30 @@ class EdiBackend(models.Model):
             anonymized_records = self.env[self.model_name].search(domain).ids
         return anonymized_records
 
+    def _get_file_wiz_context(self, sequence_file, anonymized_records):
+        return {
+            "active_model": self._name,
+            "active_id": self.id,
+            "today": fields.Date.today(),
+            "sequence_file": sequence_file,
+            "anonymized_records": anonymized_records,
+            "anonymize_char": self.char_for_anonymize,
+        }
+
+    def _get_export_data(self, domain, records, anonymized_records, sequence_file):
+        WizExport = self.env["edi.backend.file.wiz"]
+        ctx = self._get_file_wiz_context(sequence_file, anonymized_records)
+        vals = {"name": "File {}".format(self.name)}
+        wiz_export = WizExport.with_context(**ctx).create(vals)
+        contents = b""
+        contents += wiz_export.with_context(
+            applied_domain=domain
+        ).action_get_file_from_config(self)
+        # Generate the file and save as attachment
+        file = base64.b64encode(contents)
+        file_name = self._get_backend_filename(contents, sequence_file, records)
+        return contents, file, file_name
+
     def action_export_run(self, history_line=False):
         if not self.export_config_id:
             raise exceptions.UserError(_("No export configuration selected."))
@@ -293,28 +318,17 @@ class EdiBackend(models.Model):
             and history_line.applied_sequence
             or self.sequence_id.next_by_id()
         )
-        WizExport = self.env["edi.backend.file.wiz"]
-        wiz_export = WizExport.with_context(
-            active_model=self._name,
-            active_id=self.id,
-            today=fields.Date.today(),
-            sequence_file=sequence_file,
-            anonymized_records=anonymized_records,
-            anonymize_char=self.char_for_anonymize,
-        ).create({"name": "File {}".format(self.name)})
-        contents = b""
-        contents += wiz_export.with_context(
-            applied_domain=domain
-        ).action_get_file_from_config(self)
-        # Generate the file and save as attachment
-        file = base64.b64encode(contents)
-        file_name = self._get_backend_filename(contents, sequence_file, records)
+        contents, file, file_name = self._get_export_data(
+            domain, records, anonymized_records, sequence_file,
+        )
         if not history_line:
             self.write(
                 {
                     "data": file,
                     "file_name": file_name,
-                    "last_sync_date": self.security_days or now,
+                    "last_sync_date": self.security_days
+                    and self.get_relative_date()
+                    or now,
                 }
             )
         # When adding an extra sending option, we'll add the proper method
@@ -588,6 +602,8 @@ class EdiBackendCommunicationHistory(models.Model):
     data = fields.Binary(string="Last File", attachment=True, readonly=True)
     file_name = fields.Char(string="File name")
     action_type = fields.Selection(related="edi_backend_id.action_type")
+    active = fields.Boolean(default=True)
+    notes = fields.Html()
 
     def get_applied_records(self):
         """

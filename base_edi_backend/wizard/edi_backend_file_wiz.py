@@ -60,10 +60,10 @@ class EdiBackendFileWiz(models.TransientModel):
         elif align == ">":
             ascii_string = ascii_string.rjust(length, ascii_fill)
         else:
-            assert False, _("Wrong aling option. It should be < or >")  # noqa: B011
+            assert False, _("Wrong align option. It should be < or >")  # noqa: B011
         # Sanity-check
         assert len(ascii_string) == length, _(
-            "The formated string must match the given length: %s" % (ascii_string)
+            "The formated string must match the given length: %s", ascii_string
         )
         # Return string
         return ascii_string
