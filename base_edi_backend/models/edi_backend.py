@@ -17,16 +17,6 @@ try:
     import ftplib
 except ImportError:
     _logger.debug("Cannot import ftplib")
-try:
-    from odoo.addons.queue_job.job import job
-except ImportError:
-    _logger.debug("Can not `import queue_job`.")
-    import functools
-
-    def empty_decorator_factory(*argv, **kwargs):
-        return functools.partial
-
-    job = empty_decorator_factory
 
 
 class EdiBackend(models.Model):
@@ -285,7 +275,6 @@ class EdiBackend(models.Model):
             anonymized_records = self.env[self.model_name].search(domain).ids
         return anonymized_records
 
-    @job
     def action_export_run(self, history_line=False):
         if not self.export_config_id:
             raise exceptions.UserError(_("No export configuration selected."))
@@ -359,7 +348,6 @@ class EdiBackend(models.Model):
             getattr(records, "%s_action_backend_sent" % self.provider)()
         return history_line
 
-    @job
     def action_import_run(self):
         now = fields.Datetime.now()
         file_names = getattr(self, "_%s_get_names" % self.communication_type)()
