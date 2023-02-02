@@ -27,7 +27,9 @@ class EdiBackendFileWiz(models.TransientModel):
     )
 
     # Modifify to don't transform to upper ('Ver')
-    def _format_string(self, text, length, fill=" ", align="<"):
+    def _format_string(
+        self, text, length, fill=" ", align="<", allow_special_character=False
+    ):
         """Format the string into a fixed length ASCII (iso-8859-1) record.
 
         Note:
@@ -45,10 +47,11 @@ class EdiBackendFileWiz(models.TransientModel):
         from unidecode import unidecode
 
         # text = text.upper()
-        text = "".join([unidecode(x) if x not in ("Ñ", "Ç") else x for x in text])
-        text = re.sub(
-            r"[^A-Za-z0-9\s\.,-_&'´\\:;/\(\)ÑÇ\"]", "", text, re.UNICODE | re.X
-        )
+        if not allow_special_character:
+            text = "".join([unidecode(x) if x not in ("Ñ", "Ç") else x for x in text])
+            text = re.sub(
+                r"[^A-Za-z0-9\s\.,-_&'´\\:;/\(\)ÑÇ\"]", "", text, re.UNICODE | re.X
+            )
         ascii_string = text.encode("iso-8859-1")
         # Cut the string if it is too long
         if len(ascii_string) > length:
@@ -60,15 +63,17 @@ class EdiBackendFileWiz(models.TransientModel):
         elif align == ">":
             ascii_string = ascii_string.rjust(length, ascii_fill)
         else:
-            assert False, _("Wrong aling option. It should be < or >")  # noqa: B011
+            assert False, _("Wrong align option. It should be < or >")  # noqa: B011
         # Sanity-check
         assert len(ascii_string) == length, _(
-            "The formated string must match the given length: %s" % (ascii_string)
+            "The formated string must match the given length: %s", ascii_string
         )
         # Return string
         return ascii_string
 
-    def _format_alphabetic_string(self, text, length, fill=" ", align="<"):
+    def _format_alphabetic_string(
+        self, text, length, fill=" ", align="<", allow_special_character=False
+    ):
         u"""Format the string into a fixed length ASCII (iso-8859-1) record
         without numbers.
         """
@@ -76,7 +81,13 @@ class EdiBackendFileWiz(models.TransientModel):
             return fill * length
         # Replace numbers
         name = re.sub(r"[\d-]", "", text, re.UNICODE | re.X)
-        return self._format_string(name, length, fill=fill, align=align)
+        return self._format_string(
+            name,
+            length,
+            fill=fill,
+            align=align,
+            allow_special_character=allow_special_character,
+        )
 
     # Modify to include dec_separator and change defaults
     def _format_number(
@@ -271,14 +282,24 @@ class EdiBackendFileWiz(models.TransientModel):
             elif val and len(val) > line_size:
                 val = val[:line_size]
             align = ">" if line.alignment == "right" else "<"
-            value = self._format_string(val or "", line_size, align=align)
+            value = self._format_string(
+                val or "",
+                line_size,
+                align=align,
+                allow_special_character=line.allow_special_character,
+            )
         elif line.export_type == "boolean":
             value = self._format_boolean(val, line.bool_yes, line.bool_no)
         elif line.export_type == "alphabetic":
             if anonymized:
                 val = anonymize_char * line_size
             align = ">" if line.alignment == "right" else "<"
-            value = self._format_alphabetic_string(val or "", line_size, align=align)
+            value = self._format_alphabetic_string(
+                val or "",
+                line_size,
+                align=align,
+                allow_special_character=line.allow_special_character,
+            )
         else:  # float or integer
             if anonymized:
                 val = 0
