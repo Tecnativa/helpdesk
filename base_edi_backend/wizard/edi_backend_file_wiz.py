@@ -52,12 +52,12 @@ class EdiBackendFileWiz(models.TransientModel):
             text = re.sub(
                 r"[^A-Za-z0-9\s\.,-_&'´\\:;/\(\)ÑÇ\"]", "", text, re.UNICODE | re.X
             )
-        ascii_string = text.encode("iso-8859-1")
+        ascii_string = text
         # Cut the string if it is too long
         if len(ascii_string) > length:
             ascii_string = ascii_string[:length]
         # Format the string
-        ascii_fill = fill.encode("iso-8859-1")
+        ascii_fill = fill
         if align == "<":
             ascii_string = ascii_string.ljust(length, ascii_fill)
         elif align == ">":
@@ -269,7 +269,7 @@ class EdiBackendFileWiz(models.TransientModel):
                     anonymize_char=self.env.context.get("anonymize_char", " "),
                 )
                 if isinstance(record, str):
-                    record = record.encode("iso-8859-1")
+                    record = record.encode(self.env.context.get("encode"))
                 val += record
         return val
 

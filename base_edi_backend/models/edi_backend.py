@@ -104,6 +104,7 @@ class EdiBackend(models.Model):
     anonymized_domain = fields.Char()
     char_for_anonymize = fields.Char(default="x", size=1)
     notes = fields.Html()
+    encoding = fields.Char(default="iso-8859-1", required=True)
 
     @api.depends("date_field", "date_range", "last_sync_date", "security_days")
     def _compute_special_domain(self):
@@ -286,6 +287,7 @@ class EdiBackend(models.Model):
             "sequence_file": sequence_file,
             "anonymized_records": anonymized_records,
             "anonymize_char": self.char_for_anonymize,
+            "encode": self.encoding,
         }
 
     def _get_export_data(self, domain, records, anonymized_records, sequence_file):
