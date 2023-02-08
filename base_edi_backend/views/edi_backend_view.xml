@@ -81,6 +81,7 @@
                         <field name="action_type" widget="radio" />
                         <field name="provider" />
                         <field name="extension" />
+                        <field name="encoding" />
                         <field name="last_sync_date" invisible="1" />
                         <field
               name="export_config_id"
