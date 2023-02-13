@@ -45,6 +45,7 @@
                                 </th>
                                 <th><strong>Customer</strong></th>
                                 <th><strong>Elaboration</strong></th>
+                                <th><strong>Supplier</strong></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,6 +122,11 @@
                       t-field="line.sale_line_id.elaboration_note"
                     />
                                     </td>
+                                    <td>
+                                        <span
+                      t-field="line.sale_line_id.supplierinfo_id"
+                    />
+                                    </td>
                                 </tr>
                                 <t
                   t-set="total_base_unit"
@@ -140,7 +146,7 @@
                   t-if="line_last or line.product_id != lines[line_index + 1].product_id"
                 >
                                     <tr class="table-active">
-                                        <td colspan="2" />
+                                        <td colspan="3" />
                                         <td class="text-right">
                                             <strong
                         t-if="total_secondary_unit &gt; 0.0"
@@ -157,7 +163,7 @@
                                         </td>
                                         <!--<td><span t-esc="available_dict[line.product_id.id]['qty_available']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/></td>-->
                                         <td />
-                                        <td colspan="2">
+                                        <td colspan="3">
                                             <span>On hand stock </span><span
                         t-field="line.product_id.qty_available"
                       />

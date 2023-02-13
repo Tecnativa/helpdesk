@@ -10,7 +10,12 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["purchase_stock", "sale_stock_secondary_unit", "sale_elaboration"],
+    "depends": [
+        "purchase_stock",
+        "sale_stock_secondary_unit",
+        "sale_elaboration",
+        "sale_order_product_recommendation_supplierinfo",
+    ],
     "data": [
         "security/ir.model.access.csv",
         "report/purchase_requisition_report.xml",
