@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 Tecnativa - Sergio Teruel
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <template id="report_purchase_requisition">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-8">
+                                <h2>Purchase Daily List</h2>
+                            </div>
+                            <div class="col-4 text-right">
+                                <ul class="list-inline">
+                                    <span>Page: </span>
+                                    <li class="list-inline-item"><span
+                      class="page"
+                    /></li>
+                                    <li class="list-inline-item">/</li>
+                                    <li class="list-inline-item"><span
+                      class="topage"
+                    /></li>
+                                </ul>
+                                <span
+                  t-esc="datetime.datetime.now()"
+                  t-options="{'widget': 'datetime'}"
+                />
+                        </div>
+                        </div>
+                    </div>
+                    <strong>Origin: </strong><span t-esc="docs.mapped('origin')[:5]" />
+                    <h3>Products</h3>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th><strong>Sale Order</strong></th>
+                                <th><strong>Description</strong></th>
+                                <th class="text-right"><strong
+                  >Secondary Unit.</strong></th>
+                                <th class="text-right"><strong>Qty</strong></th>
+                                <th class="text-center" groups="uom.group_uom">
+                                    <strong>Product UoM</strong>
+                                </th>
+                                <th><strong>Customer</strong></th>
+                                <th><strong>Elaboration</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total_base_unit" t-value="0.0" />
+                            <t t-set="total_unit" t-value="0.0" />
+                            <t t-set="total_secondary_unit" t-value="0.0" />
+                            <t
+                t-set="lines"
+                t-value="docs.sorted(key=lambda x: x.product_id.name)"
+              />
+                            <t
+                t-set="available_dict"
+                t-value="sum(lines.mapped('product_id.qty_available'))"
+              />
+                            <!--<t t-set="available_dict" t-value="lines.mapped('product_id')._compute_quantities_dict(False, False, False)"/>-->
+                            <t t-foreach="lines" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span
+                      t-field="line.sale_line_id.order_id.name"
+                    />
+                                    </td>
+                                    <td>
+                                        <span
+                      t-field="line.product_id"
+                      style="font-size: 1.2em;"
+                    />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                      t-if="line.sale_line_id.secondary_uom_id and line.sale_line_id.secondary_uom_qty"
+                    >
+                                            <span
+                        t-field="line.sale_line_id.secondary_uom_qty"
+                      /> -
+                                            <span
+                        t-field="line.sale_line_id.secondary_uom_id"
+                      />
+                                        </t>
+                                        <t
+                      t-set="secondary_uom"
+                      t-value="line.product_id.sale_secondary_uom_id"
+                    />
+                                        <t
+                      t-if="not line.sale_line_id and secondary_uom"
+                    >
+                                            <span
+                        t-esc="line.product_qty / secondary_uom.factor"
+                        t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
+                      /> -
+                                            <span t-esc="secondary_uom.name" />
+                                        </t>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_qty" />
+                                    </td>
+                                    <td class="text-center" groups="uom.group_uom">
+                                        <span t-field="line.product_uom" />
+                                    </td>
+                                    <td>
+                                        <t
+                      t-if="line.sale_line_id.order_id.partner_id.ref"
+                    >
+                                            [<span
+                        t-field="line.sale_line_id.order_id.partner_id.ref"
+                      />]
+                                        </t>
+                                        <span
+                      t-esc="line.sale_line_id.order_id.partner_id.comercial or line.sale_line_id.order_id.partner_id.name"
+                    />
+                                    </td>
+                                    <td>
+                                        <span
+                      t-field="line.sale_line_id.elaboration_note"
+                    />
+                                    </td>
+                                </tr>
+                                <t
+                  t-set="total_base_unit"
+                  t-value="total_base_unit + line.product_qty"
+                />
+                                <t
+                  t-if="not line.sale_line_id.secondary_uom_id"
+                  t-set="total_unit"
+                  t-value="total_unit + line.product_qty"
+                />
+                                <t
+                  t-if="line.sale_line_id.secondary_uom_id"
+                  t-set="total_secondary_unit"
+                  t-value="total_secondary_unit + line.sale_line_id.secondary_uom_qty"
+                />
+                                <t
+                  t-if="line_last or line.product_id != lines[line_index + 1].product_id"
+                >
+                                    <tr class="table-active">
+                                        <td colspan="2" />
+                                        <td class="text-right">
+                                            <strong
+                        t-if="total_secondary_unit &gt; 0.0"
+                      ><span
+                          t-esc="total_secondary_unit"
+                          t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
+                        /></strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong t-if="total_unit &gt; 0.0"><span
+                          t-esc="total_unit"
+                          t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
+                        /></strong>
+                                        </td>
+                                        <!--<td><span t-esc="available_dict[line.product_id.id]['qty_available']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/></td>-->
+                                        <td />
+                                        <td colspan="2">
+                                            <span>On hand stock </span><span
+                        t-field="line.product_id.qty_available"
+                      />
+                                            <t
+                        t-set="to_buy"
+                        t-value="total_base_unit - line.product_id.qty_available"
+                      />
+                                            <span>Needed </span><strong
+                        t-esc="to_buy if to_buy &gt; 0.0 else 0"
+                        t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
+                      />
+
+                                        </td>
+                                    </tr>
+                                    <t t-set="total_base_unit" t-value="0.0" />
+                                    <t t-set="total_unit" t-value="0.0" />
+                                    <t t-set="total_secondary_unit" t-value="0.0" />
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
