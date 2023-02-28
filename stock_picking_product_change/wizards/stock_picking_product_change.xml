@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_picking_product_change_wiz" model="ir.ui.view">
+        <field name="name">Stock Picking Change Product Wizard</field>
+        <field name="model">stock.picking.product.change.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="picking_ids" invisible="1" />
+                <group>
+                    <field name="old_product_id" />
+                    <field
+            name="new_product_id"
+            context="{'so_product_stock_inline': True}"
+          />
+                    <field name="keep_secondary_unit" />
+                    <field name="keep_description" />
+                    <field name="keep_price" />
+                    <field name="only_qty_needed" />
+                </group>
+                <group>
+                    <field name="line_ids" nolabel="1">
+                        <tree editable="top" create="0">
+                            <field name="move_id" invisible="1" force_save="1" />
+                            <field name="warehouse_id" invisible="1" />
+                            <field name="picking_id" />
+                            <field name="partner_id" />
+                            <field name="old_product_id" optional="hide" />
+                            <field name="old_secondary_qty" optional="show" />
+                            <field name="old_secondary_uom_id" optional="show" />
+                            <field name="old_product_uom_qty" />
+                            <field name="old_reserved_availability" />
+                            <field
+                name="new_product_id"
+                context="{'so_product_stock_inline': True, 'warehouse': warehouse_id}"
+              />
+                            <field name="new_product_free_qty" />
+                            <field name="product_uom_qty" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button
+            name="action_change_product"
+            string="Change product"
+            type="object"
+            class="btn-primary"
+          />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_stock_picking_product_change" model="ir.actions.act_window">
+        <field name="name">Product Change</field>
+        <field name="res_model">stock.picking.product.change.wiz</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="act_stock_picking_batch_product_change" model="ir.actions.act_window">
+        <field name="name">Product Change</field>
+        <field name="res_model">stock.picking.product.change.wiz</field>
+        <field
+      name="binding_model_id"
+      ref="stock_picking_batch.model_stock_picking_batch"
+    />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

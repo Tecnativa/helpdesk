@@ -1,0 +1,230 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_product_change
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-16 19:53+0000\n"
+"PO-Revision-Date: 2020-12-16 20:54+0100\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__old_secondary_qty
+msgid "2nd Qty"
+msgstr ""
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__old_secondary_uom_id
+msgid "2nd uom"
+msgstr ""
+
+#. module: stock_picking_product_change
+#: model_terms:ir.ui.view,arch_db:stock_picking_product_change.stock_picking_product_change_wiz
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_picking_product_change
+#: model_terms:ir.ui.view,arch_db:stock_picking_product_change.stock_picking_product_change_wiz
+msgid "Change product"
+msgstr "Cambio de producto"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__create_uid
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__create_uid
+msgid "Created by"
+msgstr "Creado en"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__create_date
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__display_name
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__id
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__old_product_uom_qty
+msgid "Initial Demand"
+msgstr "Demanda inicial"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__keep_description
+msgid "Keep description"
+msgstr "Mantener descripción"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__keep_price
+msgid "Keep price"
+msgstr "Mantener precio"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__keep_secondary_unit
+msgid "Keep secondary unit"
+msgstr "Mantener unidad secundaria"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz____last_update
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__write_uid
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__write_uid
+msgid "Last Updated by"
+msgstr "Última modificación por"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__write_date
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__write_date
+msgid "Last Updated on"
+msgstr "Última modificación en"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__line_ids
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__move_id
+msgid "Move"
+msgstr "Movimiento"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__new_product_free_qty
+msgid "New Product Free Qty"
+msgstr "Cant. disponible"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__new_product_id
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__new_product_id
+msgid "New product"
+msgstr "Nuevo producto"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__only_qty_needed
+msgid "Only quantity needed"
+msgstr "Solo cantidad necesaria"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__old_product_id
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__old_product_id
+msgid "Original Product"
+msgstr "Producto original"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__picking_id
+msgid "Picking"
+msgstr "Albarán"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_wiz__picking_ids
+msgid "Pickings to process"
+msgstr "Albaranes a procesar"
+
+#. module: stock_picking_product_change
+#: model:ir.actions.act_window,name:stock_picking_product_change.act_stock_picking_batch_product_change
+#: model:ir.actions.act_window,name:stock_picking_product_change.act_stock_picking_product_change
+msgid "Product Change"
+msgstr "Cambio de producto"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__product_uom_qty
+msgid "Qty. to change"
+msgstr "Cta. a cambiar"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__old_reserved_availability
+msgid "Quantity Reserved"
+msgstr "Cantidad reservada"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,help:stock_picking_product_change.field_stock_picking_product_change_line_wiz__old_reserved_availability
+msgid "Quantity that has already been reserved for this move"
+msgstr "Cantidad que ha sido ya reservada para este movimiento"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_sale_order_line__replaced_qty
+msgid "Replaced qty"
+msgstr "Cta. reemplazada"
+
+#. module: stock_picking_product_change
+#: model:ir.model,name:stock_picking_product_change.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,help:stock_picking_product_change.field_stock_picking_product_change_line_wiz__warehouse_id
+msgid ""
+"Technical field depicting the warehouse to consider for the route selection "
+"on the next procurement (if any)."
+msgstr ""
+"Campo técnico que indica el almacén a considerar para la selección de ruta "
+"en el siguiente abastecimiento (si lo hay)."
+
+#. module: stock_picking_product_change
+#: code:addons/stock_picking_product_change/wizards/stock_picking_product_change.py:0
+#, python-format
+msgid "There is no picking lines to change"
+msgstr "No hay líneas de albarán para sustituir"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,help:stock_picking_product_change.field_stock_picking_product_change_line_wiz__old_product_uom_qty
+msgid ""
+"This is the quantity of products from an inventory point of view. For moves "
+"in the state 'done', this is the quantity of products that were actually "
+"moved. For other moves, this is the quantity of product that is planned to "
+"be moved. Lowering this quantity does not generate a backorder. Changing "
+"this quantity on assigned moves affects the product reservation, and should "
+"be done with care."
+msgstr ""
+"Ésta es la cantidad de productos desde un punto de vista de inventario. Para "
+"movimientos en el estado 'Realizado', ésta es la cantidad de productos que "
+"se movieron realmente. Para otros movimientos, ésta es la cantidad de "
+"producto que está planeado mover. Disminuyendo esta cantidad no se genera un "
+"pedido en espera. Cambiando esta cantidad en movimientos asignados, afecta "
+"la reserva de producto, y debe ser realizado con cuidado."
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__warehouse_id
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: stock_picking_product_change
+#: model:ir.model.fields,field_description:stock_picking_product_change.field_stock_picking_product_change_line_wiz__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: stock_picking_product_change
+#: model:ir.model,name:stock_picking_product_change.model_stock_picking_product_change_line_wiz
+msgid "stock.picking.product.change.line.wiz"
+msgstr ""
+
+#. module: stock_picking_product_change
+#: model:ir.model,name:stock_picking_product_change.model_stock_picking_product_change_wiz
+msgid "stock.picking.product.change.wiz"
+msgstr ""
