@@ -179,14 +179,14 @@ class StockPickingProductChangeLine(models.TransientModel):
         return new_line_vals
 
     def _create_new_so_line(self):
-        origin_so_line = self.move_id.sale_line_id
+        origin_so_line = self.move_id._get_so_line_from_move()
         if origin_so_line:
             vals = self._prepare_new_so_line_values()
             origin_so_line.order_id.order_line = [(0, 0, vals)]
             self._update_old_so_line()
 
     def _update_old_so_line(self):
-        origin_so_line = self.move_id.sale_line_id
+        origin_so_line = self.move_id._get_so_line_from_move()
         origin_order = origin_so_line.order_id
         index = origin_order.order_line.ids.index(origin_so_line.id)
         order_form = Form(origin_order)
