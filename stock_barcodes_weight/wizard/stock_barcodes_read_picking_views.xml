@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_stock_barcodes_read_picking_form" model="ir.ui.view">
+        <field name="model">wiz.stock.barcodes.read.picking</field>
+        <field
+      name="inherit_id"
+      ref="stock_barcodes.view_stock_barcodes_read_picking_form"
+    />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_force_done']" position="before">
+                <field name="visible_change_product" invisible="1" />
+                <button
+          name="action_change_product"
+          help="Accept changing product"
+          type="object"
+          attrs="{'invisible': [('visible_change_product', '=', False)]}"
+          class="ml-auto oe_kanban_action_button btn btn-info btn-sm"
+          groups="stock.group_tracking_lot"
+          data-hotkey="6"
+        >
+                     <i class="fa fa-exchange" title="Change product" />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
