@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2018 Tecnativa - Sergio Teruel
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="product_attribute_view_form" model="ir.ui.view">
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form" />
+        <field name="arch" type="xml">
+            <field name="html_color" position="after">
+                <field name="from_range" />
+                <field name="to_range" />
+                <field name="tolerance_range" />
+            </field>
+        </field>
+    </record>
+</odoo>

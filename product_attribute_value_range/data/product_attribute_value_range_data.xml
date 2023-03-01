@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+
+    <record id="attribute_caliber" model="product.attribute">
+        <field name="name">Caliber</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,50 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_attribute_value_range
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-07 11:19+0000\n"
+"PO-Revision-Date: 2022-11-07 12:21+0100\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: product_attribute_value_range
+#: model:ir.model,name:product_attribute_value_range.model_product_attribute_value
+msgid "Attribute Value"
+msgstr "Valor del Atributo"
+
+#. module: product_attribute_value_range
+#: model:ir.model.fields,field_description:product_attribute_value_range.field_product_product__caliber_ids
+#: model:ir.model.fields,field_description:product_attribute_value_range.field_product_template__caliber_ids
+#: model:product.attribute,name:product_attribute_value_range.attribute_caliber
+msgid "Caliber"
+msgstr "Calibre"
+
+#. module: product_attribute_value_range
+#: model:ir.model.fields,field_description:product_attribute_value_range.field_product_attribute_value__from_range
+msgid "From Range"
+msgstr "Rango desde"
+
+#. module: product_attribute_value_range
+#: model:ir.model,name:product_attribute_value_range.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: product_attribute_value_range
+#: model:ir.model.fields,field_description:product_attribute_value_range.field_product_attribute_value__to_range
+msgid "To Range"
+msgstr "Rango hasta"
+
+#. module: product_attribute_value_range
+#: model:ir.model.fields,field_description:product_attribute_value_range.field_product_attribute_value__tolerance_range
+msgid "Tolerance Range"
+msgstr "Tolerancia"
