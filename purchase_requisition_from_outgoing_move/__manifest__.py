@@ -18,6 +18,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "data/paperformat.xml",
         "report/purchase_requisition_report.xml",
         "report/purchase_requisition_template.xml",
         "wizards/purchase_requisition_view.xml",
