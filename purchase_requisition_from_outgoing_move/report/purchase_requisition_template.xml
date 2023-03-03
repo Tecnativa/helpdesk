@@ -44,8 +44,7 @@
                                     <strong>Product UoM</strong>
                                 </th>
                                 <th><strong>Customer</strong></th>
-                                <th><strong>Elaboration</strong></th>
-                                <th><strong>Supplier</strong></th>
+                                <th name="elaboration"><strong>Elaboration</strong></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,14 +116,9 @@
                       t-esc="line.sale_line_id.order_id.partner_id.comercial or line.sale_line_id.order_id.partner_id.name"
                     />
                                     </td>
-                                    <td>
+                                    <td name="elaboration">
                                         <span
                       t-field="line.sale_line_id.elaboration_note"
-                    />
-                                    </td>
-                                    <td>
-                                        <span
-                      t-field="line.sale_line_id.supplierinfo_id"
                     />
                                     </td>
                                 </tr>
