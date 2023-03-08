@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_name_composer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-08 14:30+0000\n"
+"PO-Revision-Date: 2023-03-08 15:33+0100\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: product_name_composer
+#: model:ir.model.fields,field_description:product_name_composer.field_product_product__base_name
+#: model:ir.model.fields,field_description:product_name_composer.field_product_template__base_name
+msgid "Base Name"
+msgstr "Nombre base"
+
+#. module: product_name_composer
+#: model:ir.actions.server,name:product_name_composer.action_supplierifo_all_products
+msgid "Compose product name"
+msgstr "Nombre del producto"
+
+#. module: product_name_composer
+#: model:ir.model,name:product_name_composer.model_res_lang
+msgid "Languages"
+msgstr "Idiomas"
+
+#. module: product_name_composer
+#: model:ir.model,name:product_name_composer.model_product_attribute
+msgid "Product Attribute"
+msgstr "Atributo de producto"
+
+#. module: product_name_composer
+#: model:ir.model.fields,field_description:product_name_composer.field_res_lang__product_name_composer
+msgid "Product Name Composer"
+msgstr "Compositor del nombre del producto"
+
+#. module: product_name_composer
+#: model:ir.model.fields,field_description:product_name_composer.field_product_attribute__product_name_composer_include
+msgid "Product Name Composer Include"
+msgstr "Atributo disponible para componer nombre de producto"
+
+#. module: product_name_composer
+#: model:ir.model,name:product_name_composer.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
