@@ -10,5 +10,4 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["stock_production_lot_fishing_info", "purchase_stock"],
-    "data": ["views/stock_move_line_views.xml"],
 }
