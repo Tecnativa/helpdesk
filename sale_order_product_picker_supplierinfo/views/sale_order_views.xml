@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field
+      name="inherit_id"
+      ref="product_supplierinfo_for_customer_sale.view_order_form"
+    />
+        <field name="arch" type="xml">
+            <xpath
+        expr="//field[@name='order_line']/tree//field[@name='product_customer_code']"
+        position="after"
+      >
+                <field name="vendor_id" optional="show" />
+                <field name="vendor_comment" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_picker" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_product_picker.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath
+        expr="//field[@name='picker_ids']/kanban/field[@name='qty_available']"
+        position="after"
+      >
+                <field name="supplierinfo_id" />
+                <field name="vendor_id" />
+                <field name="vendor_comment" />
+            </xpath>
+            <xpath
+        expr="//field[@name='picker_ids']/kanban//div/field[@name='qty_available']/../.."
+        position="after"
+      >
+                <div class="row" t-if="record.vendor_id.raw_value">
+                    <div class="col-12 text-muted">
+                        <field name="vendor_id" />
+                    </div>
+                </div>
+                <div class="row" t-if="record.vendor_comment.raw_value">
+                    <div class="col-12 text-muted">
+                        <field name="vendor_comment" />
+                    </div>
+                </div>
+            </xpath>
+            <xpath
+        expr="//field[@name='order_line']/kanban//div/t[@t-esc='record.price_unit.value']/../.."
+        position="after"
+      >
+                <div class="row" t-if="record.vendor_id.raw_value">
+                    <div class="col-12 text-muted">
+                        <field name="vendor_id" />
+                    </div>
+                </div>
+                <div class="row" t-if="record.vendor_comment.raw_value">
+                    <div class="col-12 text-muted">
+                        <field name="vendor_comment" />
+                    </div>
+                </div>
+            </xpath>
+            <xpath
+        expr="//field[@name='order_line']/kanban//field[@name='product_uom_qty']"
+        position="after"
+      >
+                <field name="supplierinfo_id" />
+                <field name="vendor_id" />
+                <field name="vendor_comment" />
+            </xpath>
+            <xpath
+        expr="//field[@name='order_line']/form//field[@name='product_uom_qty']"
+        position="after"
+      >
+                <field name="supplierinfo_id" invisible="1" />
+                <field name="vendor_id" invisible="1" />
+                <field name="vendor_comment" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
