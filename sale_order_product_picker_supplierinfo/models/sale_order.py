@@ -55,7 +55,7 @@ class SaleOrder(models.Model):
     def filter_picker_so_lines(self, picker_data):
         return self.order_line.filtered(
             lambda sol: sol.product_id.id == picker_data["product_id"][0]
-            and sol.supplierinfo_id.id == picker_data["supplierinfo_id"]
+            and sol.supplierinfo_id.id == picker_data.get("supplierinfo_id", False)
         )
 
     def _prepare_product_picker_vals(self, group_line, so_lines):
