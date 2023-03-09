@@ -3,7 +3,7 @@
     <record id="edi_backend_communication_history_search" model="ir.ui.view">
         <field name="model">edi.backend.communication.history</field>
         <field name="arch" type="xml">
-            <tree string="EDI Backend History Search">
+            <tree>
                 <field name="edi_backend_id" />
                 <field name="file_name" />
             </tree>
@@ -12,7 +12,7 @@
     <record id="edi_backend_communication_history_tree" model="ir.ui.view">
         <field name="model">edi.backend.communication.history</field>
         <field name="arch" type="xml">
-            <tree string="EDI Backend History" create="false">
+            <tree create="false">
                 <field name="edi_backend_id" invisible="1" />
                 <field name="create_date" />
                 <field name="write_date" />

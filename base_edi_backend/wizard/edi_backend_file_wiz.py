@@ -141,7 +141,7 @@ class EdiBackendFileWiz(models.TransientModel):
         # Sanity-check
         assert len(ascii_string) == (
             (include_sign and len(sign) or 0) + int_length + dec_length
-        ), _("The formated string must match the given length: %d" % (number))
+        ), _("The formated string must match the given length: %d") % (number)
         # Return the string assuring that is not unicode
         return str(ascii_string)
 
@@ -173,7 +173,10 @@ class EdiBackendFileWiz(models.TransientModel):
             raise exceptions.UserError(_("No export configuration selected."))
         # Generate the file and save as attachment
         file = base64.encodestring(contents)
-        file_name = _("%s_report_%s.txt") % (report.number, fields.Date.today())
+        file_name = _("%(report_number)s_report_%(today)s.txt") % {
+            "report_number": report.number,
+            "today": fields.Date.today(),
+        }
         # Delete old files
         attachment_obj = self.env["ir.attachment"]
         attachment_ids = attachment_obj.search(
@@ -212,10 +215,10 @@ class EdiBackendFileWiz(models.TransientModel):
             contents += self._export_line_process(obj, line)
         return contents
 
-    def _get_vals_for_safe_eval(self, object):
+    def _get_vals_for_safe_eval(self, obj):
         return {
             "user": self.env.user,
-            "object": object,
+            "object": obj,
             "context": self.env.context.copy(),
             "today": fields.Date.today(),
             "format_date": self.format_custom_date,
@@ -231,7 +234,7 @@ class EdiBackendFileWiz(models.TransientModel):
         def merge_eval(exp):
             especific_obj = obj_merge
             if not isinstance(obj_merge, dict):
-                especific_obj = obj_merge.with_context(self.env.context)
+                especific_obj = obj_merge.with_context(**self.env.context)
             return safe_eval(
                 exp,
                 self._get_vals_for_safe_eval(especific_obj),

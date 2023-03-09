@@ -24,8 +24,8 @@ class EdiBackend(models.Model):
     _description = "EDI Backend"
 
     active = fields.Boolean(default=True)
-    name = fields.Char(string="Name")
-    code = fields.Char(string="Code")
+    name = fields.Char()
+    code = fields.Char()
     company_id = fields.Many2one(
         comodel_name="res.company",
         default=lambda self: self.env.company,
@@ -441,11 +441,11 @@ class EdiBackend(models.Model):
                 if ftp.getwelcome():
                     raise exceptions.Warning(_("Connection Test OK!"))
         except exceptions.Warning:
-            raise exceptions.Warning(_("Connection Test OK!"))
+            raise exceptions.Warning(_("Connection Test OK!")) from exceptions.Warning
         except Exception:
             raise exceptions.ValidationError(
-                _("Connection Test Failed! %s" % Exception)
-            )
+                _("Connection Test Failed! %s") % Exception
+            ) from Exception
 
     def _ftp_connection(self):
         """Return a new FTP connection with found parameters."""
@@ -490,11 +490,11 @@ class EdiBackend(models.Model):
                 if sftp.pwd():
                     raise exceptions.Warning(_("Connection Test OK!"))
         except exceptions.Warning:
-            raise exceptions.Warning(_("Connection Test OK!"))
+            raise exceptions.Warning(_("Connection Test OK!")) from exceptions.Warning
         except Exception:
             raise exceptions.ValidationError(
-                _("Connection Test Failed! %s" % Exception)
-            )
+                _("Connection Test Failed! %s") % Exception
+            ) from Exception
 
     def _sftp_connection(self):
         """Return a new SFTP connection with found parameters."""
@@ -526,7 +526,7 @@ class EdiBackend(models.Model):
                 file = base64.b64encode(output_buffer.getvalue())
             except Exception:
                 exceptions.UserError(
-                    _("An error ocurred when trying to import file: %s" % Exception)
+                    _("An error ocurred when trying to import file: %s") % Exception
                 )
             return file
 
@@ -671,9 +671,8 @@ class EdiBackendCommunicationHistory(models.Model):
             action = {
                 "type": "ir.actions.act_window",
                 "view_mode": "tree,form",
-                "name": _(
-                    "Applied records ({})".format(self.edi_backend_id.model_id.name)
-                ),
+                "name": _("Applied records (%(model_name)s)")
+                % {"model_name": self.edi_backend_id.model_id.name},
                 "res_model": self.model_name,
                 "domain": [("id", "in", records.ids)],
             }
