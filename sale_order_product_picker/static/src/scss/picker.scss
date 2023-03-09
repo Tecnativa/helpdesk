@@ -1,0 +1,27 @@
+#picker-multiline-modal .oe_kanban_card:not(.product-selected) {
+  display: none;
+}
+#picker-multiline-modal .o_data_row:not(.product-selected) {
+  display: none;
+}
+.o_field_widget.o_field_selection_badge .o_selection_badge.active {
+  font-weight: bold;
+}
+.oe_field_one2many_product_picker_maximized {
+  position: fixed !important;
+  overflow-y: scroll;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 50;
+  margin-top: 0px !important;
+  .tab-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .o_notebook_headers {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+}
