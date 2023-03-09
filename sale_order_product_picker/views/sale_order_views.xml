@@ -114,6 +114,11 @@
                     <div class="d-flex">
                             <label string="Filter" for="picker_filter" class="mr-3" />
                             <field name="picker_filter" widget="selection_badge" />
+                            <label for="picker_only_available" class="mx-3" />
+                            <field
+              name="picker_only_available"
+              widget="boolean_toggle"
+            />
                     </div>
                     <field name="picker_ids">
                         <kanban class="o_picker_kanban">

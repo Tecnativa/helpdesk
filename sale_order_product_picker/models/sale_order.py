@@ -30,6 +30,7 @@ class SaleOrder(models.Model):
         selection=[("pricelist", "Pricelist"), ("last_sale_price", "Last price")],
         store=False,
     )
+    picker_only_available = fields.Boolean(string="Available", store=False)
     use_delivery_address = fields.Boolean(store=False, default=False)
     product_name_search = fields.Char(string="Search product", store=False)
 
@@ -58,13 +59,18 @@ class SaleOrder(models.Model):
             ("company_id", "=", False),
             ("company_id", "=", self.company_id.id),
         ]
+        if self.picker_only_available:
+            available_field = self.env["ir.config_parameter"].get_param(
+                "sale_order_product_picker.product_available_field", "qty_available"
+            )
+            domain = expression.AND([domain, [(available_field, ">", 0.0)]])
         if product_filter.domain:
             domain = expression.AND([domain, literal_eval(product_filter.domain)])
         if self.product_name_search:
-            product_ids = Product._name_search(self.product_name_search)
-            if product_ids:
-                domain.append(("id", "in", product_ids))
-        return Product.search(domain).ids
+            product_ids = Product._name_search(self.product_name_search, args=domain)
+        else:
+            product_ids = Product.search(domain).ids
+        return product_ids
 
     # TODO: Use field list instead overwrite method
     def filter_picker_so_lines(self, picker_data):
@@ -77,6 +83,7 @@ class SaleOrder(models.Model):
         "picker_origin_data",
         "picker_price_origin",
         "picker_filter",
+        "picker_only_available",
         "product_name_search",
     )
     def _compute_picker_ids(self):
