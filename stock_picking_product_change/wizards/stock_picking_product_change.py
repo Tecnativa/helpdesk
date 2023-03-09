@@ -9,6 +9,7 @@ from odoo.tools import float_compare
 
 class StockPickingProductChange(models.TransientModel):
     _name = "stock.picking.product.change.wiz"
+    _description = "Stock picking change wizard"
 
     picking_ids = fields.Many2many(
         comodel_name="stock.picking", string="Pickings to process",
@@ -78,6 +79,7 @@ class StockPickingProductChange(models.TransientModel):
 
 class StockPickingProductChangeLine(models.TransientModel):
     _name = "stock.picking.product.change.line.wiz"
+    _description = "Stock picking change wizard lines"
 
     wizard_id = fields.Many2one(
         comodel_name="stock.picking.product.change.wiz",

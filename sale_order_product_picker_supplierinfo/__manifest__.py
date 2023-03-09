@@ -9,7 +9,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["sale_order_product_picker", "product_supplierinfo_for_customer_sale"],
+    "depends": ["sale_order_product_picker"],
     "data": ["views/sale_order_views.xml"],
     "assets": {
         "web.assets_backend": [
