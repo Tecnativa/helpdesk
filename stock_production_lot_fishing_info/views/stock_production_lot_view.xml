@@ -9,13 +9,13 @@
                 <group name="fishing_info_group" string="Fishing Extra Info">
                     <group name="first_column">
                         <field
-              name="fao_fishing_area_id"
-              options="{'no_create': True, 'no_open': True}"
-            />
+                            name="fao_fishing_area_id"
+                            options="{'no_create': True, 'no_open': True}"
+                        />
                         <field
-              name="fao_fishing_technique_id"
-              options="{'no_create': True, 'no_open': True}"
-            />
+                            name="fao_fishing_technique_id"
+                            options="{'no_create': True, 'no_open': True}"
+                        />
                         <field name="harvesting_id" />
                         <field name="fishing_ship_id" />
                     </group>
@@ -46,15 +46,15 @@
         <field name="arch" type="xml">
             <field name="last_delivery_partner_id" position="after">
                 <field
-          name="fao_fishing_area_id"
-          options="{'no_create': True, 'no_open': True}"
-          optional="hide"
-        />
+                    name="fao_fishing_area_id"
+                    options="{'no_create': True, 'no_open': True}"
+                    optional="hide"
+                />
                 <field
-          name="fao_fishing_technique_id"
-          options="{'no_create': True, 'no_open': True}"
-          optional="hide"
-        />
+                    name="fao_fishing_technique_id"
+                    options="{'no_create': True, 'no_open': True}"
+                    optional="hide"
+                />
             </field>
         </field>
     </record>
@@ -69,15 +69,15 @@
             </field>
             <filter name="group_by_product" position="after">
                 <filter
-          name="group_by_fao_fishing_area"
-          string="Fishing Area"
-          context="{'group_by': 'fao_fishing_area_id'}"
-        />
+                    name="group_by_fao_fishing_area"
+                    string="Fishing Area"
+                    context="{'group_by': 'fao_fishing_area_id'}"
+                />
                 <filter
-          name="group_by_fao_fishing_technique"
-          string="Fishing Technique"
-          context="{'group_by': 'fao_fishing_technique_id'}"
-        />
+                    name="group_by_fao_fishing_technique"
+                    string="Fishing Technique"
+                    context="{'group_by': 'fao_fishing_technique_id'}"
+                />
             </filter>
         </field>
     </record>

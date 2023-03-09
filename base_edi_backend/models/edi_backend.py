@@ -27,9 +27,13 @@ class EdiBackend(models.Model):
     name = fields.Char(string="Name")
     code = fields.Char(string="Code")
     company_id = fields.Many2one(
-        comodel_name="res.company", default=lambda self: self.env.company,
+        comodel_name="res.company",
+        default=lambda self: self.env.company,
     )
-    sequence_id = fields.Many2one(comodel_name="ir.sequence", string="Sequence file",)
+    sequence_id = fields.Many2one(
+        comodel_name="ir.sequence",
+        string="Sequence file",
+    )
     # The module will work as it is. However, some providers might override some things
     provider = fields.Selection(selection=[("base", "Generic")], required=True)
     communication_type = fields.Selection(
@@ -54,19 +58,28 @@ class EdiBackend(models.Model):
         string="Last Export", default="2000-01-01 00:00:00"
     )
     export_config_id = fields.Many2one(
-        comodel_name="edi.backend.config", string="Export config", ondelete="cascade",
+        comodel_name="edi.backend.config",
+        string="Export config",
+        ondelete="cascade",
     )
     import_config_id = fields.Many2one(
-        comodel_name="edi.backend.config", string="Import config", ondelete="cascade",
+        comodel_name="edi.backend.config",
+        string="Import config",
+        ondelete="cascade",
     )
-    model_id = fields.Many2one(comodel_name="ir.model", string="Odoo model",)
+    model_id = fields.Many2one(
+        comodel_name="ir.model",
+        string="Odoo model",
+    )
     filter_domain = fields.Char(string="Apply on")
     model_name = fields.Char()
     special_domain = fields.Char(
-        compute="_compute_special_domain", string="Special domain",
+        compute="_compute_special_domain",
+        string="Special domain",
     )
     date_field = fields.Many2one(
-        comodel_name="ir.model.fields", string="Date field to filter",
+        comodel_name="ir.model.fields",
+        string="Date field to filter",
     )
     date_range = fields.Selection(
         selection=[("current_month", "Current Month"), ("last_month", "Last Month")],
@@ -74,21 +87,25 @@ class EdiBackend(models.Model):
     )
     security_days = fields.Integer(string="Security days")
     data = fields.Binary(string="Last File", readonly=True)
-    extension = fields.Char(default=".txt",)
+    extension = fields.Char(
+        default=".txt",
+    )
     file_name = fields.Char(string="File name")
     # FTP data
     ftp_host = fields.Char()
     ftp_user = fields.Char()
     ftp_password = fields.Char()
     ftp_file_special_name = fields.Char(
-        string="File Special Name", help="File will allways be synced with this name",
+        string="File Special Name",
+        help="File will allways be synced with this name",
     )
     # SFTP data
     sftp_host = fields.Char()
     sftp_user = fields.Char()
     sftp_password = fields.Char()
     sftp_file_special_name = fields.Char(
-        string="File Special Name", help="File will allways be synced with this name",
+        string="File Special Name",
+        help="File will allways be synced with this name",
     )
     remote_path = fields.Char(string="Remote path")
     # Mail data
@@ -96,10 +113,14 @@ class EdiBackend(models.Model):
         comodel_name="res.partner",
         help="When mailing is enabled these will be the partners we'll communicate to",
     )
-    email_author = fields.Many2one(comodel_name="res.partner",)
+    email_author = fields.Many2one(
+        comodel_name="res.partner",
+    )
     # Communication history
     history_count = fields.Integer(compute="_compute_history_count")
-    group_key = fields.Char(string="Group key",)
+    group_key = fields.Char(
+        string="Group key",
+    )
     anonymize_entries = fields.Boolean()
     anonymized_domain = fields.Char()
     char_for_anonymize = fields.Char(default="x", size=1)
@@ -323,7 +344,10 @@ class EdiBackend(models.Model):
             or self.sequence_id.next_by_id()
         )
         contents, file, file_name = self._get_export_data(
-            domain, records, anonymized_records, sequence_file,
+            domain,
+            records,
+            anonymized_records,
+            sequence_file,
         )
         if not history_line:
             self.write(
@@ -395,7 +419,12 @@ class EdiBackend(models.Model):
 
     def _get_backend_filename(self, contents, sequence_file, records):
         lines_count = contents.count(b"\n")
-        return "{}{}{}{}".format(self.code, lines_count, sequence_file, self.extension,)
+        return "{}{}{}{}".format(
+            self.code,
+            lines_count,
+            sequence_file,
+            self.extension,
+        )
 
     # FTP Connection methods
     def _ftp_connection_params(self):
@@ -578,7 +607,9 @@ class EdiBackendCommunicationHistory(models.Model):
     _order = "create_date DESC"
 
     edi_backend_id = fields.Many2one(
-        comodel_name="edi.backend", string="EDI Backend", required=True,
+        comodel_name="edi.backend",
+        string="EDI Backend",
+        required=True,
     )
     company_id = fields.Many2one(
         related="edi_backend_id.company_id",
@@ -599,7 +630,10 @@ class EdiBackendCommunicationHistory(models.Model):
         copy=False,
         help="Indicates the state of the Export send state",
     )
-    model_name = fields.Char(related="edi_backend_id.model_id.model", readonly=True,)
+    model_name = fields.Char(
+        related="edi_backend_id.model_id.model",
+        readonly=True,
+    )
     applied_domain = fields.Char()
     applied_records = fields.Char()
     applied_sequence = fields.Char()

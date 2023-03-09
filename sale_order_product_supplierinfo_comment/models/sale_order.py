@@ -8,7 +8,8 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     supplierinfo_comment = fields.Text(
-        compute="_compute_supplierinfo_comment", store=True,
+        compute="_compute_supplierinfo_comment",
+        store=True,
     )
 
     @api.depends("supplierinfo_id")

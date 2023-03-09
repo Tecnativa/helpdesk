@@ -18,61 +18,61 @@
             <form string="Edi Backend">
                 <header>
                     <button
-            name="action_ftp_test_connection"
-            type="object"
-            string="Test FTP"
-            groups="base.group_no_one"
-            attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
-          />
+                        name="action_ftp_test_connection"
+                        type="object"
+                        string="Test FTP"
+                        groups="base.group_no_one"
+                        attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
+                    />
                     <button
-            name="action_sftp_test_connection"
-            type="object"
-            string="Test SFTP"
-            groups="base.group_no_one"
-            attrs="{'invisible': [('communication_type', '!=', 'sftp')]}"
-          />
+                        name="action_sftp_test_connection"
+                        type="object"
+                        string="Test SFTP"
+                        groups="base.group_no_one"
+                        attrs="{'invisible': [('communication_type', '!=', 'sftp')]}"
+                    />
                     <button
-            name="action_export"
-            type="object"
-            string="Export"
-            attrs="{'invisible': [('action_type', '!=', 'export')]}"
-          />
+                        name="action_export"
+                        type="object"
+                        string="Export"
+                        attrs="{'invisible': [('action_type', '!=', 'export')]}"
+                    />
                     <button
-            name="action_import"
-            type="object"
-            string="Import"
-            attrs="{'invisible': [('action_type', '!=', 'import')]}"
-          />
+                        name="action_import"
+                        type="object"
+                        string="Import"
+                        attrs="{'invisible': [('action_type', '!=', 'import')]}"
+                    />
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button
-              class="oe_stat_button"
-              name="create_cron"
-              icon="fa-th-list"
-              type="object"
-            >
+                            class="oe_stat_button"
+                            name="create_cron"
+                            icon="fa-th-list"
+                            type="object"
+                        >
                             <span class="o_stat_text">Cron</span>
                         </button>
                         <button
-              class="oe_stat_button"
-              name="action_communication_history"
-              icon="fa-th-list"
-              type="object"
-            >
+                            class="oe_stat_button"
+                            name="action_communication_history"
+                            icon="fa-th-list"
+                            type="object"
+                        >
                             <field
-                string="History"
-                name="history_count"
-                widget="statinfo"
-              />
+                                string="History"
+                                name="history_count"
+                                widget="statinfo"
+                            />
                         </button>
                     </div>
                     <widget
-            name="web_ribbon"
-            title="Archived"
-            bg_color="bg-danger"
-            attrs="{'invisible': [('active', '=', True)]}"
-          />
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
                     <field name="active" invisible="1" />
                     <group>
                         <field name="name" />
@@ -84,13 +84,13 @@
                         <field name="encoding" />
                         <field name="last_sync_date" invisible="1" />
                         <field
-              name="export_config_id"
-              attrs="{'invisible': [('action_type', '!=', 'export')], 'required': [('action_type', '=', 'export')]}"
-            />
+                            name="export_config_id"
+                            attrs="{'invisible': [('action_type', '!=', 'export')], 'required': [('action_type', '=', 'export')]}"
+                        />
                         <field
-              name="import_config_id"
-              attrs="{'invisible': [('action_type', '!=', 'import')], 'required': [('action_type', '=', 'import')]}"
-            />
+                            name="import_config_id"
+                            attrs="{'invisible': [('action_type', '!=', 'import')], 'required': [('action_type', '=', 'import')]}"
+                        />
                     </group>
                     <group>
                         <field name="sequence_id" />
@@ -99,9 +99,9 @@
                         <field name="data" readonly="1" filename="file_name" />
                     </group>
                     <group
-            string="FTP transfer"
-            attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
-          >
+                        string="FTP transfer"
+                        attrs="{'invisible': [('communication_type', '!=', 'ftp')]}"
+                    >
                         <field name="ftp_host" />
                         <field name="ftp_user" />
                         <field name="ftp_password" widget="password" />
@@ -109,30 +109,30 @@
                         <field name="ftp_file_special_name" />
                     </group>
                     <group
-            string="SFTP transfer"
-            attrs="{'invisible': [('communication_type', '!=', 'sftp')]}"
-          >
+                        string="SFTP transfer"
+                        attrs="{'invisible': [('communication_type', '!=', 'sftp')]}"
+                    >
                         <field name="sftp_host" />
                         <field name="sftp_user" />
                         <field name="sftp_password" widget="password" />
                         <field name="remote_path" />
                         <field name="sftp_file_special_name" />
                         <label
-              for="sftp_file_special_name"
-              string="Field used to search on the server the files that start by this name"
-              class="o_form_label text-muted"
-              attrs="{'invisible': [('action_type', '!=', 'import')]}"
-            />
+                            for="sftp_file_special_name"
+                            string="Field used to search on the server the files that start by this name"
+                            class="o_form_label text-muted"
+                            attrs="{'invisible': [('action_type', '!=', 'import')]}"
+                        />
                     </group>
                     <group
-            string="E-Mail"
-            attrs="{'invisible': [('communication_type', '!=', 'email')]}"
-          >
+                        string="E-Mail"
+                        attrs="{'invisible': [('communication_type', '!=', 'email')]}"
+                    >
                         <field name="destination_partner_ids" widget="many2many_tags" />
                         <field
-              name="email_author"
-              attrs="{'required': [('communication_type', '=', 'email')]}"
-            />
+                            name="email_author"
+                            attrs="{'required': [('communication_type', '=', 'email')]}"
+                        />
                     </group>
                     <notebook>
                         <page name="records_tab" string="Records">
@@ -140,18 +140,18 @@
                                 <field name="model_id" />
                                 <field name="model_name" invisible="1" />
                                 <field
-                  name="filter_domain"
-                  widget="domain"
-                  options="{'model': 'model_name'}"
-                />
+                                    name="filter_domain"
+                                    widget="domain"
+                                    options="{'model': 'model_name'}"
+                                />
                                 <field
-                  name="date_field"
-                  domain="[('model_id', '=', model_id), ('ttype', 'in', ['datetime', 'date'])]"
-                />
+                                    name="date_field"
+                                    domain="[('model_id', '=', model_id), ('ttype', 'in', ['datetime', 'date'])]"
+                                />
                                 <field
-                  name="date_range"
-                  attrs="{'invisible': [('date_field', '=', False)]}"
-                />
+                                    name="date_range"
+                                    attrs="{'invisible': [('date_field', '=', False)]}"
+                                />
                                 <field name="security_days" />
                                 <field name="special_domain" />
                             </group>
@@ -161,10 +161,10 @@
                                 <field name="anonymize_entries" />
                                 <field name="char_for_anonymize" />
                                 <field
-                  name="anonymized_domain"
-                  widget="domain"
-                  options="{'model': 'model_name'}"
-                />
+                                    name="anonymized_domain"
+                                    widget="domain"
+                                    options="{'model': 'model_name'}"
+                                />
                             </group>
                         </page>
                         <page string="Notes" name="notes">
@@ -181,32 +181,32 @@
         <field name="arch" type="xml">
             <search>
                 <field
-          name="name"
-          filter_domain="['|', '|', ('display_name', 'ilike', self), ('code', '=', self)]"
-        />
+                    name="name"
+                    filter_domain="['|', '|', ('display_name', 'ilike', self), ('code', '=', self)]"
+                />
                 <filter
-          name="export"
-          string="Export"
-          domain="[('action_type','=','export')]"
-        />
+                    name="export"
+                    string="Export"
+                    domain="[('action_type','=','export')]"
+                />
                 <filter
-          name="import"
-          string="Import"
-          domain="[('action_type','=','import')]"
-        />
+                    name="import"
+                    string="Import"
+                    domain="[('action_type','=','import')]"
+                />
                 <separator />
                 <filter
-          string="Archived"
-          name="inactive"
-          domain="[('active', '=', False)]"
-        />
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
                 <separator />
                 <group expand="0" string="Group By">
                     <filter
-            string="Action type"
-            name="group_action_type"
-            context="{'group_by': 'action_type'}"
-          />
+                        string="Action type"
+                        name="group_action_type"
+                        context="{'group_by': 'action_type'}"
+                    />
                 </group>
             </search>
         </field>
@@ -216,12 +216,12 @@
         <field name="res_model">edi.backend</field>
         <field name="view_mode">tree,form</field>
         <field
-      name="view_ids"
-      eval="[
+            name="view_ids"
+            eval="[
             (5, 0, 0),
             (0, 0, {'view_mode': 'tree', 'view_id': ref('base_edi_backend.edi_backend_tree')}),
             (0, 0, {'view_mode': 'form'})]"
-    />
+        />
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>

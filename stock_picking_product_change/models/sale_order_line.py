@@ -8,5 +8,7 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     replaced_qty = fields.Float(
-        string="Replaced qty", digits="Product Unit of Measure", readonly=True,
+        string="Replaced qty",
+        digits="Product Unit of Measure",
+        readonly=True,
     )

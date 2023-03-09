@@ -74,7 +74,7 @@ class EdiBackendFileWiz(models.TransientModel):
     def _format_alphabetic_string(
         self, text, length, fill=" ", align="<", allow_special_character=False
     ):
-        u"""Format the string into a fixed length ASCII (iso-8859-1) record
+        """Format the string into a fixed length ASCII (iso-8859-1) record
         without numbers.
         """
         if not text:
@@ -232,7 +232,10 @@ class EdiBackendFileWiz(models.TransientModel):
             especific_obj = obj_merge
             if not isinstance(obj_merge, dict):
                 especific_obj = obj_merge.with_context(self.env.context)
-            return safe_eval(exp, self._get_vals_for_safe_eval(especific_obj),)
+            return safe_eval(
+                exp,
+                self._get_vals_for_safe_eval(especific_obj),
+            )
 
         def merge(match):
             exp = str(match.group()[2:-1]).strip()

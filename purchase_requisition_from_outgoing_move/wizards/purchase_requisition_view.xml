@@ -19,11 +19,11 @@
                 </sheet>
                 <footer>
                     <button
-            name="print_report"
-            type="object"
-            string="Print"
-            class="btn-primary"
-          />
+                        name="print_report"
+                        type="object"
+                        string="Print"
+                        class="btn-primary"
+                    />
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </form>
@@ -38,11 +38,11 @@
     </record>
 
     <menuitem
-    id="purchase_requisition_from_outgoing_move_menu"
-    parent="purchase.purchase_report_main"
-    name="Print purchase requisition from outgoing moves"
-    action="action_purchase_requisition_wizard"
-    sequence="99"
-  />
+        id="purchase_requisition_from_outgoing_move_menu"
+        parent="purchase.purchase_report_main"
+        name="Print purchase requisition from outgoing moves"
+        action="action_purchase_requisition_wizard"
+        sequence="99"
+    />
 
 </odoo>

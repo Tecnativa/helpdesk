@@ -10,9 +10,9 @@
                 <group>
                     <field name="old_product_id" />
                     <field
-            name="new_product_id"
-            context="{'so_product_stock_inline': True}"
-          />
+                        name="new_product_id"
+                        context="{'so_product_stock_inline': True}"
+                    />
                     <field name="keep_secondary_unit" />
                     <field name="keep_description" />
                     <field name="keep_price" />
@@ -31,9 +31,9 @@
                             <field name="old_product_uom_qty" />
                             <field name="old_reserved_availability" />
                             <field
-                name="new_product_id"
-                context="{'so_product_stock_inline': True, 'warehouse': warehouse_id}"
-              />
+                                name="new_product_id"
+                                context="{'so_product_stock_inline': True, 'warehouse': warehouse_id}"
+                            />
                             <field name="new_product_free_qty" />
                             <field name="product_uom_qty" />
                         </tree>
@@ -41,11 +41,11 @@
                 </group>
                 <footer>
                     <button
-            name="action_change_product"
-            string="Change product"
-            type="object"
-            class="btn-primary"
-          />
+                        name="action_change_product"
+                        string="Change product"
+                        type="object"
+                        class="btn-primary"
+                    />
                     <button string="Cancel" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
@@ -63,9 +63,9 @@
         <field name="name">Product Change</field>
         <field name="res_model">stock.picking.product.change.wiz</field>
         <field
-      name="binding_model_id"
-      ref="stock_picking_batch.model_stock_picking_batch"
-    />
+            name="binding_model_id"
+            ref="stock_picking_batch.model_stock_picking_batch"
+        />
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>

@@ -12,18 +12,30 @@ class StockPickingProductChange(models.TransientModel):
     _description = "Stock picking change wizard"
 
     picking_ids = fields.Many2many(
-        comodel_name="stock.picking", string="Pickings to process",
+        comodel_name="stock.picking",
+        string="Pickings to process",
     )
     old_product_id = fields.Many2one(
-        comodel_name="product.product", string="Original Product",
+        comodel_name="product.product",
+        string="Original Product",
     )
     new_product_id = fields.Many2one(
-        comodel_name="product.product", string="New product",
+        comodel_name="product.product",
+        string="New product",
     )
-    keep_secondary_unit = fields.Boolean(string="Keep secondary unit", default=True,)
-    keep_description = fields.Boolean(string="Keep description",)
-    keep_price = fields.Boolean(string="Keep price",)
-    only_qty_needed = fields.Boolean(string="Only quantity needed",)
+    keep_secondary_unit = fields.Boolean(
+        string="Keep secondary unit",
+        default=True,
+    )
+    keep_description = fields.Boolean(
+        string="Keep description",
+    )
+    keep_price = fields.Boolean(
+        string="Keep price",
+    )
+    only_qty_needed = fields.Boolean(
+        string="Only quantity needed",
+    )
     line_ids = fields.One2many(
         comodel_name="stock.picking.product.change.line.wiz",
         inverse_name="wizard_id",
@@ -86,17 +98,25 @@ class StockPickingProductChangeLine(models.TransientModel):
         ondelete="cascade",
         readonly=True,
     )
-    move_id = fields.Many2one(comodel_name="stock.move", string="Move", readonly=True,)
+    move_id = fields.Many2one(
+        comodel_name="stock.move",
+        string="Move",
+        readonly=True,
+    )
     warehouse_id = fields.Many2one(
         comodel_name="stock.warehouse",
         string="Warehouse",
         related="move_id.warehouse_id",
     )
     picking_id = fields.Many2one(
-        comodel_name="stock.picking", related="move_id.picking_id", string="Picking",
+        comodel_name="stock.picking",
+        related="move_id.picking_id",
+        string="Picking",
     )
     partner_id = fields.Many2one(
-        comodel_name="res.partner", related="picking_id.partner_id", string="Partner",
+        comodel_name="res.partner",
+        related="picking_id.partner_id",
+        string="Partner",
     )
     old_product_id = fields.Many2one(
         comodel_name="product.product",
@@ -122,10 +142,12 @@ class StockPickingProductChangeLine(models.TransientModel):
         digits="Product Unit of Measure",
     )
     new_product_free_qty = fields.Float(
-        compute="_compute_new_product_free_qty", digits="Product Unit of Measure",
+        compute="_compute_new_product_free_qty",
+        digits="Product Unit of Measure",
     )
     product_uom_qty = fields.Float(
-        string="Qty. to change", digits="Product Unit of Measure",
+        string="Qty. to change",
+        digits="Product Unit of Measure",
     )
 
     # TODO: Move to other module

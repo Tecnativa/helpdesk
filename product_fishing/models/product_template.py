@@ -16,7 +16,8 @@ class ProductTemplate(models.Model):
         compute="_compute_product_presentation_ids",
     )
     gamma_ids = fields.Many2many(
-        comodel_name="product.attribute.value", compute="_compute_gamma_ids",
+        comodel_name="product.attribute.value",
+        compute="_compute_gamma_ids",
     )
     allergens_ids = fields.Many2many(
         comodel_name="product.attribute.value", compute="_compute_allergens_ids"

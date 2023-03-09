@@ -21,7 +21,8 @@ class EdiBackendConfig(models.Model):
         string="Lines",
     )
     filler_zero_with = fields.Selection(
-        [("zero", "Zeros"), ("blank", "Blank")], string="Fill left zeros with...",
+        [("zero", "Zeros"), ("blank", "Blank")],
+        string="Fill left zeros with...",
     )
     columns_definition = fields.Selection(
         [("positional", "Positional"), ("separator", "Separator")], default="positional"
@@ -36,13 +37,17 @@ class EdiBackendConfigLine(models.Model):
     _order = "sequence"
 
     export_config_id = fields.Many2one(
-        comodel_name="edi.backend.config", string="Config parent", ondelete="cascade",
+        comodel_name="edi.backend.config",
+        string="Config parent",
+        ondelete="cascade",
     )
     subconfig_id = fields.Many2one(
-        comodel_name="edi.backend.config", string="Sub-configuration",
+        comodel_name="edi.backend.config",
+        string="Sub-configuration",
     )
     filler_zero_with = fields.Selection(
-        [("zero", "Zeros"), ("blank", "Blank")], string="Filler left zeros with ...",
+        [("zero", "Zeros"), ("blank", "Blank")],
+        string="Filler left zeros with ...",
     )
     negative_sign = fields.Char(default="-")
     apply_separator_char = fields.Boolean(default=True)

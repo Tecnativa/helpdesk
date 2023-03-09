@@ -8,10 +8,15 @@ from odoo.exceptions import Warning
 class PurchaseRequisitionWiz(models.TransientModel):
     _name = "purchase.requisition.wiz"
 
-    date_from = fields.Datetime(string="Date From",)
-    date_to = fields.Datetime(string="Date To",)
+    date_from = fields.Datetime(
+        string="Date From",
+    )
+    date_to = fields.Datetime(
+        string="Date To",
+    )
     product_attribute_ids = fields.Many2many(
-        comodel_name="product.attribute.value", string="Product Attribute",
+        comodel_name="product.attribute.value",
+        string="Product Attribute",
     )
 
     def print_report(self):

@@ -6,17 +6,17 @@
         <field name="model">stock.move</field>
         <field name="report_type">qweb-pdf</field>
         <field
-      name="report_name"
-    >purchase_requisition_from_outgoing_move.report_purchase_requisition</field>
+            name="report_name"
+        >purchase_requisition_from_outgoing_move.report_purchase_requisition</field>
         <field
-      name="report_file"
-    >purchase_requisition_from_outgoing_move.report_purchase_requisition</field>
+            name="report_file"
+        >purchase_requisition_from_outgoing_move.report_purchase_requisition</field>
         <field name="print_report_name">'Purchase List - %s' % (object.name)</field>
         <field name="binding_type">report</field>
         <field
-      name="paperformat_id"
-      ref="purchase_requisition_from_outgoing_move.paperformat_euro_purchase_requisition"
-    />
+            name="paperformat_id"
+            ref="purchase_requisition_from_outgoing_move.paperformat_euro_purchase_requisition"
+        />
     </record>
 
 </odoo>

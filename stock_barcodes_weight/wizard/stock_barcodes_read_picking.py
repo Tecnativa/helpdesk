@@ -13,8 +13,10 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         calibers = self.product_id.product_tmpl_id.caliber_ids
         caliber_att = calibers[:1].attribute_id
         if calibers:
-            actual_caliber = self.product_id.product_template_variant_value_ids.filtered(
-                lambda v: v.attribute_id == caliber_att
+            actual_caliber = (
+                self.product_id.product_template_variant_value_ids.filtered(
+                    lambda v: v.attribute_id == caliber_att
+                )
             )
             att_value = actual_caliber.product_attribute_value_id
             from_range = att_value.from_range * (1 - att_value.tolerance_range / 100)

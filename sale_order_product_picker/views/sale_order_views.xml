@@ -18,44 +18,44 @@
                 <attribute name="limit">200</attribute>
             </xpath>
             <xpath
-        expr="//field[@name='order_line']//tree//field[@name='product_id']"
-        position="attributes"
-      >
+                expr="//field[@name='order_line']//tree//field[@name='product_id']"
+                position="attributes"
+            >
                 <attribute
-          name="attrs"
-        >{'readonly': [('product_id', '!=', False)], 'required': [('display_type', '=', False)]}</attribute>
+                    name="attrs"
+                >{'readonly': [('product_id', '!=', False)], 'required': [('display_type', '=', False)]}</attribute>
             </xpath>
             <xpath
-        expr="//field[@name='order_line']//form//field[@name='product_id']"
-        position="attributes"
-      >
+                expr="//field[@name='order_line']//form//field[@name='product_id']"
+                position="attributes"
+            >
                 <attribute
-          name="attrs"
-        >{'readonly': [['product_id', "!=", False]]}</attribute>
+                    name="attrs"
+                >{'readonly': [['product_id', "!=", False]]}</attribute>
                 <attribute name="on_change">1</attribute>
             </xpath>
         <xpath
-        expr="//field[@name='order_line']//form//div[@name='invoice_lines']"
-        position="attributes"
-      >
+                expr="//field[@name='order_line']//form//div[@name='invoice_lines']"
+                position="attributes"
+            >
                 <attribute name="attrs">{'invisible': [(1, '=', 1)]}</attribute>
         </xpath>
         <xpath
-        expr="//field[@name='order_line']//form//field[@name='tax_id']"
-        position="attributes"
-      >
+                expr="//field[@name='order_line']//form//field[@name='tax_id']"
+                position="attributes"
+            >
                 <attribute name="invisible">1</attribute>
         </xpath>
         <xpath
-        expr="//field[@name='order_line']//form//field[@name='product_uom_qty']"
-        position="attributes"
-      >
+                expr="//field[@name='order_line']//form//field[@name='product_uom_qty']"
+                position="attributes"
+            >
             <attribute name="widget">numeric_step</attribute>
         </xpath>
             <xpath
-        expr="//field[@name='order_line']/kanban//field[@name='company_id']"
-        position="after"
-      >
+                expr="//field[@name='order_line']/kanban//field[@name='company_id']"
+                position="after"
+            >
                 <field name="move_ids" />
                 <field name="virtual_available_at_date" />
                 <field name="scheduled_date" />
@@ -69,9 +69,9 @@
                 <field name="state" />
             </xpath>
             <xpath
-        expr="//field[@name='order_line']/kanban//div[hasclass('no-gutters')]"
-        position="inside"
-      >
+                expr="//field[@name='order_line']/kanban//div[hasclass('no-gutters')]"
+                position="inside"
+            >
 <!--                <widget name="qty_at_date_widget" width="20px" />-->
             </xpath>
             <xpath expr="//page[@name='order_lines']" position="after">
@@ -79,36 +79,36 @@
                     <div class="d-flex">
                         <div>
                             <label
-                string="Origin"
-                for="picker_origin_data"
-                class="mr-3"
-              />
+                                string="Origin"
+                                for="picker_origin_data"
+                                class="mr-3"
+                            />
                             <field name="picker_origin_data" widget="selection_badge" />
                         </div>
                         <div>
                             <label
-                string="Price"
-                for="picker_price_origin"
-                class="mx-3"
-              />
+                                string="Price"
+                                for="picker_price_origin"
+                                class="mx-3"
+                            />
                             <field
-                name="picker_price_origin"
-                widget="selection_badge"
-              />
+                                name="picker_price_origin"
+                                widget="selection_badge"
+                            />
                         </div>
                         <div
-              class="d-flex"
-              style="max-width: 400px; max-height: 30px; margin-left: 10px; width: 100%;"
-            >
+                            class="d-flex"
+                            style="max-width: 400px; max-height: 30px; margin-left: 10px; width: 100%;"
+                        >
                             <field
-                name="product_name_search"
-                placeholder="Input product code or name"
-              />
+                                name="product_name_search"
+                                placeholder="Input product code or name"
+                            />
                             <label
-                string=""
-                for="product_name_search"
-                class="fa fa-search mx-3"
-              />
+                                string=""
+                                for="product_name_search"
+                                class="fa fa-search mx-3"
+                            />
                         </div>
                     </div>
                     <div class="d-flex">
@@ -116,9 +116,9 @@
                             <field name="picker_filter" widget="selection_badge" />
                             <label for="picker_only_available" class="mx-3" />
                             <field
-              name="picker_only_available"
-              widget="boolean_toggle"
-            />
+                            name="picker_only_available"
+                            widget="boolean_toggle"
+                        />
                     </div>
                     <field name="picker_ids">
                         <kanban class="o_picker_kanban">
@@ -150,56 +150,56 @@
                                             <div class="row no-gutters">
                                                 <div class="col-2 pr-3">
                                                     <img
-                            t-att-src="kanban_image('product.product', 'image_128', record.product_id.raw_value)"
-                            t-att-title="record.product_id.value"
-                            t-att-alt="record.product_id.value"
-                            style="max-width: 100%;"
-                          />
+                                                        t-att-src="kanban_image('product.product', 'image_128', record.product_id.raw_value)"
+                                                        t-att-title="record.product_id.value"
+                                                        t-att-alt="record.product_id.value"
+                                                        style="max-width: 100%;"
+                                                    />
                                                 </div>
                                                 <div class="col-8">
                                                     <div class="row">
                                                         <div class="col">
                                                             <strong
-                                t-esc="record.product_id.value"
-                                t-attf-class="#{record.is_in_order.raw_value ? 'text-success' : ''}"
-                              />
+                                                                t-esc="record.product_id.value"
+                                                                t-attf-class="#{record.is_in_order.raw_value ? 'text-success' : ''}"
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-6 text-muted">
                                                             Quantity: <field
-                                name="product_uom_qty"
-                              />
+                                                                name="product_uom_qty"
+                                                            />
                                                         </div>
-                <!-- TODO: Use stock widget -->
+                                                        <!-- TODO: Use stock widget -->
                                                         <div
-                              class="col-6 text-muted"
-                              t-if="record.qty_available.raw_value"
-                            >
+                                                            class="col-6 text-muted"
+                                                            t-if="record.qty_available.raw_value"
+                                                        >
                                                             Available: <field
-                                name="qty_available"
-                              />
+                                                                name="qty_available"
+                                                            />
                                                         </div>
                                                     </div>
-                <!-- TODO: Use pretty element -->
+                                                    <!-- TODO: Use pretty element -->
                                                     <div class="row">
                                                         <div
-                              class="col-12 font-weight-bold"
-                            >
+                                                            class="col-12 font-weight-bold"
+                                                        >
                                                             <field
-                                name="price_unit"
-                                widget="monetary"
-                              />
+                                                                name="price_unit"
+                                                                widget="monetary"
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div
-                            class="row"
-                            t-if="record.qty_delivered.raw_value"
-                          >
+                                                        class="row"
+                                                        t-if="record.qty_delivered.raw_value"
+                                                    >
                                                         <div class="col-12 text-muted">
                                                             Previous delivered: <field
-                                name="qty_delivered"
-                              />
+                                                                name="qty_delivered"
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -211,23 +211,23 @@
                                                     <div class="row mb-3">
                                                         <div class="col-12">
                                                             <button
-                                class="btn btn-primary o_picker_quick_add w-100"
-                              >
+                                                                class="btn btn-primary o_picker_quick_add w-100"
+                                                            >
                                                                 <strong
-                                  style="font-size: 1.2em"
-                                >+1</strong>
+                                                                    style="font-size: 1.2em"
+                                                                >+1</strong>
                                                             </button>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <button
-                                class="btn btn-secondary o_picker_form_add w-100"
-                                t-if="record.is_in_order.raw_value"
-                              >
+                                                                class="btn btn-secondary o_picker_form_add w-100"
+                                                                t-if="record.is_in_order.raw_value"
+                                                            >
                                                                 <i
-                                  class="fa fa-files-o"
-                                />
+                                                                    class="fa fa-files-o"
+                                                                />
                                                             </button>
                                                         </div>
                                                     </div>
@@ -248,19 +248,19 @@
         <field name="res_model">sale.order</field>
         <field name="view_mode">tree,form</field>
         <field
-      name="view_ids"
-      eval="[(5, 0, 0),
+            name="view_ids"
+            eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'tree'}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('view_order_form')})]"
-    />
+        />
     </record>
     <menuitem
-    name="Commercial Quotations"
-    id="menu_email_campaigns"
-    parent="sale.sale_order_menu"
-    sequence="5"
-    action="action_open_picker_views"
-    groups="sales_team.group_sale_salesman"
-  />
+        name="Commercial Quotations"
+        id="menu_email_campaigns"
+        parent="sale.sale_order_menu"
+        sequence="5"
+        action="action_open_picker_views"
+        groups="sales_team.group_sale_salesman"
+    />
 
 </odoo>

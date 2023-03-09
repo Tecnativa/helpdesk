@@ -27,41 +27,41 @@
             <form string="EDI Backend History" create="false">
                 <header>
                     <button
-            name="action_set_no_send"
-            type="object"
-            string="Set no send"
-            attrs="{'invisible': [('action_type', '!=', 'export')]}"
-          />
+                        name="action_set_no_send"
+                        type="object"
+                        string="Set no send"
+                        attrs="{'invisible': [('action_type', '!=', 'export')]}"
+                    />
                     <button
-            name="action_rebuild_file"
-            type="object"
-            string="Rebuild"
-            attrs="{'invisible': [('action_type', '!=', 'export')]}"
-          />
+                        name="action_rebuild_file"
+                        type="object"
+                        string="Rebuild"
+                        attrs="{'invisible': [('action_type', '!=', 'export')]}"
+                    />
                     <button
-            name="action_open_applied_records"
-            type="object"
-            string="Open records"
-          />
+                        name="action_open_applied_records"
+                        type="object"
+                        string="Open records"
+                    />
                     <button
-            name="action_import_run"
-            type="object"
-            string="Import from file"
-            attrs="{'invisible': [('action_type', '!=', 'import')]}"
-          />
+                        name="action_import_run"
+                        type="object"
+                        string="Import from file"
+                        attrs="{'invisible': [('action_type', '!=', 'import')]}"
+                    />
                     <field
-            name="state"
-            widget="statusbar"
-            attrs="{'invisible': [('action_type', '!=', 'export')]}"
-          />
+                        name="state"
+                        widget="statusbar"
+                        attrs="{'invisible': [('action_type', '!=', 'export')]}"
+                    />
                 </header>
                 <sheet>
                     <widget
-            name="web_ribbon"
-            title="Archived"
-            bg_color="bg-danger"
-            attrs="{'invisible': [('active', '=', True)]}"
-          />
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
                     <field name="active" invisible="1" />
                     <group>
                         <field name="edi_backend_id" />
@@ -73,11 +73,11 @@
                     <group>
                         <field name="model_name" invisible="1" />
                         <field
-              name="applied_domain"
-              widget="domain"
-              options="{'model': 'model_name'}"
-              attrs="{'invisible': [('action_type', '!=', 'export')]}"
-            />
+                            name="applied_domain"
+                            widget="domain"
+                            options="{'model': 'model_name'}"
+                            attrs="{'invisible': [('action_type', '!=', 'export')]}"
+                        />
                         <field name="applied_records" />
                     </group>
                     <group>

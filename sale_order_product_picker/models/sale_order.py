@@ -168,7 +168,10 @@ class SaleOrder(models.Model):
         # Manual ordering that circumvents ORM limitations
         found_lines = sorted(
             found_lines,
-            key=lambda res: (res["product_id_count"], res["qty_delivered"],),
+            key=lambda res: (
+                res["product_id_count"],
+                res["qty_delivered"],
+            ),
             reverse=True,
         )
         return found_lines
