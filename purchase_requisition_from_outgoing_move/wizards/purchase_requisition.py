@@ -2,18 +2,15 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import _, fields, models
-from odoo.exceptions import Warning
+from odoo.exceptions import ValidationError
 
 
 class PurchaseRequisitionWiz(models.TransientModel):
     _name = "purchase.requisition.wiz"
+    _description = "Purchase requisition wiz"
 
-    date_from = fields.Datetime(
-        string="Date From",
-    )
-    date_to = fields.Datetime(
-        string="Date To",
-    )
+    date_from = fields.Datetime()
+    date_to = fields.Datetime()
     product_attribute_ids = fields.Many2many(
         comodel_name="product.attribute.value",
         string="Product Attribute",
@@ -39,7 +36,7 @@ class PurchaseRequisitionWiz(models.TransientModel):
 
         moves = self.env["stock.move"].search(domain)
         if not moves:
-            raise Warning(_("There is no moves to print"))
+            raise ValidationError(_("There is no moves to print"))
 
         return self.env.ref(
             "purchase_requisition_from_outgoing_move.report_purchase_requisition_outgoing"

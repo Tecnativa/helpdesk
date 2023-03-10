@@ -10,7 +10,7 @@ class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
     def _create_and_assign_production_lot(self):
-        super(StockMoveLine, self)._create_and_assign_production_lot()
+        res = super(StockMoveLine, self)._create_and_assign_production_lot()
         picking_dic = defaultdict(lambda: self.browse())
         for sml in self:
             picking_dic[sml.picking_id.id] += sml
@@ -18,3 +18,4 @@ class StockMoveLine(models.Model):
             move_lines.mapped("lot_id").with_context(
                 active_picking_id=picking_id
             )._compute_fao_fishing()
+        return res

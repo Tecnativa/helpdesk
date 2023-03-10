@@ -32,7 +32,6 @@ class ProductTemplate(models.Model):
     )
     weight_type = fields.Selection(
         [("variable", "Variable"), ("fixed", "Fixed")],
-        string="Weight Type",
         default="fixed",
     )
 

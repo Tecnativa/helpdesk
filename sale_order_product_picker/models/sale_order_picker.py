@@ -73,7 +73,7 @@ class SaleOrderPicker(models.Model):
                 line.price_unit = line._get_last_sale_price_product()
             else:
                 line.price_unit = line.product_id.with_context(
-                    line._get_picker_price_unit_context()
+                    **line._get_picker_price_unit_context()
                 ).price
 
     @api.depends("product_id")
