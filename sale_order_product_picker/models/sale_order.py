@@ -32,6 +32,12 @@ class SaleOrder(models.Model):
     )
     picker_only_available = fields.Boolean(string="Available", store=False)
     use_delivery_address = fields.Boolean(store=False, default=False)
+    picker_product_attribute_value_id = fields.Many2one(
+        comodel_name="product.attribute.value",
+        string="Attribute value",
+        help="Filter products by attribute value",
+        store=False,
+    )
     product_name_search = fields.Char(string="Search product", store=False)
 
     @api.model
@@ -46,7 +52,10 @@ class SaleOrder(models.Model):
     # @ormcache("self.partner_id", "self.picker_filter", "self.product_name_search")
     def _get_picker_product_ids(self):
         if not self.partner_id or not (
-            self.picker_origin_data or self.picker_filter or self.product_name_search
+            self.picker_origin_data
+            or self.picker_filter
+            or self.picker_product_attribute_value_id
+            or self.product_name_search
         ):
             self.picker_ids = False
             return None
@@ -66,6 +75,14 @@ class SaleOrder(models.Model):
             domain = expression.AND([domain, [(available_field, ">", 0.0)]])
         if product_filter.domain:
             domain = expression.AND([domain, literal_eval(product_filter.domain)])
+        if self.picker_product_attribute_value_id:
+            domain.append(
+                (
+                    "attribute_line_ids.value_ids",
+                    "=",
+                    self.picker_product_attribute_value_id.id,
+                )
+            )
         if self.product_name_search:
             product_ids = Product._name_search(self.product_name_search, args=domain)
         else:
@@ -84,6 +101,7 @@ class SaleOrder(models.Model):
         "picker_price_origin",
         "picker_filter",
         "picker_only_available",
+        "picker_product_attribute_value_id",
         "product_name_search",
     )
     def _compute_picker_ids(self):

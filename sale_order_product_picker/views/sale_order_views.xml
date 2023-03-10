@@ -119,6 +119,12 @@
                             name="picker_only_available"
                             widget="boolean_toggle"
                         />
+                            <label
+                            string="Attribute"
+                            for="picker_product_attribute_value_id"
+                            class="mx-3"
+                        />
+                            <field name="picker_product_attribute_value_id" />
                     </div>
                     <field name="picker_ids">
                         <kanban class="o_picker_kanban">
