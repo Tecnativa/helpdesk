@@ -223,13 +223,13 @@ class EdiBackend(models.Model):
 
     def _fill_data_from_vals(self, vals_list):
         records = set()
-        for vals in vals_list:
-            res = self.fill_model_data(vals)
+        for index, vals in enumerate(vals_list):
+            res = self.fill_model_data(vals, index)
             if res:
                 records.add(res)
         return list(records)
 
-    def fill_model_data(self, vals):
+    def fill_model_data(self, vals, index=0):
         """Overwrite this method to fill the data model."""
         return False
 

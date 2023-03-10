@@ -10,6 +10,8 @@
 import base64
 import re
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import _, exceptions, fields, models, tools
 from odoo.tools.safe_eval import safe_eval
 
@@ -224,6 +226,7 @@ class EdiBackendFileWiz(models.TransientModel):
             "format_date": self.format_custom_date,
             "format_date_sp": self.format_custom_date_sp,
             "format_hour": self.format_custom_hour,
+            "relativedelta": relativedelta,
         }
 
     # Modify to include date functions
