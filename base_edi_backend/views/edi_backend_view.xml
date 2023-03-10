@@ -113,6 +113,7 @@
                         attrs="{'invisible': [('communication_type', '!=', 'sftp')]}"
                     >
                         <field name="sftp_host" />
+                        <field name="sftp_port" />
                         <field name="sftp_user" />
                         <field name="sftp_password" widget="password" />
                         <field name="remote_path" />
@@ -131,7 +132,42 @@
                         <field name="destination_partner_ids" widget="many2many_tags" />
                         <field
                             name="email_author"
-                            attrs="{'required': [('communication_type', '=', 'email')]}"
+                            attrs="{'required': [('communication_type', '=', 'email'),
+                                                ('action_type', '=', 'export')],
+                                    'invisible':[('action_type','!=','export')]}"
+                        />
+                        <label
+                            for="alias_name"
+                            string="Email Alias"
+                            attrs="{'invisible': [('action_type', '!=', 'import')]}"
+                        />
+                        <div
+                            name="alias_def"
+                            attrs="{'invisible': [('action_type', '!=', 'import')]}"
+                        >
+                            <field
+                                name="alias_id"
+                                class="oe_read_only oe_inline"
+                                string="Email Alias"
+                                required="0"
+                            />
+                                <div
+                                class="oe_edit_only oe_inline"
+                                name="edit_alias"
+                                style="display: inline;"
+                            >
+                                    <field name="alias_name" class="oe_inline" />@<field
+                                    name="alias_domain"
+                                    class="oe_inline"
+                                    readonly="1"
+                                />
+                                </div>
+                            </div>
+                         <field
+                            name="alias_contact"
+                            class="oe_inline oe_edit_only"
+                            attrs="{'invisible': [('action_type', '!=', 'import')]}"
+                            string="Accept Emails From"
                         />
                     </group>
                     <notebook>
