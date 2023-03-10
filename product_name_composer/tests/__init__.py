@@ -1,1 +1,1 @@
-from . import test_stock_production_lot_info_last_purchase
+from . import test_product_name_composer
