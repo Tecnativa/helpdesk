@@ -22,6 +22,7 @@ except ImportError:
 class EdiBackend(models.Model):
     _name = "edi.backend"
     _description = "EDI Backend"
+    _inherit = ["mail.alias.mixin", "mail.thread"]
 
     active = fields.Boolean(default=True)
     name = fields.Char()
@@ -103,6 +104,7 @@ class EdiBackend(models.Model):
     sftp_host = fields.Char()
     sftp_user = fields.Char()
     sftp_password = fields.Char()
+    sftp_port = fields.Integer(default=22)
     sftp_file_special_name = fields.Char(
         string="File Special Name",
         help="File will allways be synced with this name",
@@ -215,7 +217,11 @@ class EdiBackend(models.Model):
                 continue
             vals = {}
             for config in lines_config:
-                value = item[config.position - 1 : config.position + config.size - 1]
+                value = item[
+                    config.position - 1 : config.position + config.size - 1
+                    if config.size
+                    else None
+                ]
                 vals[config.key] = value
             if vals:
                 vals_list.append(vals)
@@ -223,10 +229,14 @@ class EdiBackend(models.Model):
 
     def _fill_data_from_vals(self, vals_list):
         records = set()
+        last_record_id = False
         for index, vals in enumerate(vals_list):
-            res = self.fill_model_data(vals, index)
-            if res:
-                records.add(res)
+            rec = self.with_context(last_record_id=last_record_id).fill_model_data(
+                vals, index
+            )
+            if rec:
+                last_record_id = rec
+                records.add(rec)
         return list(records)
 
     def fill_model_data(self, vals, index=0):
@@ -392,30 +402,35 @@ class EdiBackend(models.Model):
 
     def action_import_run(self):
         now = fields.Datetime.now()
-        file_names = getattr(self, "_%s_get_names" % self.communication_type)()
-        for file_name in file_names:
-            file = getattr(self, "_file_from_%s" % self.communication_type)(file_name)
-            self.write(
-                {
-                    "data": file,
-                    "file_name": file_name,
-                    "last_sync_date": self.security_days or now,
-                }
-            )
-            vals_list = self._get_vals_from_file()
-            records = self._fill_data_from_vals(vals_list)
-            self.env["edi.backend.communication.history"].create(
-                {
-                    "edi_backend_id": self.id,
-                    "company_id": self.company_id.id,
-                    "data": file,
-                    "file_name": file_name,
-                    "applied_records": str(records),
-                }
-            )
-        # If no problems found, then delete files from server
-        for file_name in file_names:
-            getattr(self, "_%s_delete_file" % self.communication_type)(file_name)
+        if self.communication_type == "email":
+            self.action_import_history_run()
+        else:
+            file_names = getattr(self, "_%s_get_names" % self.communication_type)()
+            for file_name in file_names:
+                file = getattr(self, "_file_from_%s" % self.communication_type)(
+                    file_name
+                )
+                self.write(
+                    {
+                        "data": file,
+                        "file_name": file_name,
+                        "last_sync_date": self.security_days or now,
+                    }
+                )
+                vals_list = self._get_vals_from_file()
+                record_ids = self._fill_data_from_vals(vals_list)
+                self.env["edi.backend.communication.history"].create(
+                    {
+                        "edi_backend_id": self.id,
+                        "company_id": self.company_id.id,
+                        "data": file,
+                        "file_name": file_name,
+                        "applied_records": str(record_ids),
+                    }
+                )
+            # If no problems found, then delete files from server
+            for file_name in file_names:
+                getattr(self, "_%s_delete_file" % self.communication_type)(file_name)
 
     def _get_backend_filename(self, contents, sequence_file, records):
         lines_count = contents.count(b"\n")
@@ -479,7 +494,7 @@ class EdiBackend(models.Model):
             "host": self.sftp_host,
             "username": self.sftp_user,
             "password": self.sftp_password,
-            "port": 22,
+            "port": self.sftp_port,
             "cnopts": cnopts,
         }
 
@@ -551,7 +566,7 @@ class EdiBackend(models.Model):
                 remote_path += "/"
             all_files = sftp.listdir(remote_path)
             for file in all_files:
-                if file.startswith(self.sftp_file_special_name):
+                if file.startswith(self.sftp_file_special_name or ""):
                     file_names.append(file)
         return file_names
 
@@ -599,12 +614,30 @@ class EdiBackend(models.Model):
             vals["sequence_id"] = self._create_sequence(vals).id
         return super().create(vals)
 
+    def get_alias_model_name(self, vals):
+        return vals.get("alias_model", "edi.backend.communication.history")
+
+    def get_alias_values(self):
+        values = super(EdiBackend, self).get_alias_values()
+        values["alias_defaults"] = {"edi_backend_id": self.id}
+        return values
+
+    def action_import_history_run(self):
+        records = self.env["edi.backend.communication.history"].search(
+            [("edi_backend_id", "=", self.id)]
+        )
+        for record in records:
+            if not record.applied_records:
+                record.action_import_run()
+        return
+
 
 class EdiBackendCommunicationHistory(models.Model):
     _name = "edi.backend.communication.history"
     _description = "EDI Backend communication history"
     _rec_name = "create_date"
     _order = "create_date DESC"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     edi_backend_id = fields.Many2one(
         comodel_name="edi.backend",
@@ -683,3 +716,21 @@ class EdiBackendCommunicationHistory(models.Model):
         vals_list = self.edi_backend_id._get_vals_from_file(history=self)
         records = self.edi_backend_id._fill_data_from_vals(vals_list)
         self.applied_records = str(records)
+
+    def message_new(self, msg_dict, custom_values=None):
+        attachments = msg_dict.get("attachments", False)
+        if attachments:
+            if len(attachments) > 1:
+                for i in range(1, len(attachments)):
+                    cc_values = {
+                        "data": base64.b64encode(attachments[i][1]),
+                        "file_name": attachments[i][0],
+                    }
+                    cc_values.update(custom_values)
+                    self.create(cc_values)
+            cc_values = {
+                "data": base64.b64encode(attachments[0][1]),
+                "file_name": attachments[0][0],
+            }
+            cc_values.update(custom_values)
+        return super().message_new(msg_dict, custom_values=cc_values)
