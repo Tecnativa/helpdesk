@@ -175,7 +175,16 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                 });
             } else if (lines.length === 1) {
                 const id = lines[0].line.id;
-                const changes = {product_uom_qty: lines[0].data.product_uom_qty + 1};
+                const changes = {};
+                if (lines[0].data.secondary_uom_id) {
+                    Object.assign(changes, {
+                        secondary_uom_qty: lines[0].data.secondary_uom_qty + 1,
+                    });
+                } else {
+                    Object.assign(changes, {
+                        product_uom_qty: lines[0].data.product_uom_qty + 1,
+                    });
+                }
                 list.picker = true;
                 list._setValue({
                     operation: "UPDATE",
