@@ -52,6 +52,7 @@ class SaleOrder(models.Model):
         return [
             "picker_origin_data",
             "picker_filter",
+            "picker_only_available",
             "picker_product_attribute_value_id",
             "product_name_search",
         ]
@@ -104,15 +105,7 @@ class SaleOrder(models.Model):
             lambda sol: sol.product_id.id == picker_data["product_id"][0]
         )
 
-    @api.depends(
-        "partner_id",
-        "picker_origin_data",
-        "picker_price_origin",
-        "picker_filter",
-        "picker_only_available",
-        "picker_product_attribute_value_id",
-        "product_name_search",
-    )
+    @api.depends(lambda s: ["partner_id"] + s._get_picker_trigger_search_fields())
     def _compute_picker_ids(self):
         for order in self:
             product_ids = order._get_picker_product_ids()

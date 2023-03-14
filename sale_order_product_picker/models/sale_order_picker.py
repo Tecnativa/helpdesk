@@ -62,7 +62,7 @@ class SaleOrderPicker(models.Model):
             "quantity": self.product_uom_qty,
         }
 
-    @api.depends("product_id", "order_id.partner_id")
+    @api.depends("product_id", "order_id.partner_id", "order_id.picker_price_origin")
     def _compute_price_unit(self):
         """
         Get product price unit from product list price or from last sale price
