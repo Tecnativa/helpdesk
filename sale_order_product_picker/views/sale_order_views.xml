@@ -124,7 +124,10 @@
                             for="picker_product_attribute_value_id"
                             class="mx-3"
                         />
-                            <field name="picker_product_attribute_value_id" />
+                            <field
+                            name="picker_product_attribute_value_id"
+                            options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                        />
                     </div>
                     <field name="picker_ids">
                         <kanban class="o_picker_kanban">

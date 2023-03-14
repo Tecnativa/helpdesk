@@ -23,11 +23,11 @@ class SaleOrder(models.Model):
         selection="_list_product_picker_filters", string="Filter", store=False
     )
     picker_origin_data = fields.Selection(
-        selection=[("products", "Products"), ("sale_order", "Sale orders")],
+        selection=[("sale_order", "Sale orders")],
         store=False,
     )
     picker_price_origin = fields.Selection(
-        selection=[("pricelist", "Pricelist"), ("last_sale_price", "Last price")],
+        selection=[("last_sale_price", "Last price")],
         store=False,
     )
     picker_only_available = fields.Boolean(string="Available", store=False)
@@ -48,18 +48,15 @@ class SaleOrder(models.Model):
         )
         return [(f.id, f.name) for f in product_filters]
 
-    # TODO: Invalidate cache on product write if next line is uncommented
-    # @ormcache("self.partner_id", "self.picker_filter", "self.product_name_search")
-    def _get_picker_product_ids(self):
-        if not self.partner_id or not (
-            self.picker_origin_data
-            or self.picker_filter
-            or self.picker_product_attribute_value_id
-            or self.product_name_search
-        ):
-            self.picker_ids = False
-            return None
-        Product = self.env["product.product"]
+    def _get_picker_trigger_search_fields(self):
+        return [
+            "picker_origin_data",
+            "picker_filter",
+            "picker_product_attribute_value_id",
+            "product_name_search",
+        ]
+
+    def _get_picker_product_domain(self):
         product_filter = self.env["ir.filters"].browse(self.picker_filter)
         # TODO: Improve to apply field view domain (Assortments)
         domain = [
@@ -83,6 +80,18 @@ class SaleOrder(models.Model):
                     self.picker_product_attribute_value_id.id,
                 )
             )
+        return domain
+
+    # TODO: Invalidate cache on product write if next line is uncommented
+    # @ormcache("self.partner_id", "self.picker_filter", "self.product_name_search")
+    def _get_picker_product_ids(self):
+        if not self.partner_id or not any(
+            self[f_name] for f_name in self._get_picker_trigger_search_fields()
+        ):
+            self.picker_ids = False
+            return None
+        Product = self.env["product.product"]
+        domain = self._get_picker_product_domain()
         if self.product_name_search:
             product_ids = Product._name_search(self.product_name_search, args=domain)
         else:
