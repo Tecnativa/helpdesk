@@ -167,11 +167,23 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                 });
                 list.trigger_up("edited_list", {id: list.value.id});
                 list.picker = true;
-                list._setValue({
+                var changes = await list._setValue({
                     operation: "CREATE",
                     editable: "bottom",
+                });
+                var id = changes.filter((change) => change.name === "order_line")[0]
+                    .value.data[0].id;
+                var dataLine = {};
+                for (var key of this.getDefaultFields()) {
+                    dataLine[key] = this.recordData[key].res_id
+                        ? {id: this.recordData[key].res_id}
+                        : this.recordData[key];
+                }
+                list._setValue({
+                    operation: "UPDATE",
+                    id: id,
+                    data: dataLine,
                     picker_record_id: this.db_id,
-                    context: [ctx],
                 });
             } else if (lines.length === 1) {
                 const id = lines[0].line.id;

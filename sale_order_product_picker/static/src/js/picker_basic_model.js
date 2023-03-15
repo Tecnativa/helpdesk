@@ -30,7 +30,8 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
             }
             return res;
         },
-        _applyChange: async function (recordID, changes) {
+        notifyChanges: async function (recordID, changes, options) {
+            var res = await this._super.apply(this, arguments);
             if (
                 recordID &&
                 this.get(recordID).model === "sale.order" &&
@@ -76,7 +77,12 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                         pickerRecords
                     );
                     if (picker_changes) {
-                        changes.picker_ids = picker_changes;
+                        var picker_notifies = await this.notifyChanges(
+                            recordID,
+                            {picker_ids: picker_changes},
+                            options
+                        );
+                        res = res.concat(picker_notifies);
                     }
                 }
                 if (changes.order_line.operation === "DELETE") {
@@ -86,7 +92,6 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                     }
                 }
             }
-            var res = this._super(...arguments);
             return res;
         },
         _applyChangesPicker: function (recordID, command, pickerRecords) {
@@ -282,11 +287,15 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                 solRecord.last_qty = changes.product_uom_qty;
                 for (var record_id of pickerRecords) {
                     var pickerRecord = this.localData[record_id];
-                    if (
-                        this.checkLineToProcess({}, pickerRecord, {
-                            default_product_id: command.data.product_id.id,
-                        })
-                    ) {
+                    var ctx = {};
+                    for (var field of this.getBreakFields()) {
+                        if (command.data && command.data[field]) {
+                            var default_field = "default_" + field;
+                            ctx[default_field] =
+                                command.data[field].id || command.data[field];
+                        }
+                    }
+                    if (this.checkLineToProcess({}, pickerRecord, ctx)) {
                         return {
                             operation: "UPDATE",
                             id: record_id,
