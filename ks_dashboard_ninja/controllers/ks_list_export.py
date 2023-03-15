@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 
 
 class KsListExport(ExportFormat, http.Controller):
-    def base(self, data, token):
+    def base(self, data):
         params = json.loads(data)
         # header,list_data = operator.itemgetter('header','chart_data')(params)
         header, list_data, item_id, ks_export_boolean, context, params = operator.itemgetter(
@@ -120,8 +120,7 @@ class KsListExport(ExportFormat, http.Controller):
             headers=[
                 ('Content-Disposition', content_disposition(self.filename(header))),
                 ('Content-Type', self.content_type),
-            ],
-            cookies={'fileToken': token})
+            ])
 
 
 class KsListExcelExport(KsListExport, http.Controller):
@@ -130,15 +129,16 @@ class KsListExcelExport(KsListExport, http.Controller):
 
     @http.route('/ks_dashboard_ninja/export/list_xls', type='http', auth="user")
     @serialize_exception
-    def index(self, data, token):
-        return self.base(data, token)
+    def index(self, data):
+        return self.base(data)
 
     @property
     def content_type(self):
         return 'application/vnd.ms-excel'
 
-    def filename(self, base):
-        return base + '.xls'
+    @property
+    def extension(self):
+        return '.xls'
 
     def from_data(self, fields, rows):
         with ExportXlsxWriter(fields, len(rows)) as xlsx_writer:
@@ -151,15 +151,16 @@ class KsListExcelExport(KsListExport, http.Controller):
 class KsListCsvExport(KsListExport, http.Controller):
     @http.route('/ks_dashboard_ninja/export/list_csv', type='http', auth="user")
     @serialize_exception
-    def index(self, data, token):
-        return self.base(data, token)
+    def index(self, data):
+        return self.base(data)
 
     @property
     def content_type(self):
         return 'text/csv;charset=utf8'
 
-    def filename(self, base):
-        return base + '.csv'
+    @property
+    def extension(self):
+        return '.csv'
 
     def from_data(self, fields, rows):
         fp = io.BytesIO()

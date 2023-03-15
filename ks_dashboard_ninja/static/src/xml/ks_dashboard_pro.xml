@@ -321,7 +321,7 @@
 
                                                 <t t-if="table_row['ks_column_type'][ks_rec_count]==='html'">
                                                     <td>
-                                                        <t t-raw="row_data"/>
+                                                        <t t-out="row_data"/>
                                                     </td>
                                                     <t t-set="ks_rec_count" t-value="ks_rec_count+1"/>
                                                 </t>
@@ -396,13 +396,13 @@
                 <t t-foreach="table_row['data']" t-as="row_data">
                     <t t-if="table_row['ks_column_type'][ks_rec_count]=='html'">
                         <td class="ks_list_canvas_click">
-                            <t t-raw="row_data"/>
+                            <t t-out="row_data"/>
                         </td>
                         <t t-set="ks_rec_count" t-value="ks_rec_count+1"/>
                     </t>
                     <t t-else="">
                         <td class="ks_list_canvas_click">
-                            <t t-raw="row_data"/>
+                            <t t-out="row_data"/>
                         </td>
                         <t t-set="ks_rec_count" t-value="ks_rec_count+1"/>
                     </t>
