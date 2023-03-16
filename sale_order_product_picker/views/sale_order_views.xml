@@ -144,7 +144,7 @@
                             options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
                         />
                     </div>
-                    <field name="picker_ids">
+                    <field name="picker_ids" limit="80">
                         <kanban class="o_picker_kanban">
                             <field name="order_id" />
                             <field name="product_id" />
@@ -251,6 +251,7 @@
                                                             >
                                                                 <i
                                                                     class="fa fa-files-o"
+                                                                    title="Add new line"
                                                                 />
                                                             </button>
                                                         </div>
