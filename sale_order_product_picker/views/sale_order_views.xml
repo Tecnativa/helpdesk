@@ -51,6 +51,21 @@
                 position="attributes"
             >
             <attribute name="widget">numeric_step</attribute>
+            <attribute name="options">{'auto_select': True}</attribute>
+        </xpath>
+        <xpath
+                expr="//field[@name='order_line']//form//field[@name='price_unit']"
+                position="attributes"
+            >
+            <attribute name="widget">numeric_step</attribute>
+            <attribute name="options">{'auto_select': True}</attribute>
+        </xpath>
+        <xpath
+                expr="//field[@name='order_line']//form//field[@name='discount']"
+                position="attributes"
+            >
+            <attribute name="widget">numeric_step</attribute>
+            <attribute name="options">{'auto_select': True}</attribute>
         </xpath>
             <xpath
                 expr="//field[@name='order_line']/kanban//field[@name='company_id']"
