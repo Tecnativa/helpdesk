@@ -400,37 +400,41 @@ class EdiBackend(models.Model):
             getattr(records, "%s_action_backend_sent" % self.provider)()
         return history_line
 
+    def action_import_one_file(self, file_name):
+        file = getattr(self, "_file_from_%s" % self.communication_type)(file_name)
+        self.write(
+            {
+                "data": file,
+                "file_name": file_name,
+                "last_sync_date": self.security_days or fields.Datetime.now(),
+            }
+        )
+        vals_list = self._get_vals_from_file()
+        record_ids = self._fill_data_from_vals(vals_list)
+        self.env["edi.backend.communication.history"].create(
+            {
+                "edi_backend_id": self.id,
+                "company_id": self.company_id.id,
+                "data": file,
+                "file_name": file_name,
+                "applied_records": str(record_ids),
+            }
+        )
+        # If no problems found, then delete files from server
+        getattr(self, "_%s_delete_file" % self.communication_type)(file_name)
+
     def action_import_run(self):
-        now = fields.Datetime.now()
+        fields.Datetime.now()
         if self.communication_type == "email":
             self.action_import_history_run()
         else:
             file_names = getattr(self, "_%s_get_names" % self.communication_type)()
-            for file_name in file_names:
-                file = getattr(self, "_file_from_%s" % self.communication_type)(
-                    file_name
-                )
-                self.write(
-                    {
-                        "data": file,
-                        "file_name": file_name,
-                        "last_sync_date": self.security_days or now,
-                    }
-                )
-                vals_list = self._get_vals_from_file()
-                record_ids = self._fill_data_from_vals(vals_list)
-                self.env["edi.backend.communication.history"].create(
-                    {
-                        "edi_backend_id": self.id,
-                        "company_id": self.company_id.id,
-                        "data": file,
-                        "file_name": file_name,
-                        "applied_records": str(record_ids),
-                    }
-                )
-            # If no problems found, then delete files from server
-            for file_name in file_names:
-                getattr(self, "_%s_delete_file" % self.communication_type)(file_name)
+            if len(file_names) == 1:
+                self.action_import_one_file(file_names)
+            else:
+                # queue a job for each file
+                for file_name in file_names:
+                    self.with_delay().action_import_one_file(file_name)
 
     def _get_backend_filename(self, contents, sequence_file, records):
         lines_count = contents.count(b"\n")
