@@ -1,0 +1,18 @@
+.oe_notebook_fullscreen {
+    position: fixed !important;
+    overflow-y: scroll;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 50;
+    margin-top: 0px !important;
+    .tab-content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .o_notebook_headers {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+}
