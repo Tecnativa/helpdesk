@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+
+    <div t-name="web_form_notebook_fullscreen.fullscreen">
+        <button id="notebook_maximize" class="btn btn-primary nav-link">
+            <i class="fa fa-expand" />
+        </button>
+    </div>
+
+</template>

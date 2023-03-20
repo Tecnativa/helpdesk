@@ -178,6 +178,7 @@
                                                         t-att-title="record.product_id.value"
                                                         t-att-alt="record.product_id.value"
                                                         style="max-width: 100%;"
+                                                        class="o_picker_img_full_size"
                                                     />
                                                 </div>
                                                 <div class="col-8">

@@ -13,6 +13,7 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
             {
                 "click .o_picker_quick_add": "_onQuickAddClicked",
                 "click .o_picker_form_add": "_onFormAddClicked",
+                "click .o_picker_img_full_size": "_openImageFullResolution",
             },
             KanbanRecord.prototype.events
         ),
@@ -281,6 +282,32 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
             );
             $("#picker-multiline-modal .modal-body").append($new_list);
             $("#picker-multiline-modal").modal({show: true});
+        },
+        /**
+         * Open image of product in a modal with full resolution size.
+         *
+         * @private
+         */
+        _openImageFullResolution: async function () {
+            $("#picker-image-full-modal").remove();
+            const product_id = this.recordData.product_id.res_id;
+            $("body").append(
+                _t(`
+                <div class="modal o_legacy_dialog o_technical_modal" id="picker-image-full-modal" role="dialog">
+                    <div class="modal-dialog modal-lg ui-draggable modal-dialog-centered">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header ui-draggable-handle">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src="/web/image/product.product/${product_id}/image_1920" style="max-width: 100%; object-fit: contain;" alt="Product image"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>`)
+            );
+            $("#picker-image-full-modal").modal({show: true});
         },
     });
 

@@ -16,9 +16,7 @@
             "sale_order_product_picker/static/src/js/relational_fields.js",
             "sale_order_product_picker/static/src/js/picker_kanban_record.js",
             "sale_order_product_picker/static/src/js/picker_basic_model.js",
-            "sale_order_product_picker/static/src/js/form_renderer.js",
             "sale_order_product_picker/static/src/scss/picker.scss",
         ],
-        "web.assets_qweb": ["sale_order_product_picker/static/src/xml/fullscreen.xml"],
     },
 }
