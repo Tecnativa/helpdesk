@@ -1,0 +1,175 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_requisition_from_outgoing_move
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-13 18:06+0000\n"
+"PO-Revision-Date: 2023-02-13 19:11+0100\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.actions.report,print_report_name:purchase_requisition_from_outgoing_move.report_purchase_requisition_outgoing
+msgid "'Purchase List - %s' % (object.name)"
+msgstr "'Purchase List %s' % (object.name)"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<span>Needed </span>"
+msgstr "<span> Necesitada </span>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<span>On hand stock </span>"
+msgstr "<span>Stock a mano </span>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<span>Page: </span>"
+msgstr "<span>Página: </span>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<strong>Customer</strong>"
+msgstr "<strong>Cliente: </strong>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<strong>Description</strong>"
+msgstr "<strong>Descripción</strong>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<strong>Elaboration</strong>"
+msgstr "<strong>Elaboración</strong>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<strong>Origin: </strong>"
+msgstr "<strong>Ubicación origen</strong>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<strong>Product UoM</strong>"
+msgstr "<strong>Ud. medida del producto</strong>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<strong>Qty</strong>"
+msgstr "<strong>Cant</strong>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<strong>Sale Order</strong>"
+msgstr "<strong>Pedido de venta</strong>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "<strong>Secondary Unit.</strong>"
+msgstr "<strong>Ud. Secundaria</strong>"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.purchase_requisition_wiz
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.actions.report,name:purchase_requisition_from_outgoing_move.report_purchase_requisition_outgoing
+msgid "Daily Purchase List From Stock Moves"
+msgstr "Lista de la compra diaria desde movimientos de stock"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__date_from
+msgid "Date From"
+msgstr "Desde"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__date_to
+msgid "Date To"
+msgstr "Hasta"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__id
+msgid "ID"
+msgstr "ID"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.purchase_requisition_wiz
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.ui.menu,name:purchase_requisition_from_outgoing_move.purchase_requisition_from_outgoing_move_menu
+msgid "Print purchase requisition from outgoing moves"
+msgstr "Imprimir necesidades de compra desde movimientos de salida"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model.fields,field_description:purchase_requisition_from_outgoing_move.field_purchase_requisition_wiz__product_attribute_ids
+msgid "Product Attribute"
+msgstr "Atributo de producto"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "Products"
+msgstr "Productos"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.report_purchase_requisition
+msgid "Purchase Daily List"
+msgstr "Lista de compras diaria"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.actions.act_window,name:purchase_requisition_from_outgoing_move.action_purchase_requisition_wizard
+#: model_terms:ir.ui.view,arch_db:purchase_requisition_from_outgoing_move.purchase_requisition_wiz
+msgid "Purchase requisition from outgoing moves"
+msgstr "Necesidades de compra desde movimientos de salida"
+
+#. module: purchase_requisition_from_outgoing_move
+#: code:addons/purchase_requisition_from_outgoing_move/wizards/purchase_requisition.py:0
+#, python-format
+msgid "There is no moves to print"
+msgstr "No hay movimientos para imprimir"
+
+#. module: purchase_requisition_from_outgoing_move
+#: model:ir.model,name:purchase_requisition_from_outgoing_move.model_purchase_requisition_wiz
+msgid "purchase.requisition.wiz"
+msgstr ""
