@@ -16,6 +16,7 @@
         "data/paperformat.xml",
         "report/purchase_requisition_report.xml",
         "report/purchase_requisition_template.xml",
+        "views/stock_move_view.xml",
         "wizards/purchase_requisition_view.xml",
     ],
 }

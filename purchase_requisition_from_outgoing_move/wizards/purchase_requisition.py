@@ -16,7 +16,7 @@ class PurchaseRequisitionWiz(models.TransientModel):
         string="Product Attribute",
     )
 
-    def print_report(self):
+    def _stock_move_domain(self):
         domain = [
             ("state", "not in", ("cancel", "done")),
             ("location_dest_id.usage", "=", "customer"),
@@ -33,11 +33,20 @@ class PurchaseRequisitionWiz(models.TransientModel):
             domain.append(("date", ">=", self.date_from))
         if self.date_to:
             domain.append(("date", "<=", self.date_to))
+        return domain
 
+    def print_report(self):
+        domain = self._stock_move_domain()
         moves = self.env["stock.move"].search(domain)
         if not moves:
             raise ValidationError(_("There is no moves to print"))
-
         return self.env.ref(
             "purchase_requisition_from_outgoing_move.report_purchase_requisition_outgoing"
         ).report_action(moves)
+
+    def action_open_moves(self):
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "purchase_requisition_from_outgoing_move.stock_move_action"
+        )
+        action["domain"] = self._stock_move_domain()
+        return action

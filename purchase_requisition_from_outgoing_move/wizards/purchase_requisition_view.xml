@@ -24,6 +24,12 @@
                         string="Print"
                         class="btn-primary"
                     />
+                    <button
+                        name="action_open_moves"
+                        type="object"
+                        string="Open stock moves"
+                        class="btn-secondary"
+                    />
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </form>
