@@ -13,7 +13,6 @@
     "depends": [
         "purchase_requisition_from_outgoing_move",
         "sale_order_product_picker_supplierinfo",
-        "sale_order_product_supplierinfo_comment",
     ],
     "data": [
         "report/purchase_requisition_template.xml",
