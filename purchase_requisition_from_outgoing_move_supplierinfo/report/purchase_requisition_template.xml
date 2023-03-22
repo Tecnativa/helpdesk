@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Tecnativa - Sergio Teruel
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <template
+        id="report_purchase_requisition"
+        inherit_id="purchase_requisition_from_outgoing_move.report_purchase_requisition"
+    >
+        <th name="elaboration" position="after">
+            <th name="supplier"><strong>Supplier</strong></th>
+        </th>
+        <td name="elaboration" position="after">
+            <td name="supplierinfo">
+                <span t-field="line.sale_line_id.vendor_id.name" />
+                <t t-if="line.sale_line_id.vendor_comment"><br /></t>
+                <span t-field="line.sale_line_id.vendor_comment" />
+            </td>
+        </td>
+    </template>
+
+</odoo>
