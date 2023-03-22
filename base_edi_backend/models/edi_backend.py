@@ -431,7 +431,7 @@ class EdiBackend(models.Model):
         else:
             file_names = getattr(self, "_%s_get_names" % self.communication_type)()
             if len(file_names) == 1:
-                self.action_import_one_file(file_names)
+                self.action_import_one_file(file_names[0])
             else:
                 # queue a job for each file
                 for file_name in file_names:
