@@ -1,6 +1,7 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
 # Copyright 2022 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl
+import ast
 import base64
 import json
 import logging
@@ -618,12 +619,12 @@ class EdiBackend(models.Model):
             vals["sequence_id"] = self._create_sequence(vals).id
         return super().create(vals)
 
-    def get_alias_model_name(self, vals):
-        return vals.get("alias_model", "edi.backend.communication.history")
-
-    def get_alias_values(self):
-        values = super(EdiBackend, self).get_alias_values()
-        values["alias_defaults"] = {"edi_backend_id": self.id}
+    def _alias_get_creation_values(self):
+        values = super()._alias_get_creation_values()
+        values['alias_model_id'] = self.env['ir.model']._get('edi.backend.communication.history').id
+        if self.id:
+            values['alias_defaults'] = defaults = ast.literal_eval(self.alias_defaults or "{}")
+            defaults['edi_backend_id'] = self.id
         return values
 
     def action_import_history_run(self):
