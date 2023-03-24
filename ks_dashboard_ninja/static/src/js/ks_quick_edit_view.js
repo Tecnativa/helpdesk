@@ -29,7 +29,7 @@ odoo.define('ks_dashboard_ninja.quick_edit_view', function(require) {
         },
 
         _ksCreateController: function() {
-            this.context = $.extend({}, odoo.session_info.user_context);
+            this.context = $.extend({}, this.getSession().user_context);
             this.context['form_view_ref'] = 'ks_dashboard_ninja.item_quick_edit_form_view';
             this.context['res_id'] = this.item.id;
             this.res_model = "ks_dashboard_ninja.item";

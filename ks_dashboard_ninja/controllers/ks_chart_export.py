@@ -11,7 +11,7 @@ from odoo.tools import pycompat
 
 class KsChartExport(ExportFormat, http.Controller):
 
-    def base(self, data, token):
+    def base(self, data):
         params = json.loads(data)
         header, chart_data = operator.itemgetter('header', 'chart_data')(params)
         chart_data = json.loads(chart_data)
@@ -28,8 +28,7 @@ class KsChartExport(ExportFormat, http.Controller):
             headers=[
                 ('Content-Disposition', content_disposition(self.filename(header))),
                 ('Content-Type', self.content_type)
-            ],
-            cookies={'fileToken': token})
+            ])
 
 
 class KsChartExcelExport(KsChartExport, http.Controller):
@@ -38,15 +37,16 @@ class KsChartExcelExport(KsChartExport, http.Controller):
 
     @http.route('/ks_dashboard_ninja/export/chart_xls', type='http', auth="user")
     @serialize_exception
-    def index(self, data, token):
-        return self.base(data, token)
+    def index(self, data):
+        return self.base(data)
 
     @property
     def content_type(self):
         return 'application/vnd.ms-excel'
 
-    def filename(self, base):
-        return base + '.xls'
+    @property
+    def extension(self):
+        return '.xls'
 
     def from_data(self, fields, rows):
         with ExportXlsxWriter(fields, len(rows)) as xlsx_writer:
@@ -60,15 +60,16 @@ class KsChartCsvExport(KsChartExport, http.Controller):
 
     @http.route('/ks_dashboard_ninja/export/chart_csv', type='http', auth="user")
     @serialize_exception
-    def index(self, data, token):
-        return self.base(data, token)
+    def index(self, data):
+        return self.base(data)
 
     @property
     def content_type(self):
         return 'text/csv;charset=utf8'
 
-    def filename(self, base):
-        return base + '.csv'
+    @property
+    def extension(self):
+        return '.csv'
 
     def from_data(self, fields, rows):
         fp = io.BytesIO()

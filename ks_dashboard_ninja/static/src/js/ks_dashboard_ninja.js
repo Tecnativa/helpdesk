@@ -124,7 +124,7 @@ odoo.define('ks_dashboard_ninja.ks_dashboard', function(require) {
                 ksDateFilterStartDate: this.ksDateFilterStartDate,
                 ksDateFilterEndDate: this.ksDateFilterEndDate,
             }
-            return Object.assign(context, odoo.session_info.user_context)
+            return Object.assign(context, this.getSession().user_context)
         },
 
         on_attach_callback: function() {
@@ -309,7 +309,7 @@ odoo.define('ks_dashboard_ninja.ks_dashboard', function(require) {
 
 
             $quickEditButton.on("hide.bs.dropdown", function(ev) {
-                if (ev.hasOwnProperty("clickEvent") && document.contains(ev.clickEvent.target)) {
+                if (ev.hasOwnProperty("clickEvent") && $(ev.clickEvent.target).is(":visible")) {
                     if (ksQuickEditViewWidget) {
                         ksQuickEditViewWidget.ksDiscardChanges();
                         ksQuickEditViewWidget = false;
@@ -501,7 +501,7 @@ odoo.define('ks_dashboard_ninja.ks_dashboard', function(require) {
 
         on_reverse_breadcrumb: function(state) {
             var self = this;
-            this.action_manager.trigger_up('push_state', {
+            this.trigger_up('push_state', {
                 controllerID: this.controllerID,
                 state: state || {},
             });

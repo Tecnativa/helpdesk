@@ -7,7 +7,7 @@
     """,
 
     'description': """
-        Dashboard Ninja v13.0,
+        Dashboard Ninja v15.0,
         Odoo Dashboard,
         Dashboard,
         Dashboards,
@@ -60,7 +60,7 @@
     'maintainer': 'Ksolves India Ltd.',
     'live_test_url': 'https://dashboardninja.kappso.com/web/demo_login',
     'category': 'Tools',
-    'version': '13.0.4.3.0',
+    'version': '15.0.1.0.0',
     'support': 'sales@ksolves.com',
     'images': [],
 
@@ -72,26 +72,25 @@
         'data/ks_default_data.xml',
         'views/ks_dashboard_ninja_view.xml',
         'views/ks_dashboard_ninja_item_view.xml',
-        'views/ks_dashboard_ninja_assets.xml',
         'views/ks_dashboard_action.xml',
         'views/ks_import_dashboard_view.xml',
-    ],
-
-    'qweb': [
-        'static/src/xml/ks_dn_global_filter.xml',
-        'static/src/xml/ks_dashboard_ninja_templates.xml',
-        'static/src/xml/ks_dashboard_ninja_item_templates.xml',
-        'static/src/xml/ks_dashboard_ninja_item_theme.xml',
-        'static/src/xml/ks_widget_toggle.xml',
-        'static/src/xml/ks_dashboard_pro.xml',
-        'static/src/xml/ks_quick_edit_view.xml',
-        'static/src/xml/ks_to_do_template.xml',
     ],
 
     'demo': [
         'demo/ks_dashboard_ninja_demo.xml',
     ],
+    "assets": {
+        "web.assets_backend": [
+            "/ks_dashboard_ninja/static/src/css/*",
+            "/ks_dashboard_ninja/static/src/js/*",
+            "/ks_dashboard_ninja/static/lib/css/gridstack.min.css",
+            "/ks_dashboard_ninja/static/lib/js/gridstack-h5.js",
+        ],
+        "web.assets_qweb": [
+            '/ks_dashboard_ninja/static/src/xml/*',
+        ],
+    },
 
     'uninstall_hook': 'uninstall_hook',
-    "installable": False,
+    "installable": True,
 }
