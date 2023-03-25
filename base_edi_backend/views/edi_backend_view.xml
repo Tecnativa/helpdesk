@@ -104,7 +104,7 @@
                     >
                         <field name="ftp_host" />
                         <field name="ftp_user" />
-                        <field name="ftp_password" widget="password" />
+                        <field name="ftp_password" password="True" />
                         <field name="remote_path" />
                         <field name="ftp_file_special_name" />
                     </group>
@@ -115,7 +115,7 @@
                         <field name="sftp_host" />
                         <field name="sftp_port" />
                         <field name="sftp_user" />
-                        <field name="sftp_password" widget="password" />
+                        <field name="sftp_password" password="True" />
                         <field name="remote_path" />
                         <field
                             name="sftp_file_special_name"
