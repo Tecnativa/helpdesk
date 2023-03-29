@@ -9,7 +9,6 @@
                 expr="//field[@name='order_line']/tree//field[@name='price_unit']"
                 position="after"
             >
-                <field name="vendor_id" optional="show" />
                 <field name="vendor_comment" optional="show" />
             </xpath>
         </field>
@@ -65,25 +64,20 @@
                 <field name="vendor_id" />
                 <field name="vendor_comment" />
             </xpath>
-            <xpath expr="//field[@name='order_line']/form/group" position="inside">
-                <group string="Vendor" name="vendor">
-                    <field
-                        name="supplierinfo_id"
-                        invisible="1"
-                        attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"
-                    />
-                    <field
-                        name="vendor_id"
-                        invisible="0"
-                        attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"
-                        options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                    />
-                    <field
-                        name="vendor_comment"
-                        invisible="0"
-                        attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"
-                    />
-                </group>
+            <xpath
+                expr="//field[@name='order_line']/form//field[@name='vendor_id']"
+                position="after"
+            >
+                <field
+                    name="supplierinfo_id"
+                    invisible="1"
+                    attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"
+                />
+                <field
+                    name="vendor_comment"
+                    invisible="0"
+                    attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"
+                />
             </xpath>
         </field>
     </record>

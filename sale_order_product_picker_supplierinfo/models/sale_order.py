@@ -72,5 +72,4 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     supplierinfo_id = fields.Many2one(comodel_name="product.supplierinfo")
-    vendor_id = fields.Many2one(comodel_name="res.partner")
     vendor_comment = fields.Char()
