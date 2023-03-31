@@ -433,9 +433,12 @@ class EdiBackend(models.Model):
             if len(file_names) == 1:
                 self.action_import_one_file(file_names[0])
             else:
-                # queue a job for each file
+                # queue a job for each file, we can not execute all files at same time
+                # because we write on same backend.
+                eta = fields.Datetime.now()
                 for file_name in file_names:
-                    self.with_delay().action_import_one_file(file_name)
+                    self.with_delay(eta=eta).action_import_one_file(file_name)
+                    eta += relativedelta(minutes=5)
 
     def _get_backend_filename(self, contents, sequence_file, records):
         lines_count = contents.count(b"\n")
