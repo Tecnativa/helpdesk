@@ -403,24 +403,17 @@ class EdiBackend(models.Model):
 
     def action_import_one_file(self, file_name):
         file = getattr(self, "_file_from_%s" % self.communication_type)(file_name)
-        self.write(
-            {
-                "data": file,
-                "file_name": file_name,
-                "last_sync_date": self.security_days or fields.Datetime.now(),
-            }
-        )
-        vals_list = self._get_vals_from_file()
-        record_ids = self._fill_data_from_vals(vals_list)
-        self.env["edi.backend.communication.history"].create(
+        history = self.env["edi.backend.communication.history"].create(
             {
                 "edi_backend_id": self.id,
                 "company_id": self.company_id.id,
                 "data": file,
                 "file_name": file_name,
-                "applied_records": str(record_ids),
             }
         )
+        vals_list = self._get_vals_from_file(history=history)
+        record_ids = self._fill_data_from_vals(vals_list)
+        history.applied_records = str(record_ids)
         # If no problems found, then delete files from server
         getattr(self, "_%s_delete_file" % self.communication_type)(file_name)
 
@@ -433,12 +426,9 @@ class EdiBackend(models.Model):
             if len(file_names) == 1:
                 self.action_import_one_file(file_names[0])
             else:
-                # queue a job for each file, we can not execute all files at same time
-                # because we write on same backend.
-                eta = fields.Datetime.now()
+                # queue a job for each file
                 for file_name in file_names:
-                    self.with_delay(eta=eta).action_import_one_file(file_name)
-                    eta += relativedelta(minutes=5)
+                    self.with_delay().action_import_one_file(file_name)
 
     def _get_backend_filename(self, contents, sequence_file, records):
         lines_count = contents.count(b"\n")
@@ -624,10 +614,14 @@ class EdiBackend(models.Model):
 
     def _alias_get_creation_values(self):
         values = super()._alias_get_creation_values()
-        values['alias_model_id'] = self.env['ir.model']._get('edi.backend.communication.history').id
+        values["alias_model_id"] = (
+            self.env["ir.model"]._get("edi.backend.communication.history").id
+        )
         if self.id:
-            values['alias_defaults'] = defaults = ast.literal_eval(self.alias_defaults or "{}")
-            defaults['edi_backend_id'] = self.id
+            values["alias_defaults"] = defaults = ast.literal_eval(
+                self.alias_defaults or "{}"
+            )
+            defaults["edi_backend_id"] = self.id
         return values
 
     def action_import_history_run(self):
