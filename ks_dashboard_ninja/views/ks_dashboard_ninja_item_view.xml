@@ -17,7 +17,6 @@
                     <field name="ks_item_end_date"/>
                     <field name="ks_compare_period"/>
                     <field name="ks_year_period"/>
-                    <field name="ks_update_items_data"/>
                 </tree>
             </field>
         </record>
@@ -104,7 +103,6 @@
                                                         ['ks_kpi','ks_tile','ks_bar_chart','ks_horizontalBar_chart','ks_line_chart','ks_area_chart','ks_pie_chart',
                                                         'ks_doughnut_chart','ks_polarArea_chart','ks_list_view'])]}"/>
                         <field name="ks_dashboard_item_type" invisible="1"/>
-                        <field name="ks_update_items_data" attrs="{'invisible':[('ks_dashboard_item_type','=', 'ks_to_do')]}" placeholder="Item Update Interval.."/>
                     </group>
 
                     <group attrs="{'invisible':[('ks_dashboard_item_type','!=','ks_tile'),('ks_dashboard_item_type','!=','ks_kpi')]}"
@@ -546,16 +544,6 @@
                                     <field name="ks_goal_value"/>
                                 </tree>
                             </field>
-                        </page>
-                        <page string="Auto Update" attrs="{'invisible': [('ks_dashboard_item_type','=','ks_to_do')]}">
-                            <group>
-                                <field name="ks_auto_update_type" widget="radio"/>
-                                <field name="ks_update_items_data" string="Set Update Interval"
-                                       context="{'current_id': id}"
-                                       attrs="{'invisible':[('ks_auto_update_type','!=','ks_update_interval')], 'required':[('ks_auto_update_type','=','ks_update_interval')]}"/>
-                                <field name="ks_show_live_pop_up"
-                                       attrs="{'invisible':[('ks_auto_update_type','!=','ks_live_update')]}"/>
-                            </group>
                         </page>
                         <page string="Advance Configuration" attrs="{'invisible':[('ks_dashboard_item_type','=','ks_to_do')]}">
                             <group attrs="{'invisible':['|','|',('ks_dashboard_item_type','=','ks_to_do'),('ks_dashboard_item_type','=','ks_tile'),('ks_dashboard_item_type','=','ks_kpi')]}">
