@@ -341,44 +341,6 @@ odoo.define('ks_dashboard_ninja.ks_dashboard', function(require) {
             });
         },
 
-        start: function() {
-            var self = this;
-            self.ks_set_default_chart_view();
-            return this._super().then(function(){
-                self.call('bus_service', 'onNotification', self, function (notifications) {
-                    _.each(notifications, (function (notification) {
-                        if (notification[1].hasOwnProperty('type') && notification[1]['type'] === "ks_dashboard_ninja.notification" && self.ks_mode ==='active') {
-                            var item_to_update = _(notification[1].changes).filter((x)=>{return self.ks_dashboard_data.ks_dashboard_items_ids.indexOf(x)>=0});
-                            if(item_to_update){
-
-                                var msg = "" + item_to_update.length + " Dashboard item has been updated."
-                                if (item_to_update.length >1){
-                                    msg = "" + item_to_update.length + " Dashboard items has been updated."
-                                }
-
-                                var update_notification_ids = _(item_to_update).filter((x)=>{return self.ks_dashboard_data.ks_item_data[x].ks_auto_update_type === 'ks_live_update' && self.ks_dashboard_data.ks_item_data[x].ks_show_live_pop_up === true});
-                                if(update_notification_ids.length>0){
-
-                                        self.call('notification', 'notify', {
-                                            message: msg,
-                                            type: 'info',
-                                        });
-                                }
-                                for(var i = 0; i < update_notification_ids.length; i++){
-
-                                    self.ksFetchUpdateItem(update_notification_ids[i])
-                                }
-//                                self.call('bus_service','sendNotification',(
-//                                    "Dashboard Ninja Update",
-//                                    "" + item_to_update.length + " Item Data Modified."
-//                                ));
-                            }
-                        }
-                    }).bind(this));
-                });
-            });
-        },
-
         ks_set_default_chart_view: function() {
             Chart.plugins.unregister(ChartDataLabels);
             var backgroundColor = 'white';

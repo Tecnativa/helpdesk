@@ -477,18 +477,6 @@ class KsDashboardNinjaItems(models.Model):
         help="Provides the visibility of multiplier field")
     ks_multiplier = fields.Float(string="Multiplier", default=1, help="Provides the multiplication of record value")
 
-    # Adding refresh per item override global update interval
-    ks_update_items_data = fields.Selection([
-        ('15000', '15 Seconds'),
-        ('30000', '30 Seconds'),
-        ('45000', '45 Seconds'),
-        ('60000', '1 minute'),
-        ('120000', '2 minute'),
-        ('300000', '5 minute'),
-        ('600000', '10 minute'),
-    ], string="Item Update Interval", default=lambda self: self._context.get('ks_set_interval', False),
-        help=" Data will be refreshed after the selected interval.")
-
     # User can select custom units for measure
     ks_unit = fields.Boolean(string="Show Custom Unit", default=False, help='Display the unit of the data.')
     ks_unit_selection = fields.Selection([
@@ -525,12 +513,6 @@ class KsDashboardNinjaItems(models.Model):
         help="To Change the number format showing in chart to given option")
     ks_button_color = fields.Char(string="Top Button Color",
                                   default="#000000,0.99")
-    ks_auto_update_type = fields.Selection(
-        [('ks_live_update', 'Update at every instance.'), ('ks_update_interval', ' Update after the selected interval')],
-        string='Auto Update Type',
-        default=lambda self: 'ks_update_interval' if self._context.get('ks_set_interval', False) else False,
-        help='Select the update type.')
-    ks_show_live_pop_up = fields.Boolean(string='Show Live Update Pop Up', help='Checkbox to enable notification after every update. ')
 
     ks_is_client_action = fields.Boolean('Client Action', default=False)
     ks_client_action = fields.Many2one('ir.actions.client',
