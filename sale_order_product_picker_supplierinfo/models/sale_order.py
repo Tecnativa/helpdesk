@@ -1,7 +1,7 @@
 # Copyright 2023 Tecnativa - Carlos Dauden
 # License AGPL-3 - See https://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
@@ -73,3 +73,9 @@ class SaleOrderLine(models.Model):
 
     supplierinfo_id = fields.Many2one(comodel_name="product.supplierinfo")
     vendor_comment = fields.Char()
+
+    @api.onchange("product_uom", "product_uom_qty")
+    def product_uom_change(self):
+        if self.vendor_id:
+            self = self.with_context(force_filter_supplier_id=self.vendor_id)
+        return super().product_uom_change()
