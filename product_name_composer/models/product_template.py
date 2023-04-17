@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    base_name = fields.Char()
+    base_name = fields.Char(translate=True)
 
     @api.onchange("name")
     def _onchange_name(self):
