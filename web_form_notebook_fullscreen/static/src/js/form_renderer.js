@@ -19,11 +19,12 @@ odoo.define("web_form_notebook_fullscreen.FormRenderer", function (require) {
             $notebook.find(".o_notebook_headers ul").css("width", "100%");
             $notebook
                 .find(".o_notebook_headers")
-                .append($(QWeb.render("web_form_notebook_fullscreen.fullscreen", this)));
+                .append(
+                    $(QWeb.render("web_form_notebook_fullscreen.fullscreen", this))
+                );
             return $notebook;
         },
         _onClickNotebookMaximize: function () {
-            debugger
             var $notebook = $(".o_notebook");
             $notebook.toggleClass(
                 "position-relative h-100 bg-white oe_notebook_fullscreen"
