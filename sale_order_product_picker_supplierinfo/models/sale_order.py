@@ -35,8 +35,10 @@ class SaleOrder(models.Model):
         ]
 
     def _get_product_picker_data_supplierinfo(self):
+        limit = self._get_product_picker_limit()
         supplierinfos = self.env["product.supplierinfo"].search(
-            self._product_picker_data_supplierinfo_domain()
+            self._product_picker_data_supplierinfo_domain(),
+            limit=limit,
         )
         return [
             {
