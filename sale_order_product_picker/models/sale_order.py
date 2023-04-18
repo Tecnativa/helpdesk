@@ -57,6 +57,11 @@ class SaleOrder(models.Model):
             "product_name_search",
         ]
 
+    def _get_product_picker_limit(self):
+        return self.env["ir.config_parameter"].get_param(
+            "sale_order_product_picker.product_picker_limit", 40
+        )
+
     def _get_picker_product_domain(self):
         product_filter = self.env["ir.filters"].browse(self.picker_filter)
         # TODO: Improve to apply field view domain (Assortments)
@@ -173,13 +178,14 @@ class SaleOrder(models.Model):
         return vals
 
     def _get_product_picker_data_products(self):
-        limit = 80
+        limit = self._get_product_picker_limit()
         products = self.env["product.product"].browse(
             self._get_picker_product_ids()[:limit]
         )
         return [{"product_id": (p.id, p.name)} for p in products]
 
     def _get_product_picker_data_sale_order(self):
+        limit = self._get_product_picker_limit()
         found_lines = self.env["sale.order.line"].read_group(
             self._product_picker_data_sale_order_domain(),
             ["product_id", "qty_delivered"],
@@ -194,4 +200,4 @@ class SaleOrder(models.Model):
             ),
             reverse=True,
         )
-        return found_lines
+        return found_lines[:limit]

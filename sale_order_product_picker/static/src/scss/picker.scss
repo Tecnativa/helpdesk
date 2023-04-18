@@ -7,6 +7,7 @@
 .o_field_widget.o_field_selection_badge .o_selection_badge.active {
     font-weight: bold;
 }
-.o_form_view.o_form_editable .o_row > .o_field_widget, .o_form_view.o_form_editable .o_row > div {
+.o_form_view.o_form_editable .o_row > .o_field_widget,
+.o_form_view.o_form_editable .o_row > div {
     width: auto !important;
 }
