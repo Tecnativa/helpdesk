@@ -58,8 +58,10 @@ class SaleOrder(models.Model):
         ]
 
     def _get_product_picker_limit(self):
-        return self.env["ir.config_parameter"].get_param(
-            "sale_order_product_picker.product_picker_limit", 40
+        return int(
+            self.env["ir.config_parameter"].get_param(
+                "sale_order_product_picker.product_picker_limit", "40"
+            )
         )
 
     def _get_picker_product_domain(self):
