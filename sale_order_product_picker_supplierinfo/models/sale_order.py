@@ -81,3 +81,47 @@ class SaleOrderLine(models.Model):
         if self.vendor_id:
             self = self.with_context(force_filter_supplier_id=self.vendor_id)
         return super().product_uom_change()
+
+    @api.depends("vendor_id", "supplierinfo_id")
+    def _compute_purchase_price(self):
+        """get purchase_price from supplierinfo_id or vendor."""
+        processed_lines = self.browse()
+        for line in self:
+            if not line.supplierinfo_id and not line.vendor_id:
+                continue
+            supplier_info = line.supplierinfo_id or line._get_vendor_supplier_info()
+            if supplier_info:
+                line.purchase_price = supplier_info.price
+                processed_lines += line
+        return super(SaleOrderLine, self - processed_lines)._compute_purchase_price()
+
+    # TODO: Move this to sale_purchase_force_vendor
+    def _get_vendor_supplier_info(self):
+        self.ensure_one()
+        return self.product_id.with_company(self.company_id.id)._select_seller(
+            partner_id=self.vendor_id,
+            quantity=self.product_uom_qty,
+            uom_id=self.product_uom,
+        )
+
+    # TODO: Replace after create glue module sale_purchase_force_vendor and sale_margin
+    # @api.depends('supplierinfo_id')
+    # def _compute_purchase_price(self):
+    #     """ Get purchase_price from supplierinfo """
+    #     supplierinfo_lines = self.filtered("supplierinfo_id")
+    #     for line in supplierinfo_lines:
+    #         line.purchase_price = line.supplierinfo_id.price
+    #     return super(SaleOrderLine, self - supplierinfo_lines)._compute_purchase_price()
+
+    # TODO: Move this to sale_purchase_force_vendor_sale_margin
+    # @api.depends("vendor_id")
+    # def _compute_purchase_price(self):
+    #     """Get purchase_price from vendor supplierinfo."""
+    #     processed_lines = self.browse()
+    #     for line in self.filtered("vendor_id"):
+    #         supplier_info = line._get_vendor_supplier_info()
+    #         if supplier_info:
+    #             line.purchase_price = supplier_info.price
+    #             processed_lines += line
+    #     return super(SaleOrderLine, self - processed_lines)._compute_purchase_price()
+    #
