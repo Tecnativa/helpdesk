@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
         selection="_list_product_picker_filters", string="Filter", store=False
     )
     picker_origin_data = fields.Selection(
-        selection=[("sale_order", "Sale orders")],
+        selection=[("sale_order", "Last sales")],
         store=False,
     )
     picker_price_origin = fields.Selection(

@@ -269,7 +269,7 @@ msgstr "Última actualización el"
 #. module: sale_order_product_picker
 #: model:ir.model.fields.selection,name:sale_order_product_picker.selection__sale_order__picker_price_origin__last_sale_price
 msgid "Last price"
-msgstr "Último precio de venta"
+msgstr "Último precio"
 
 #. module: sale_order_product_picker
 #: model:ir.model.fields.selection,name:sale_order_product_picker.selection__sale_order_picker__state__done
@@ -305,7 +305,7 @@ msgstr "Picker"
 #. module: sale_order_product_picker
 #: model:ir.model.fields,field_description:sale_order_product_picker.field_sale_order__picker_origin_data
 msgid "Picker Origin Data"
-msgstr "Origen de los datos para generar los movimientos a realizar"
+msgstr "Origen de datos para catálogo"
 
 #. module: sale_order_product_picker
 #: model:ir.model.fields,field_description:sale_order_product_picker.field_sale_order__picker_price_origin
@@ -364,8 +364,8 @@ msgstr "Línea de venta"
 
 #. module: sale_order_product_picker
 #: model:ir.model.fields.selection,name:sale_order_product_picker.selection__sale_order__picker_origin_data__sale_order
-msgid "Sale orders"
-msgstr "Pedidos de venta"
+msgid "Last sales"
+msgstr "Últimas ventas"
 
 #. module: sale_order_product_picker
 #: model:ir.model,name:sale_order_product_picker.model_sale_order
