@@ -25,6 +25,9 @@ class ProductTemplate(models.Model):
     production_method_ids = fields.Many2many(
         comodel_name="product.attribute.value", compute="_compute_production_method_ids"
     )
+    scientific_name_ids = fields.Many2many(
+        comodel_name="product.attribute.value", compute="_compute_scientific_name_ids"
+    )
 
     preservation_condition_ids = fields.Many2many(
         comodel_name="product.attribute.value",
@@ -85,4 +88,10 @@ class ProductTemplate(models.Model):
         self._set_attribute_values(
             "product_fishing.product_origin_country_attribute",
             "origin_country_ids",
+        )
+
+    def _compute_scientific_name_ids(self):
+        self._set_attribute_values(
+            "product_fishing.scientific_name",
+            "scientific_name_ids",
         )

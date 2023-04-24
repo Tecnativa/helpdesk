@@ -17,5 +17,9 @@
         "product_expiry",
         "product_fishing",
     ],
-    "data": ["security/ir.model.access.csv", "views/stock_production_lot_view.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/stock_production_lot_view.xml",
+        "views/res_company_view.xml",
+    ],
 }
