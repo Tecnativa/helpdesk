@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 
 class ReportPrintBatchPickingAllMoves(models.AbstractModel):
-    _name = "report.stock_picking_batch_report.report_batch_picking_all_moves"
+    _name = "report.stock_picking_batch_report.report_bp_all_moves"
     _description = "Report Batch Picking All Moves"
 
     def key_level_0(self, operation):
@@ -101,7 +101,7 @@ class ReportPrintBatchPickingAllMoves(models.AbstractModel):
         return self.sort_level_0(list(grouped_data.values()))
 
     def _get_report_values(self, docids, data=None):
-        report_name = "stock_picking_batch_report.report_batch_picking_all_moves"
+        report_name = "stock_picking_batch_report.report_bp_all_moves"
         report_obj = self.env["ir.actions.report"]
         report = report_obj._get_report_from_name(report_name)
         docargs = {
@@ -118,7 +118,7 @@ class ReportPrintBatchPickingAllMoves(models.AbstractModel):
 # In this report operations are stock.move instead of stock.move.line
 class ReportPrintBatchPickingAllMovesByProduct(models.AbstractModel):
     _name = "report.stock_picking_batch_report.report_batch_all_mov_prod"
-    _inherit = "report.stock_picking_batch_report.report_batch_picking_all_moves"
+    _inherit = "report.stock_picking_batch_report.report_bp_all_moves"
     _description = "Report batch picking all moves product elaboration"
 
     def key_level_0(self, operation):

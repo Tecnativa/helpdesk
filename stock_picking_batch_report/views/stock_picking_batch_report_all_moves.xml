@@ -9,19 +9,15 @@
             ref="stock_picking_batch.model_stock_picking_batch"
         />
     <field name="report_type">qweb-pdf</field>
-    <field
-            name="report_name"
-        >stock_picking_batch_report.report_batch_picking_all_moves</field>
-    <field
-            name="report_file"
-        >stock_picking_batch_report.report_batch_picking_all_moves</field>
+    <field name="report_name">stock_picking_batch_report.report_bp_all_moves</field>
+    <field name="report_file">stock_picking_batch_report.report_bp_all_moves</field>
     <field
             name="paperformat_id"
             ref="stock_picking_batch_report.paperformat_euro_nomargin"
         />
 </record>
 
-<template id="report_batch_picking_all_moves">
+<template id="report_bp_all_moves">
     <t t-call="web.html_container">
         <t t-call="web.internal_layout">
             <div class="page">

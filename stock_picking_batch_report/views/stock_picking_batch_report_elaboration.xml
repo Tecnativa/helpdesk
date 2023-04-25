@@ -3,7 +3,7 @@
 
     <template
         id="report_batch_all_mov_prod"
-        inherit_id="congeladosromero_custom.report_batch_picking_all_moves"
+        inherit_id="stock_picking_batch_report.report_bp_all_moves"
         primary="True"
     >
         <th id="partner" position="after">

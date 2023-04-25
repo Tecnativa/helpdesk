@@ -27,7 +27,7 @@
                     </div>
                     <t
                         t-set="fresh_attribute_value"
-                        t-value="docs.env.ref('congeladosromero_custom.product_gamma_f')"
+                        t-value="docs.env.ref('product_fishing.product_gamma_f')"
                     />
                     <t t-foreach="docs" t-as="doc">
                         <p t-field="doc.notes" />
