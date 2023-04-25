@@ -25,9 +25,10 @@
                             <span t-field="user.name" />
                         </div>
                     </div>
+                    <!-- Para ser establecido en modulos que extiendan este template -->
                     <t
                         t-set="fresh_attribute_value"
-                        t-value="docs.env.ref('product_fishing.product_gamma_f')"
+                        t-value="docs.env['product.attribute.value'].browse()"
                     />
                     <t t-foreach="docs" t-as="doc">
                         <p t-field="doc.notes" />

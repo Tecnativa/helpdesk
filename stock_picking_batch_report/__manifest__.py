@@ -18,7 +18,6 @@
         "product_weight_type",
         "stock_location_type_good",
         "stock_secondary_unit",
-        "product_fishing",
     ],
     "data": [
         "data/report_paperformat.xml",
