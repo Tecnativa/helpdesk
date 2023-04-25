@@ -8,8 +8,8 @@
                     <style type="text/css">
 .fresh-row {
     font-weight: bold;
-    color: #fff;
-    background-color: #dadada;
+    color: #000;
+    background-color: #d3d3d3;
 }
                     </style>
                     <div class="row mt32 mb16">
