@@ -12,6 +12,7 @@
     "installable": True,
     "auto_install": True,
     "depends": [
+        "l10n_es_partner",
         "stock_picking_batch_extended",
         "sale_elaboration",
         "product_weight_type",
