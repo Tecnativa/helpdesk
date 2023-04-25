@@ -10,7 +10,11 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["sale_stock"],
-    "data": ["security/ir.model.access.csv", "views/sale_order_views.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/product_views.xml",
+        "views/sale_order_views.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "sale_order_product_picker/static/src/js/relational_fields.js",

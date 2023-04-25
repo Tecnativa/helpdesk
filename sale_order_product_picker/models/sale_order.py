@@ -42,9 +42,11 @@ class SaleOrder(models.Model):
 
     @api.model
     def _list_product_picker_filters(self):
-        # TODO: Use self.env["ir.filters"].get_filters("product.product") ??
+        action = self.env.ref(
+            "sale_order_product_picker.product_normal_action_sell_picker"
+        )
         product_filters = self.env["ir.filters"].search(
-            [("model_id", "=", "product.product")]
+            [("model_id", "=", "product.product"), ("action_id", "=", action.id)]
         )
         return [(f.id, f.name) for f in product_filters]
 

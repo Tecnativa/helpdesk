@@ -128,6 +128,13 @@
                     </div>
                     <div class="d-flex">
                             <label string="Filter" for="picker_filter" class="mr-3" />
+                            <button
+                            type="action"
+                            name="%(sale_order_product_picker.product_normal_action_sell_picker)d"
+                            icon="fa-gear"
+                            class="btn-link"
+                            title="Manage product filters (Reload after modify)"
+                        />
                             <field name="picker_filter" widget="selection_badge" />
                             <label for="picker_only_available" class="mx-3" />
                             <field
