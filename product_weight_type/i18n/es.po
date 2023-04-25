@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_weight_type
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-25 08:46+0000\n"
+"PO-Revision-Date: 2023-04-25 10:47+0200\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: product_weight_type
+#: model:ir.model.fields.selection,name:product_weight_type.selection__product_template__weight_type__fixed
+msgid "Fixed"
+msgstr "Fijo"
+
+#. module: product_weight_type
+#: model:ir.model,name:product_weight_type.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: product_weight_type
+#: model:ir.model.fields.selection,name:product_weight_type.selection__product_template__weight_type__variable
+msgid "Variable"
+msgstr "Variable"
+
+#. module: product_weight_type
+#: model:ir.model.fields,field_description:product_weight_type.field_product_product__weight_type
+#: model:ir.model.fields,field_description:product_weight_type.field_product_template__weight_type
+msgid "Weight Type"
+msgstr "Tipo peso"

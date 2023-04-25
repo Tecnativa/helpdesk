@@ -30,10 +30,6 @@ class ProductTemplate(models.Model):
         comodel_name="product.attribute.value",
         compute="_compute_preservation_condition_ids",
     )
-    weight_type = fields.Selection(
-        [("variable", "Variable"), ("fixed", "Fixed")],
-        default="fixed",
-    )
 
     def _set_attribute_values(self, attribute_ref, field_name):
         """
