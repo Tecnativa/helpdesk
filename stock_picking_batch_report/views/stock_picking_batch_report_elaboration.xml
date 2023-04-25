@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="report_batch_all_mov_prod"
+        inherit_id="congeladosromero_custom.report_batch_picking_all_moves"
+        primary="True"
+    >
+        <th id="partner" position="after">
+            <th id="elaboration">Elaboration</th>
+        </th>
+        <xpath expr="//th[@id='partner']/.." position="inside">
+            <th class="text-right">Stock</th>
+        </xpath>
+        <td id="partner" position="after">
+            <td id="elaboration" class="text-center">
+                <span t-if="l1_item['elaboration']">Yes</span>
+            </td>
+        </td>
+        <xpath expr="//td[@id='partner']/.." position="inside">
+            <td class="text-right" style="font-size: 0.85em">
+                <span
+                    t-field="product.with_context(warehouse=op.location_id.warehouse_id.id).qty_available"
+                />
+            </td>
+        </xpath>
+    </template>
+
+</odoo>

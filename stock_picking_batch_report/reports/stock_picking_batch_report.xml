@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="action_report_batch_picking_driver" model="ir.actions.report">
+        <field name="name">Batch picking driver</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_picking_batch_report.report_batch_picking_from_move</field>
+        <field
+            name="report_file"
+        >stock_picking_batch_report.report_batch_picking_from_move</field>
+        <field
+            name="binding_model_id"
+            ref="stock_picking_batch.model_stock_picking_batch"
+        />
+        <field name="binding_type">report</field>
+        <field
+            name="paperformat_id"
+            ref="congeladosromero_custom.paperformat_euro_nomargin"
+        />
+    </record>
+
+    <record
+        id="action_report_batch_picking_all_moves_product"
+        model="ir.actions.report"
+    >
+        <field name="name">Batch picking all moves product elaboration</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_picking_batch_report.report_batch_all_mov_prod</field>
+        <field
+            name="report_file"
+        >stock_picking_batch_report.report_batch_all_mov_prod</field>
+        <field
+            name="binding_model_id"
+            ref="stock_picking_batch.model_stock_picking_batch"
+        />
+        <field name="binding_type">report</field>
+        <field
+            name="paperformat_id"
+            ref="congeladosromero_custom.paperformat_euro_nomargin"
+        />
+    </record>
+</odoo>
