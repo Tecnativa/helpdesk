@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+<record id="action_report_batch_picking_all_moves" model="ir.actions.report">
+    <field name="name">Batch picking all moves</field>
+    <field name="model">stock.picking.batch</field>
+    <field
+            name="binding_model_id"
+            ref="stock_picking_batch.model_stock_picking_batch"
+        />
+    <field name="report_type">qweb-pdf</field>
+    <field
+            name="report_name"
+        >stock_picking_batch_report.report_batch_picking_all_moves</field>
+    <field
+            name="report_file"
+        >stock_picking_batch_report.report_batch_picking_all_moves</field>
+    <field
+            name="paperformat_id"
+            ref="stock_picking_batch_report.paperformat_euro_nomargin"
+        />
+</record>
+
+<template id="report_batch_picking_all_moves">
+    <t t-call="web.html_container">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="row mt32 mb16">
+                    <div class="col-3">
+                        <strong>Date:</strong>
+                        <span t-esc="now()" t-options="{'widget': 'datetime'}" />
+                    </div>
+                    <div class="col-3">
+                        <strong>Printed by:</strong>
+                        <span t-field="user.name" />
+                    </div>
+                </div>
+                <t t-foreach="docs" t-as="doc">
+                    <p t-field="doc.notes" />
+                    <t t-foreach="get_grouped_data(doc)" t-as="l0_data">
+                        <div id="type_goods" class="row">
+                            <div class="col-12">
+                                <h3 t-esc="l0_data['name']" />
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Batch Ref</th>
+                                    <th colspan="2">Picked By</th>
+                                    <th colspan="2" />
+                                    <th colspan="2" class="text-center"># Pickings</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="padding-bottom:25px;">
+                                        <span t-esc="doc.name" />
+                                    </td>
+                                    <td colspan="2">
+                                        <span t-esc="doc.user_id.name" />
+                                    </td>
+                                    <td
+                                            colspan="2"
+                                            style="padding-top:25px;"
+                                        >Visa:_________________</td>
+                                    <td colspan="2" class="text-center">
+                                        <span t-esc="doc.picking_count" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th id="reference">Reference</th>
+                                    <th id="product">Product</th>
+                                    <th id="location">Location</th>
+                                    <th id="partner" t-if="not hide_partner"><span
+                                            >Partner</span></th>
+                                    <th
+                                            class="text-right"
+                                            t-if="doc.state != 'done'"
+                                        >Demand</th>
+                                    <th class="text-right">Qty</th>
+                                    <th id="uom_th">UoM</th>
+                                    <th />
+                                    <th>Lot</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="l0_data['l1_items']" t-as="l1_item">
+                                    <t t-set="product" t-value="l1_item['product']" />
+                                    <t t-set="qty" t-value="l1_item['product_qty']" />
+                                    <t
+                                            t-set="initial_demand"
+                                            t-value="l1_item['initial_demand']"
+                                        />
+                                    <t t-set="op" t-value="l1_item['operations'][:1]" />
+                                    <t
+                                            t-set="secondary_uom"
+                                            t-value="l1_item['secondary_uom']"
+                                        />
+                                    <t
+                                            t-set="secondary_uom_qty"
+                                            t-value="l1_item['secondary_uom_qty']"
+                                        />
+                                        <t
+                                            t-set="locations"
+                                            t-value="l1_item['locations']"
+                                        />
+                                    <tr>
+                                        <td id="reference">
+                                            <span
+                                                    t-field="op.product_id.default_code"
+                                                />
+                                        </td>
+                                        <td id="product">
+                                            <span t-field="op.name" />
+                                        </td>
+                                        <td id="location">
+                                            <div t-foreach="locations" t-as="location">
+                                                <span t-field="location.display_name" />
+                                            </div>
+                                        </td>
+                                        <td id="partner" t-if="not hide_partner">
+                                            <!-- Rotura por partner cuando UoM es Kg(id=uom_kg) -->
+                                            <t t-if="op.product_uom == uom_kg">
+                                                <span
+                                                        t-esc="op.picking_id.partner_id.comercial or op.picking_id.partner_id.name"
+                                                    />
+                                            </t>
+                                        </td>
+                                        <td
+                                                id="demand"
+                                                t-if="doc.state != 'done'"
+                                                class="text-right"
+                                            >
+                                            <t t-if="initial_demand != qty">
+                                                <span
+                                                        t-esc="initial_demand"
+                                                        t-options="{'widget': 'float', 'precision': currency_precision}"
+                                                    />
+                                            </t>
+                                        </td>
+                                        <td
+                                                id="qty"
+                                                t-attf-class="text-right #{product.weight_type == 'variable' and 'high-contrast-cr'}"
+                                            >
+                                            <span
+                                                    t-esc="qty"
+                                                    t-options="{'widget': 'float', 'precision': currency_precision}"
+                                                    style="font-size:14px"
+                                                />
+                                            <!-- No mostrar cajas cuando UoM es Kg(id=uom_kg) -->
+                                            <!-- Cajas Romero -->
+                                            <t t-if="not secondary_uom">
+                                                <t
+                                                        t-if="product.volume and op.product_uom != uom_kg"
+                                                    >
+                                                    <t
+                                                            t-set="packs_units"
+                                                            t-value="divmod(qty, product.volume)"
+                                                        />
+                                                    <div
+                                                            t-if="packs_units[0] and qty != packs_units[0]"
+                                                        >
+                                                        <span>Boxes:</span><span
+                                                                t-esc="packs_units[0]"
+                                                                style="font-size:14px"
+                                                            />
+                                                    </div>
+                                                    <div
+                                                            t-if="packs_units[1] and qty != packs_units[1]"
+                                                        >
+                                                        <span>Units:</span><span
+                                                                t-esc="packs_units[1]"
+                                                                style="font-size:14px"
+                                                            />
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="op.product_uom" />
+                                        </td>
+                                        <td>
+                                            <!-- Compute secondary uoms on fly based on stock move lines TT26190-->
+                                            <t t-if="secondary_uom">
+                                                <t t-if="l1_item['operations']">
+                                                    <div
+                                                            t-foreach="l1_item['operations']"
+                                                            t-as="operation"
+                                                            style="font-size: 0.85em"
+                                                        >
+                                                        <strong
+                                                                t-esc="operation.quantity_done / operation.secondary_uom_id.factor if operation.secondary_uom_id.factor else 1.0"
+                                                                t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
+                                                            /> <span
+                                                                t-field="operation.secondary_uom_id"
+                                                            />
+                                                    </div>
+                                                </t>
+                                                <t t-else="">
+                                                    <strong
+                                                            t-esc="secondary_uom_qty"
+                                                            t-options="{'widget': 'float', 'precision': currency_precision}"
+                                                        /> <strong
+                                                            t-esc="secondary_uom.name"
+                                                        />
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <div
+                                                    t-foreach="l1_item['operations'].mapped('move_line_ids.lot_id')"
+                                                    t-as="lot"
+                                                >
+                                                <span t-field="lot.name" /> <span
+                                                        t-field="lot.expiration_date"
+                                                        t-options="{'widget': 'date'}"
+                                                    />
+                                            </div>
+                                        </td>
+                                        <tr
+                                                align="left"
+                                                t-if="product.description_warehouse"
+                                            >
+                                            <td colspan="4">
+                                                <pre class="description ">
+                                                    <span
+                                                            t-esc="product.description_warehouse"
+                                                        />
+                                                </pre>
+                                            </td>
+                                        </tr>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div id="type_goods_break" style="page-break-before:always;" />
+                    </t>
+                    <div
+                            t-foreach="doc.picking_ids.filtered('note')"
+                            t-as="pick_with_note"
+                        >
+                        <span t-field="pick_with_note.note" />
+                    </div>
+                </t>
+            </div>
+        </t>
+    </t>
+</template>
+
+</odoo>

@@ -5,7 +5,7 @@
     "summary": "Batch picking reports",
     "version": "15.0.1.0.0",
     "development_status": "Beta",
-    "category": "Sale",
+    "category": "Warehouse",
     "website": "https://github.com/OCA/sale-workflow",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -14,11 +14,15 @@
     "depends": [
         "stock_picking_batch_extended",
         "sale_elaboration",
-        "congeladosromero_custom",
+        "product_weight_type",
+        "stock_location_type_good",
+        "stock_secondary_unit",
     ],
     "data": [
+        "data/report_paperformat.xml",
         "views/stock_picking_batch_report_driver.xml",
         "views/stock_picking_batch_report_elaboration.xml",
+        "reports/report_batch_picking_all_moves.xml",
         "reports/stock_picking_batch_report.xml",
     ],
 }

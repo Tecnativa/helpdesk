@@ -18,7 +18,7 @@
         <field name="binding_type">report</field>
         <field
             name="paperformat_id"
-            ref="congeladosromero_custom.paperformat_euro_nomargin"
+            ref="stock_picking_batch_report.paperformat_euro_nomargin"
         />
     </record>
 
@@ -42,7 +42,7 @@
         <field name="binding_type">report</field>
         <field
             name="paperformat_id"
-            ref="congeladosromero_custom.paperformat_euro_nomargin"
+            ref="stock_picking_batch_report.paperformat_euro_nomargin"
         />
     </record>
 </odoo>
