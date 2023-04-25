@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 Tecnativa - Carlos Dauden
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3). -->
+<odoo>
+
+<record id="view_location_form" model="ir.ui.view">
+    <field name="model">stock.location</field>
+    <field name="inherit_id" ref="stock.view_location_form" />
+    <field name="arch" type="xml">
+        <field name="return_location" position="after">
+            <field name="type_goods" />
+        </field>
+    </field>
+</record>
+
+</odoo>

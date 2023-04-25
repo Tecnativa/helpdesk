@@ -1,0 +1,51 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_location_type_good
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-25 09:06+0000\n"
+"PO-Revision-Date: 2023-04-25 09:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_location_type_good
+#: model:ir.model.fields.selection,name:stock_location_type_good.selection__stock_location__type_goods__cool_goods
+msgid "Cool Goods"
+msgstr ""
+
+#. module: stock_location_type_good
+#: model:ir.model.fields.selection,name:stock_location_type_good.selection__stock_location__type_goods__dray_goods
+msgid "Dray Goods"
+msgstr ""
+
+#. module: stock_location_type_good
+#: model:ir.model.fields.selection,name:stock_location_type_good.selection__stock_location__type_goods__fresh_goods
+msgid "Fresh Goods"
+msgstr ""
+
+#. module: stock_location_type_good
+#: model:ir.model.fields.selection,name:stock_location_type_good.selection__stock_location__type_goods__frozen_goods
+msgid "Frozen Goods"
+msgstr ""
+
+#. module: stock_location_type_good
+#: model:ir.model.fields.selection,name:stock_location_type_good.selection__stock_location__type_goods__icecream_goods
+msgid "Ice Cream Goods"
+msgstr ""
+
+#. module: stock_location_type_good
+#: model:ir.model,name:stock_location_type_good.model_stock_location
+msgid "Inventory Locations"
+msgstr ""
+
+#. module: stock_location_type_good
+#: model:ir.model.fields,field_description:stock_location_type_good.field_stock_location__type_goods
+msgid "Type Goods"
+msgstr ""
