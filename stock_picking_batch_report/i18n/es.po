@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 20:02+0000\n"
-"PO-Revision-Date: 2022-12-22 21:04+0100\n"
+"POT-Creation-Date: 2023-04-25 17:59+0000\n"
+"PO-Revision-Date: 2023-04-25 20:54+0200\n"
 "Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,24 +18,48 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. module: stock_picking_batch_report
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
+msgid "# Pickings"
+msgstr "Nº Albaranes"
+
+#. module: stock_picking_batch_report
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
+msgid "<span>Boxes:</span>"
+msgstr "<span>Cajas:</span>"
+
+#. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "<span>Partner</span>"
 msgstr "<span>Empresa</span>"
 
 #. module: stock_picking_batch_report
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
+msgid "<span>Units:</span>"
+msgstr "<span>Uds:</span>"
+
+#. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "<strong>Date:</strong>"
 msgstr "<strong>Fecha:</strong>"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "<strong>Printed by:</strong>"
 msgstr "<strong>Impreso por:</strong>"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "Batch Ref"
 msgstr "Ref. agrupación"
+
+#. module: stock_picking_batch_report
+#: model:ir.actions.report,name:stock_picking_batch_report.action_report_batch_picking_all_moves
+msgid "Batch picking all moves"
+msgstr "Batch picking todas las operaciones"
 
 #. module: stock_picking_batch_report
 #: model:ir.actions.report,name:stock_picking_batch_report.action_report_batch_picking_all_moves_product
@@ -46,6 +70,11 @@ msgstr "Batch Picking por producto elaboración (todas)"
 #: model:ir.actions.report,name:stock_picking_batch_report.action_report_batch_picking_driver
 msgid "Batch picking driver"
 msgstr "Batch picking chofer"
+
+#. module: stock_picking_batch_report
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
+msgid "Demand"
+msgstr "Demanda"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
@@ -59,42 +88,63 @@ msgid "Elaboration"
 msgstr "Elaboración"
 
 #. module: stock_picking_batch_report
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "Lot"
 msgstr "Lote"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "Picked By"
 msgstr "Recogido por"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "Product"
 msgstr "Producto"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "Qty"
 msgstr "Cant."
 
 #. module: stock_picking_batch_report
-#: model:ir.model,name:stock_picking_batch_report.model_report_stock_picking_batch_report_report_batch_all_mov_prod
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: stock_picking_batch_report
+#: model:ir.model,name:stock_picking_batch_report.model_report_stock_picking_batch_report_report_bp_all_moves
+msgid "Report Batch Picking All Moves"
+msgstr "Batch picking todas las operaciones"
+
+#. module: stock_picking_batch_report
+#: model:ir.model,name:stock_picking_batch_report.model_report_picking_batch_report_report_batch_all_mov_prod
 msgid "Report batch picking all moves product elaboration"
-msgstr ""
+msgstr "Batch Picking por producto elaboración (todas)"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_all_mov_prod
 msgid "Stock"
-msgstr ""
+msgstr "Stock"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "UoM"
 msgstr "Ud. medida"
 
 #. module: stock_picking_batch_report
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_batch_picking_from_move
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_report.report_bp_all_moves
 msgid "Visa:_________________"
 msgstr "Firma:_________________"
 
