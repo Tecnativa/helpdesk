@@ -13,7 +13,7 @@
         "sale_margin",
         "sale_order_product_picker",
         "sale_purchase_force_vendor",
-        "sale_purchase_line_comment",
+        "sale_line_vendor_comment",
     ],
     "data": ["views/sale_order_views.xml"],
     "assets": {
