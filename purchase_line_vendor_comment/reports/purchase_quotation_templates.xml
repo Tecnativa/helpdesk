@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="report_purchasequotation_document"
+        inherit_id="purchase.report_purchasequotation_document"
+    >
+        <!-- Header data -->
+        <th name="th_quantity" position="after">
+            <th name="vendor_comment"><strong>Comment</strong></th>
+        </th>
+        <!-- Content data -->
+        <xpath expr="//span[@t-field='order_line.product_qty']/.." position="after">
+            <td id="vendor_comment">
+                <span t-field="order_line.vendor_comment" />
+            </td>
+        </xpath>
+    </template>
+
+</odoo>
