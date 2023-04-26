@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import dateutil
-import datetime as dt
 import pytz
 import json
 import babel
@@ -15,20 +14,15 @@ from odoo.exceptions import ValidationError, UserError
 from odoo.addons.ks_dashboard_ninja.lib.ks_date_filter_selections import ks_get_date, ks_convert_into_utc, \
     ks_convert_into_local
 
-# TODO : Check all imports if needed
-
-
-read = fields.Many2one.read
+fields_many2many_read = fields.Many2many.read
 
 
 def ks_read(self, records):
     if self.name == 'ks_list_view_fields' or self.name == 'ks_list_view_group_fields':
         comodel = records.env[self.comodel_name]
-
         # String domains are supposed to be dynamic and evaluated on client-side
         # only (thus ignored here).
         domain = self.domain if isinstance(self.domain, list) else []
-
         wquery = comodel._where_calc(domain)
         comodel._apply_ir_rules(wquery, 'read')
         from_c, where_c, where_params = wquery.get_sql()
@@ -44,114 +38,50 @@ def ks_read(self, records):
                 limit=(' LIMIT %d' % self.limit) if self.limit else '',
         )
         where_params.append(tuple(records.ids))
-
         # retrieve lines and group them by record
         group = defaultdict(list)
         records._cr.execute(query, where_params)
         rec_list = records._cr.fetchall()
         for row in rec_list:
             group[row[0]].append(row[1])
-
         # store result in cache
         cache = records.env.cache
         for record in records:
-            if self.name == 'ks_list_view_fields':
-                field = 'ks_list_view_fields'
-            else:
-                field = 'ks_list_view_group_fields'
+            field = self.name
             order = False
             if record.ks_many2many_field_ordering:
                 order = json.loads(record.ks_many2many_field_ordering).get(field, False)
-
             if order:
                 group[record.id].sort(key=lambda x: order.index(x))
             cache.set(record, self, tuple(group[record.id]))
-
     else:
-        context = {'active_test': False}
-        context.update(self.context)
-        comodel = records.env[self.comodel_name].with_context(**context)
-        domain = self.get_domain_list(records)
-        comodel._flush_search(domain)
-        wquery = comodel._where_calc(domain)
-        comodel._apply_ir_rules(wquery, 'read')
-        order_by = comodel._generate_order_by(None, wquery)
-        from_c, where_c, where_params = wquery.get_sql()
-        query = """ SELECT {rel}.{id1}, {rel}.{id2} FROM {rel}, {from_c}
-                    WHERE {where_c} AND {rel}.{id1} IN %s AND {rel}.{id2} = {tbl}.id
-                    {order_by} {limit} OFFSET {offset}
-                """.format(rel=self.relation, id1=self.column1, id2=self.column2,
-                           tbl=comodel._table, from_c=from_c, where_c=where_c or '1=1',
-                           limit=(' LIMIT %d' % self.limit) if self.limit else '',
-                           offset=0, order_by=order_by)
-        where_params.append(tuple(records.ids))
-
-        # retrieve lines and group them by record
-        group = defaultdict(list)
-        records._cr.execute(query, where_params)
-        for row in records._cr.fetchall():
-            group[row[0]].append(row[1])
-
-        # store result in cache
-        cache = records.env.cache
-        for record in records:
-            cache.set(record, self, tuple(group[record.id]))
+        fields_many2many_read(self, records)
 
 
 fields.Many2many.read = ks_read
 
-read_group = models.BaseModel._read_group_process_groupby
+_read_group_process_groupby = models.BaseModel._read_group_process_groupby
 
 
-def ks_time_addition(self, gb, query):
-    """
-        Overwriting default to add minutes to Helper method to collect important
-        information about groupbys: raw field name, type, time information, qualified name, ...
-    """
-    split = gb.split(':')
-    field_type = self._fields[split[0]].type
+def _read_group_process_groupby_ks(self, gb, query):
+    """Overwriting default to add minutes to Helper method."""
+    split = gb.split(":")
     gb_function = split[1] if len(split) == 2 else None
-    if gb_function == 'month_year':
-        gb_function = 'month'
-    temporal = field_type in ('date', 'datetime')
-    tz_convert = field_type == 'datetime' and self._context.get('tz') in pytz.all_timezones
-    qualified_field = self._inherits_join_calc(self._table, split[0], query)
-    if temporal:
-        display_formats = {
-            'minute': 'hh:mm dd MMM',
-            'hour': 'hh:00 dd MMM',
-            'day': 'dd MMM yyyy',  # yyyy = normal year
-            'week': "'W'w YYYY",  # w YYYY = ISO week-year
-            'month': 'MMMM yyyy',
-            'quarter': 'QQQ yyyy',
-            'year': 'yyyy',
-        }
-        time_intervals = {
-            'minute': dateutil.relativedelta.relativedelta(minutes=1),
-            'hour': dateutil.relativedelta.relativedelta(hours=1),
-            'day': dateutil.relativedelta.relativedelta(days=1),
-            'week': dt.timedelta(days=7),
-            'month': dateutil.relativedelta.relativedelta(months=1),
-            'quarter': dateutil.relativedelta.relativedelta(months=3),
-            'year': dateutil.relativedelta.relativedelta(years=1)
-        }
-        if tz_convert:
-            qualified_field = "timezone('%s', timezone('UTC',%s))" % (self._context.get('tz', 'UTC'), qualified_field)
-        qualified_field = "date_trunc('%s', %s::timestamp)" % (gb_function or 'month', qualified_field)
-    if field_type == 'boolean':
-        qualified_field = "coalesce(%s,false)" % qualified_field
-    return {
-        'field': split[0],
-        'groupby': gb,
-        'type': field_type,
-        'display_format': display_formats[gb_function or 'month'] if temporal else None,
-        'interval': time_intervals[gb_function or 'month'] if temporal else None,
-        'tz_convert': tz_convert,
-        'qualified_field': qualified_field,
-    }
+    if gb_function in ("month_year", "minute"):
+        gb = split[0] + ":month"  # avoid error on super call
+    res = _read_group_process_groupby(self, gb, query)
+    if gb_function == "minute":
+        field_type = self._fields[split[0]].type
+        temporal = field_type in ('date', 'datetime')
+        if temporal:
+            res["display_formats"][gb_function] = "hh:mm dd MMM"
+            res["time_intervals"][gb_function] = (
+                dateutil.relativedelta.relativedelta(minutes=1)
+            )
+    return res
 
 
-models.BaseModel._read_group_process_groupby = ks_time_addition
+models.BaseModel._read_group_process_groupby = _read_group_process_groupby_ks
 
 
 class KsDashboardNinjaItems(models.Model):
@@ -3292,7 +3222,3 @@ class KsDashboardItemMultiplier(models.Model):
                                                   "('ttype','=','integer'),('ttype','=','float'),"
                                                   "('ttype','=','monetary')]",
                                            string="Multiplier Field")
-
-    # def create(self,values):
-    #     print(values)
-    #     pass
