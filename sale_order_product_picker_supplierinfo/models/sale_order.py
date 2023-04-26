@@ -74,7 +74,6 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     supplierinfo_id = fields.Many2one(comodel_name="product.supplierinfo")
-    vendor_comment = fields.Char()
 
     @api.onchange("product_uom", "product_uom_qty")
     def product_uom_change(self):
