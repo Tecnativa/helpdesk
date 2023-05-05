@@ -162,6 +162,7 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
             var ctx = this._getContextPicker();
             const list = this._getListObject();
             const lines = await this._getLinesOfRecord(list);
+            var model = list.getParent().getParent().model;
             if (!lines.length) {
                 Object.assign(ctx, {
                     created_from_picker: true,
@@ -174,20 +175,42 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                 });
                 var id = changes.filter((change) => change.name === "order_line")[0]
                     .value.data[0].id;
+                // Charging form fields to perform onchanges.
+                var viewInfo = {
+                    fieldInfo: list.attrs.views.form.fieldsInfo.form,
+                    fields: list.attrs.views.form.fields,
+                    viewType: "form",
+                };
+                model.addFieldsInfo(id, viewInfo);
+                // Generate the default values for the new fields
+                model.generateDefaultValues(id, {viewType: "form"});
                 var dataLine = {};
                 for (var key of this.getDefaultFields()) {
                     dataLine[key] = this.recordData[key].res_id
                         ? {id: this.recordData[key].res_id}
                         : this.recordData[key];
                 }
-                list._setValue({
+                await list._setValue({
                     operation: "UPDATE",
                     id: id,
                     data: dataLine,
                     picker_record_id: this.db_id,
                 });
+                // Perform the form onchanges to avoid loosing data.
+                await model._performOnChange(
+                    model.localData[id],
+                    Object.keys(dataLine),
+                    {viewType: "form"}
+                );
             } else if (lines.length === 1) {
                 const id = lines[0].line.id;
+                // Charging form fields to perform onchanges.
+                var viewInfo = {
+                    fieldInfo: list.attrs.views.form.fieldsInfo.form,
+                    fields: list.attrs.views.form.fields,
+                    viewType: "form",
+                };
+                model.addFieldsInfo(id, viewInfo);
                 const changes = {};
                 if (lines[0].data.secondary_uom_id) {
                     Object.assign(changes, {
@@ -199,12 +222,18 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                     });
                 }
                 list.picker = true;
-                list._setValue({
+                await list._setValue({
                     operation: "UPDATE",
                     id: id,
                     data: changes,
                     picker_record_id: this.db_id,
                 });
+                // Perform the form onchanges to avoid loosing data.
+                await model._performOnChange(
+                    model.localData[id],
+                    Object.keys(changes),
+                    {viewType: "form"}
+                );
             } else {
                 $target.removeAttr("disabled");
                 this._openMultiLineModalPicker(list, lines, ctx);
