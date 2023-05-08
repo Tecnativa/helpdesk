@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_barcodes_read_picking_form" model="ir.ui.view">
+        <field name="model">wiz.stock.barcodes.read.picking</field>
+        <field
+            name="inherit_id"
+            ref="stock_barcodes.view_stock_barcodes_read_picking_form"
+        />
+        <field name="arch" type="xml">
+            <label for="manual_entry" position="after">
+                <field
+                    name="auto_put_in_pack_on_read"
+                    widget="FieldBarcodeBooleanToggle"
+                />
+                <label for="auto_put_in_pack_on_read" />
+            </label>
+        </field>
+    </record>
+</odoo>

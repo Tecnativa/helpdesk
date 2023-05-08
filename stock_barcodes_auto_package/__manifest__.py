@@ -14,7 +14,7 @@
         "stock_barcodes",
     ],
     "data": [
-        "views/product_template_views.xml",
         "views/stock_barcodes_option_view.xml",
+        "wizard/stock_barcodes_read_picking_views.xml",
     ],
 }
