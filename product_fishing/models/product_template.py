@@ -30,6 +30,10 @@ class ProductTemplate(models.Model):
         comodel_name="product.attribute.value",
         compute="_compute_preservation_condition_ids",
     )
+    origin_country_ids = fields.Many2many(
+        comodel_name="product.attribute.value",
+        compute="_compute_origin_country_ids",
+    )
 
     def _set_attribute_values(self, attribute_ref, field_name):
         """
@@ -75,4 +79,10 @@ class ProductTemplate(models.Model):
         self._set_attribute_values(
             "product_fishing.product_preservation_condition_attribute",
             "preservation_condition_ids",
+        )
+
+    def _compute_origin_country_ids(self):
+        self._set_attribute_values(
+            "product_fishing.product_origin_country_attribute",
+            "origin_country_ids",
         )
