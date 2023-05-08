@@ -33,6 +33,15 @@ class StockProductionLot(models.Model):
             )
         ]
 
+    def _get_country_id_domain(self):
+        return [
+            (
+                "attribute_id",
+                "=",
+                self.env.ref("product_fishing.product_origin_country_attribute").id,
+            )
+        ]
+
     def _get_product_presentation_domain(self):
         return [
             (
@@ -79,7 +88,14 @@ class StockProductionLot(models.Model):
         store=True,
         string="Harvesting Method",
     )
-    country_id = fields.Many2one(comodel_name="res.country")
+    country_id = fields.Many2one(
+        comodel_name="product.attribute.value",
+        domain=lambda self: self._get_country_id_domain(),
+        compute="_compute_fao_fishing",
+        readonly=False,
+        store=True,
+        string="Country",
+    )
     caliber_id = fields.Many2many(
         related="product_id.product_template_variant_value_ids", string="Caliber"
     )
@@ -97,3 +113,5 @@ class StockProductionLot(models.Model):
                 lot.presentation_id = lot.product_id.presentation_ids[0].id
             if len(lot.product_id.harvesting_method_ids) == 1:
                 lot.harvesting_id = lot.product_id.harvesting_method_ids[0].id
+            if len(lot.product_id.origin_country_ids) == 1:
+                lot.country_id = lot.product_id.origin_country_ids[0].id
