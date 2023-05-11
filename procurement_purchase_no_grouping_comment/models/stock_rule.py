@@ -12,11 +12,13 @@ class StockRule(models.Model):
         """Do not group purchase order line if they are linked to different
         vendor comment in sale order line.
         """
-        return procurement.values.get("vendor_comment"), super(
-            StockRule, self
-        )._get_procurements_to_merge_groupby(procurement)
+        return (
+            procurement.values.get("vendor_id"),
+            procurement.values.get("vendor_comment"),
+            super(StockRule, self)._get_procurements_to_merge_groupby(procurement),
+        )
 
     def _get_custom_move_fields(self):
         fields = super(StockRule, self)._get_custom_move_fields()
-        fields += ["vendor_comment"]
+        fields.extend(["vendor_id", "vendor_comment"])
         return fields

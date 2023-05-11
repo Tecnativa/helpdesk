@@ -12,6 +12,7 @@
         "purchase_line_vendor_comment",
         "stock_move_vendor_comment",
         "purchase_stock",
+        "sale_purchase_force_vendor",
     ],
     "installable": True,
     "license": "AGPL-3",

@@ -9,5 +9,6 @@ class SaleOrderLine(models.Model):
 
     def _prepare_procurement_values(self, group_id=False):
         values = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
+        values["vendor_id"] = self.vendor_id.id
         values["vendor_comment"] = self.vendor_comment
         return values
