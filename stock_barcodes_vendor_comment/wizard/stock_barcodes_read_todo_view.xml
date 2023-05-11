@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_barcodes_todo_kanban" model="ir.ui.view">
+        <field name="model">wiz.stock.barcodes.read.todo</field>
+        <field name="inherit_id" ref="stock_barcodes.view_stock_barcodes_todo_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="vendor_id" />
+                <field name="vendor_comment" />
+            </xpath>
+            <xpath expr="//kanban//div[@name='action']" position="before">
+                <t t-if="record.vendor_id">
+                    <div class="row mt8 mb8">
+                        <div class="col-12">
+                            <strong>Vendor: </strong><field name="vendor_id" />
+                        </div>
+                        <div class="col-12">
+                            <strong>Comment: </strong><field name="vendor_comment" />
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </field>
+    </record>
+</odoo>
