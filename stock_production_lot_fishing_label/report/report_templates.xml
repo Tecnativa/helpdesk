@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="basic_layout_fishing_label_freezing">
+        <span
+            t-if="o.env.ref('product_fishing.product_gamma_c') in o.product_id.gamma_ids"
+        >Freezing</span>
+        <span t-else="">Packed</span>
+    </template>
+    <template id="basic_layout_fishing_label_expiration">
+        <span>Expiration</span>
+    </template>
+    <template id="basic_layout_fishing_label_lot_num">
+        <span>Batch No.</span>
+    </template>
+    <template id="basic_layout_fishing_label_net_weight">
+        <span>Net Weight</span>
+    </template>
+    <template id="basic_layout_fishing_label">
+        <t t-call="web.html_container">
+            <t t-if="not o" t-set="o" t-value="doc" />
+            <t t-set="langs" t-value="report_langs[o]" />
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id" />
+                </t>
+                <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                    <t t-set="company" t-value="o.company_id.sudo()" />
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company" />
+                </t>
+            </t>
+            <!-- Header -->
+            <div class="header">
+                <div class="row">
+                    <div class="col-12 text-center" t-if="show_client_elaborations">
+                        <strong
+                            style="font-size: 16pt;"
+                            t-field="o.picking_partner_id"
+                        />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <t t-foreach="langs" t-as="lang">
+                            <strong
+                                style="font-size: 20pt;"
+                                t-field="o.with_context(lang=lang).product_id.name"
+                            />
+                            <br t-if="lang != langs[-1]" />
+                        </t>
+                    </div>
+                    <div class="col-3 pt-2" id="extra_heading">
+                        <t t-if="show_client_elaborations">
+                            <span
+                                t-out="', '.join(o.move_id.elaboration_ids.mapped('code'))"
+                            />
+                        </t>
+                    </div>
+                </div>
+                <table
+                    class="text-center"
+                    style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 16pt;"
+                >
+                    <tbody>
+                        <tr>
+                            <td>
+                                <t t-foreach="langs" t-as="lang">
+                                    <t
+                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_freezing"
+                                        t-lang="lang"
+                                    />
+                                    <span t-if="lang != langs[-1]"> / </span>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-foreach="langs" t-as="lang">
+                                    <t
+                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_expiration"
+                                        t-lang="lang"
+                                    />
+                                    <span t-if="lang != langs[-1]"> / </span>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-foreach="langs" t-as="lang">
+                                    <t
+                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_lot_num"
+                                        t-lang="lang"
+                                    />
+                                    <span t-if="lang != langs[-1]"> / </span>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-foreach="langs" t-as="lang">
+                                    <t
+                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_net_weight"
+                                        t-lang="lang"
+                                    />
+                                    <span t-if="lang != langs[-1]"> / </span>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- TODO: Freezing date -->
+                                <strong
+                                    t-field="o.lot_id.packaging_date"
+                                    t-options='{"widget": "date"}'
+                                />
+                            </td>
+                            <td>
+                                <strong
+                                    t-field="o.lot_id.expiration_date"
+                                    t-options='{"widget": "date"}'
+                                />
+                            </td>
+                            <td><strong t-field="o.lot_id" /></td>
+                            <td>
+                                <t
+                                    t-if="o.product_uom_id.category_id == o.env.ref('uom.product_uom_categ_kgm')"
+                                >
+                                    <strong t-field="o.qty_done" /> <strong
+                                        t-field="o.product_uom_id"
+                                    />
+                                </t>
+                                <t t-else="">
+                                    <strong
+                                        t-out="o.qty_done * o.product_id.net_weight"
+                                    /> <strong t-field="o.product_id.weight_uom_name" />
+                                </t>
+                            </td>
+                            <t
+                                t-set="precision"
+                                t-value="o.env['decimal.precision'].precision_get('Product Unit of Measure')"
+                            />
+                            <td
+                                t-if="not float_is_zero(o.product_id.drained_weight, precision_digits=precision)"
+                            >
+                                <t
+                                    t-if="o.product_uom_id.category_id == o.env.ref('uom.product_uom_categ_kgm')"
+                                >
+                                    <!-- TODO: Asegurarse del cálculo -->
+                                    <strong
+                                        t-out="o.qty_done * (o.product_id.drained_weight / o.product_id.net_weight)"
+                                    /> <strong t-field="o.product_uom_id" />
+                                </t>
+                                <t t-else="">
+                                    <strong
+                                        t-out="o.qty_done * o.product_id.drained_weight"
+                                    /> <strong t-field="o.product_id.weight_uom_name" />
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Content -->
+            <div
+                class="article"
+                t-att-data-oe-model="o and o._name"
+                t-att-data-oe-id="o and o.id"
+                t-att-data-oe-lang="o and o.env.context.get('lang')"
+            >
+                <t t-out="0" />
+            </div>
+            <!-- Footer -->
+            <div class="footer o_standard_footer">
+                <div class="row">
+                    <div class="col-3">
+                        <ul class="list-unstyled">
+                            <strong style="font-size: 15pt;"><li
+                                    t-if="company.name"
+                                ><span t-field="company.name" /></li></strong>
+                            <li>
+                                <small t-field="company.street" />
+                                <small t-field="company.zip" />
+                                <small t-field="company.city" />
+                                <small> - </small>
+                                <small t-field="company.country_id" />
+                            </li>
+                            <li t-if="company.phone">Tel. <span
+                                    class="o_force_ltr"
+                                    t-field="company.phone"
+                                /></li>
+                            <li t-if="company.website"><span
+                                    t-field="company.website"
+                                /></li>
+                        </ul>
+                    </div>
+                    <div class="col-2">
+                        <div class="row">
+                            <div
+                                class="col"
+                                style="text-align:center;margin-top:12px;position:relative;left:30px;"
+                            >
+                                <div
+                                    t-if="company.sanitary_registry"
+                                    style="border: solid black 1px;border-radius:50%;padding:3px;margin-top:12px;text-align:center"
+                                >
+                                    <div>
+                                        <span>ES</span>
+                                    </div>
+                                    <div>
+                                        <span t-field="company.sanitary_registry" />
+                                    </div>
+                                    <div>
+                                        <span>CE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row pl-3">
+                            <div class="col">
+                                <t
+                                    t-set="barcode"
+                                    t-value="'240' + o.product_id.default_code + '10' + o.lot_id.name"
+                                />
+                                <img
+                                    t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
+                                    style="width:100%;height:60px"
+                                />
+                            </div>
+                        </div>
+                        <div class="row pl-3">
+                            <div
+                                class="col"
+                                style="text-align:center; font-size: 12pt;"
+                            >
+                                <span
+                                    t-out="'(240)' + o.product_id.default_code + '(10)' + o.lot_id.name"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 text-center">
+                        <strong t-field="o.result_package_id.alias" />
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
