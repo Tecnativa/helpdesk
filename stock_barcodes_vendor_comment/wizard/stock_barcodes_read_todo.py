@@ -1,7 +1,7 @@
 # Copyright 2023 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class WizStockBarcodesReadTodo(models.TransientModel):
@@ -18,9 +18,3 @@ class WizStockBarcodesReadTodo(models.TransientModel):
             moves = line.stock_move_ids or line.line_ids.mapped("move_id")
             line.vendor_id = moves[:1].vendor_id
             line.vendor_comment = moves[:1].vendor_comment
-
-    @api.model
-    def fields_to_fill_from_pending_line(self):
-        res = super().fields_to_fill_from_pending_line()
-        res.extend(["vendor_id", "vendor_comment"])
-        return res
