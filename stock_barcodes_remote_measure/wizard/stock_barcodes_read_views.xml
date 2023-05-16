@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_barcodes_read_form" model="ir.ui.view">
+        <field name="model">wiz.stock.barcodes.read</field>
+        <field name="inherit_id" ref="stock_barcodes.view_stock_barcodes_read_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@name='option_qty_fields']//field[@name='product_qty']"
+                position="attributes"
+            >
+                <attribute name="widget">remote_measure</attribute>
+                <attribute
+                    name="options"
+                >{'uom_field': 'product_uom_id', 'default_user_device': 1}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
