@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_barcodes_read_picking_form" model="ir.ui.view">
+        <field name="model">wiz.stock.barcodes.read.picking</field>
+        <field
+            name="inherit_id"
+            ref="stock_barcodes.view_stock_barcodes_read_picking_form"
+        />
+        <field name="priority" eval="999" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='move_line_ids']/tree/button[@name='action_barcode_detailed_operation_unlink']"
+                position="before"
+            >
+                <button
+                    name="action_print_label_report"
+                    type="object"
+                    class="btn-warning ml-auto oe_kanban_action_button btn-sm"
+                    icon="fa-print"
+                    title="Print labels"
+                    context="{'stock_move_line_to_print': id}"
+                >
+                </button>
+            </xpath>
+            <xpath
+                expr="//field[@name='move_line_ids']/kanban//button[@name='action_barcode_detailed_operation_unlink']"
+                position="before"
+            >
+                <button
+                    name="action_print_label_report"
+                    type="object"
+                    class="btn-secondary ml-auto oe_kanban_action_button btn-sm"
+                    context="{'stock_move_line_to_print': id}"
+                >
+                    <i
+                        class="fa fa-print"
+                        title="Print label"
+                        style="font-size:1.5em"
+                    />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

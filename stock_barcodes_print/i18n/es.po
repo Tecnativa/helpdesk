@@ -1,0 +1,50 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_barcodes_auto_package
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-08 19:38+0000\n"
+"PO-Revision-Date: 2023-05-08 21:38+0200\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: stock_barcodes_auto_package
+#: model:ir.model.fields,field_description:stock_barcodes_auto_package.field_wiz_stock_barcodes_read_picking__auto_put_in_pack_on_read
+msgid "Auto package"
+msgstr "Auto empaquetar"
+
+#. module: stock_barcodes_auto_package
+#: model:ir.model.fields,field_description:stock_barcodes_auto_package.field_stock_barcodes_option_group__auto_put_in_pack_on_read
+msgid "Auto put in pack in read barcode"
+msgstr "Auto empaquetar cuando el código de barras es leído"
+
+#. module: stock_barcodes_auto_package
+#: model:ir.model.fields,help:stock_barcodes_auto_package.field_stock_barcodes_option_group__auto_put_in_pack_on_read
+msgid "Auto put in pack when a barcode is read and product is checked to do it"
+msgstr ""
+"Auto empaquetar cuando el código de barras es leído y el producto está "
+"marcado para hacer esto"
+
+#. module: stock_barcodes_auto_package
+#: model:ir.model,name:stock_barcodes_auto_package.model_stock_barcodes_option_group
+msgid "Options group for barcode interface"
+msgstr "Grupo de opciones para el interfaz de códigos de barras"
+
+#. module: stock_barcodes_auto_package
+#: model:ir.model,name:stock_barcodes_auto_package.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: stock_barcodes_auto_package
+#: model:ir.model,name:stock_barcodes_auto_package.model_wiz_stock_barcodes_read_picking
+msgid "Wizard to read barcode on picking"
+msgstr "Asistente para leer códigos de barras desde los albaranes"

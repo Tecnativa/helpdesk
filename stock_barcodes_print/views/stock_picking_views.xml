@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock_barcodes.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='new_picking_barcode_option_group_id']"
+                position="after"
+            >
+                <field
+                    name="default_label_report"
+                    domain="[('is_barcode_label', '=', True)]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
