@@ -19,6 +19,10 @@
         <t t-call="web.html_container">
             <t t-if="not o" t-set="o" t-value="doc" />
             <t t-set="langs" t-value="report_langs[o]" />
+            <t
+                t-set="o"
+                t-value="o.move_line_id if o._name == 'stock.picking.line.print' else o"
+            />
             <t t-if="not company">
                 <!-- Multicompany -->
                 <t t-if="company_id">
@@ -37,6 +41,7 @@
                     <div class="col-12 text-center" t-if="show_client_elaborations">
                         <strong
                             style="font-size: 16pt;"
+                            t-if="o._name != 'stock.quant'"
                             t-field="o.picking_partner_id"
                         />
                     </div>
@@ -54,6 +59,7 @@
                     <div class="col-3 pt-2" id="extra_heading">
                         <t t-if="show_client_elaborations">
                             <span
+                                t-if="o._name != 'stock.quant'"
                                 t-out="', '.join(o.move_id.elaboration_ids.mapped('code'))"
                             />
                         </t>
@@ -121,14 +127,23 @@
                                 <t
                                     t-if="o.product_uom_id.category_id == o.env.ref('uom.product_uom_categ_kgm')"
                                 >
-                                    <strong t-field="o.qty_done" /> <strong
-                                        t-field="o.product_uom_id"
+                                    <strong
+                                        t-if="o._name == 'stock.quant'"
+                                        t-field="o.quantity"
                                     />
+                                    <strong t-else="" t-field="o.qty_done" />
+                                    <strong t-field="o.product_uom_id" />
                                 </t>
                                 <t t-else="">
                                     <strong
+                                        t-if="o._name == 'stock.quant'"
+                                        t-out="o.quantity * o.product_id.net_weight"
+                                    />
+                                    <strong
+                                        t-else=""
                                         t-out="o.qty_done * o.product_id.net_weight"
-                                    /> <strong t-field="o.product_id.weight_uom_name" />
+                                    />
+                                    <strong t-field="o.product_id.weight_uom_name" />
                                 </t>
                             </td>
                             <t
@@ -143,13 +158,25 @@
                                 >
                                     <!-- TODO: Asegurarse del cálculo -->
                                     <strong
+                                        t-if="o._name == 'stock.quant'"
+                                        t-out="o.quantity * (o.product_id.drained_weight / o.product_id.net_weight)"
+                                    />
+                                    <strong
+                                        t-else=""
                                         t-out="o.qty_done * (o.product_id.drained_weight / o.product_id.net_weight)"
-                                    /> <strong t-field="o.product_uom_id" />
+                                    />
+                                    <strong t-field="o.product_uom_id" />
                                 </t>
                                 <t t-else="">
                                     <strong
+                                        t-if="o._name == 'stock.quant'"
+                                        t-out="o.quantity * o.product_id.drained_weight"
+                                    />
+                                    <strong
+                                        t-else=""
                                         t-out="o.qty_done * o.product_id.drained_weight"
-                                    /> <strong t-field="o.product_id.weight_uom_name" />
+                                    />
+                                    <strong t-field="o.product_id.weight_uom_name" />
                                 </t>
                             </td>
                         </tr>
@@ -237,7 +264,10 @@
                         </div>
                     </div>
                     <div class="col-2 text-center">
-                        <strong t-field="o.result_package_id.alias" />
+                        <strong
+                            t-if="o._name != 'stock.quant'"
+                            t-field="o.result_package_id.alias"
+                        />
                     </div>
                 </div>
             </div>
