@@ -3,14 +3,30 @@
     <!--  Complete fishing labels  -->
     <record id="action_label_fishing_report" model="ir.actions.report">
         <field name="name">Fishing Label Impresion</field>
+        <field name="model">stock.picking.line.print</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_file"
+        >stock_production_lot_fishing_label.label_fishing</field>
+        <field
+            name="report_name"
+        >stock_production_lot_fishing_label.label_fishing</field>
+        <field
+            name="paperformat_id"
+            ref="stock_production_lot_fishing_label.paperformat_fishing_label"
+        />
+        <field name="is_barcode_label">True</field>
+    </record>
+    <record id="action_label_fishing_move_report" model="ir.actions.report">
+        <field name="name">Fishing Label Impresion</field>
         <field name="model">stock.move.line</field>
         <field name="report_type">qweb-pdf</field>
         <field
             name="report_file"
-        >stock_production_lot_fishing_label.label_fishing_report</field>
+        >stock_production_lot_fishing_label.label_fishing_move</field>
         <field
             name="report_name"
-        >stock_production_lot_fishing_label.label_fishing_report</field>
+        >stock_production_lot_fishing_label.label_fishing_move</field>
         <field
             name="paperformat_id"
             ref="stock_production_lot_fishing_label.paperformat_fishing_label"
@@ -24,21 +40,52 @@
         <field name="state">code</field>
         <field name="code">
 smls = records.mapped('move_line_ids').filtered(lambda sml: sml.qty_done > 0)
-action = env.ref('stock_production_lot_fishing_label.action_label_fishing_report').report_action(smls)
+action = env.ref('stock_production_lot_fishing_label.action_label_fishing_move_report').report_action(smls)
         </field>
-
+    </record>
+    <record id="action_label_fishing_quant_report" model="ir.actions.report">
+        <field name="name">Fishing Label Impresion</field>
+        <field name="model">stock.quant</field>
+        <field name="binding_model_id" ref="stock.model_stock_quant" />
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_file"
+        >stock_production_lot_fishing_label.label_fishing_quant</field>
+        <field
+            name="report_name"
+        >stock_production_lot_fishing_label.label_fishing_quant</field>
+        <field
+            name="paperformat_id"
+            ref="stock_production_lot_fishing_label.paperformat_fishing_label"
+        />
     </record>
     <!--  Mini fishing labels  -->
     <record id="action_label_fishing_report_mini" model="ir.actions.report">
-        <field name="name">Fishing Label Impresion</field>
+        <field name="name">Fishing Label Mini Impresion</field>
+        <field name="model">stock.picking.line.print</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_file"
+        >stock_production_lot_fishing_label.label_fishing_mini</field>
+        <field
+            name="report_name"
+        >stock_production_lot_fishing_label.label_fishing_mini</field>
+        <field
+            name="paperformat_id"
+            ref="stock_production_lot_fishing_label.paperformat_fishing_label_mini"
+        />
+        <field name="is_barcode_label">True</field>
+    </record>
+    <record id="action_label_fishing_move_report_mini" model="ir.actions.report">
+        <field name="name">Fishing Label Mini Impresion</field>
         <field name="model">stock.move.line</field>
         <field name="report_type">qweb-pdf</field>
         <field
             name="report_file"
-        >stock_production_lot_fishing_label.label_fishing_report_mini</field>
+        >stock_production_lot_fishing_label.label_fishing_move_mini</field>
         <field
             name="report_name"
-        >stock_production_lot_fishing_label.label_fishing_report_mini</field>
+        >stock_production_lot_fishing_label.label_fishing_move_mini</field>
         <field
             name="paperformat_id"
             ref="stock_production_lot_fishing_label.paperformat_fishing_label_mini"
@@ -52,8 +99,24 @@ action = env.ref('stock_production_lot_fishing_label.action_label_fishing_report
         <field name="state">code</field>
         <field name="code">
 smls = records.mapped('move_line_ids').filtered(lambda sml: sml.qty_done > 0)
-action = env.ref('stock_production_lot_fishing_label.action_label_fishing_report_mini').report_action(smls)
+action = env.ref('stock_production_lot_fishing_label.action_label_fishing_move_report_mini').report_action(smls)
         </field>
 
+    </record>
+    <record id="action_label_fishing_quant_report_mini" model="ir.actions.report">
+        <field name="name">Fishing Label Mini Impresion</field>
+        <field name="model">stock.quant</field>
+        <field name="binding_model_id" ref="stock.model_stock_quant" />
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_file"
+        >stock_production_lot_fishing_label.label_fishing_quant_mini</field>
+        <field
+            name="report_name"
+        >stock_production_lot_fishing_label.label_fishing_quant_mini</field>
+        <field
+            name="paperformat_id"
+            ref="stock_production_lot_fishing_label.paperformat_fishing_label_mini"
+        />
     </record>
 </odoo>

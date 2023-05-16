@@ -42,157 +42,182 @@
     </template>
     <template id="label_fishing_report_document">
         <t t-call="stock_production_lot_fishing_label.basic_layout_fishing_label">
-            <div class="page" style="font-size: 16pt;">
-                <t t-set="langs" t-value="report_langs[doc]" />
-                <div class="row" id="scientific_name">
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <t
-                                t-call="stock_production_lot_fishing_label.label_fishing_report_document_scientific"
-                                t-lang="lang"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
+            <t
+                t-set="count"
+                t-value="doc.label_qty if doc._name == 'stock.picking.line.print' else 1"
+            />
+            <t t-foreach="count" t-as="i">
+                <div class="page" style="font-size: 16pt;">
+                    <t t-set="langs" t-value="report_langs[doc]" />
+                    <div class="row" id="scientific_name">
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_scientific"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            <i t-field="doc.product_id.scientific_name_ids[:1].name" />
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <i t-field="doc.product_id.scientific_name_ids[:1].name" />
+                    <div class="row" id="fishing_zone">
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_fish_zone"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <span
+                                    t-field="doc.lot_id.fao_fishing_area_id.with_context(lang=lang).name"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
                     </div>
-                </div>
-                <div class="row" id="fishing_zone">
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <t
-                                t-call="stock_production_lot_fishing_label.label_fishing_report_document_fish_zone"
-                                t-lang="lang"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
+                    <div class="row" id="production_method">
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_production_method"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <span
+                                    t-field="doc.lot_id.harvesting_id.with_context(lang=lang).name"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
+                    <div class="row" id="fishing_art">
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_fishing_art"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <span
+                                    t-field="doc.lot_id.fao_fishing_technique_id.with_context(lang=lang).name"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row" id="boat">
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_boat"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            <span t-field="doc.lot_id.fishing_ship_id.name" />
+                        </div>
+                    </div>
+                    <div class="row" id="origin">
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_origin"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <span
+                                    t-field="doc.lot_id.country_id.with_context(lang=lang).name"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row" id="presentation">
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_presentation"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <span
+                                    t-field="doc.lot_id.presentation_id.with_context(lang=lang).name"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row" id="keep_at">
+                        <div class="col-6">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_keep_at"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </t>
+                        </div>
+                        <div class="col-6">
                             <span
-                                t-field="doc.lot_id.fao_fishing_area_id.with_context(lang=lang).name"
+                                t-out="', '.join(doc.product_id.preservation_condition_ids.mapped('name'))"
                             />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
+                        </div>
                     </div>
-                </div>
-                <div class="row" id="production_method">
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <t
-                                t-call="stock_production_lot_fishing_label.label_fishing_report_document_production_method"
-                                t-lang="lang"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <span
-                                t-field="doc.lot_id.harvesting_id.with_context(lang=lang).name"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                </div>
-                <div class="row" id="fishing_art">
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <t
-                                t-call="stock_production_lot_fishing_label.label_fishing_report_document_fishing_art"
-                                t-lang="lang"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <span
-                                t-field="doc.lot_id.fao_fishing_technique_id.with_context(lang=lang).name"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                </div>
-                <div class="row" id="boat">
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <t
-                                t-call="stock_production_lot_fishing_label.label_fishing_report_document_boat"
-                                t-lang="lang"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                    <div class="col-6">
-                        <span t-field="doc.lot_id.fishing_ship_id.name" />
-                    </div>
-                </div>
-                <div class="row" id="origin">
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <t
-                                t-call="stock_production_lot_fishing_label.label_fishing_report_document_origin"
-                                t-lang="lang"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <span
-                                t-field="doc.lot_id.country_id.with_context(lang=lang).name"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                </div>
-                <div class="row" id="presentation">
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <t
-                                t-call="stock_production_lot_fishing_label.label_fishing_report_document_presentation"
-                                t-lang="lang"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <span
-                                t-field="doc.lot_id.presentation_id.with_context(lang=lang).name"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                </div>
-                <div class="row" id="keep_at">
-                    <div class="col-6">
-                        <t t-foreach="langs" t-as="lang">
-                            <t
-                                t-call="stock_production_lot_fishing_label.label_fishing_report_document_keep_at"
-                                t-lang="lang"
-                            />
-                            <span t-if="lang != langs[-1]"> / </span>
-                        </t>
-                    </div>
-                    <div class="col-6">
-                        <span
-                            t-out="', '.join(doc.product_id.preservation_condition_ids.mapped('name'))"
+                    <t t-if="use_second_page">
+                        <p style="page-break-before:always;" />
+                        <t
+                            t-call="stock_production_lot_fishing_label.label_fishing_report_document_nutrition_facts"
                         />
-                    </div>
-                </div>
-                <t t-if="use_second_page">
+                    </t>
                     <p style="page-break-before:always;" />
-                    <t
-                        t-call="stock_production_lot_fishing_label.label_fishing_report_document_nutrition_facts"
-                    />
-                </t>
-            </div>
+                </div>
+            </t>
         </t>
     </template>
-    <template id="label_fishing_report">
+    <template id="label_fishing">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="stock_production_lot_fishing_label.label_fishing_report_document"
+                />
+            </t>
+        </t>
+    </template>
+    <template id="label_fishing_move">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="stock_production_lot_fishing_label.label_fishing_report_document"
+                />
+            </t>
+        </t>
+    </template>
+    <template id="label_fishing_quant">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t
@@ -204,28 +229,55 @@
     <!--  Mini fishing labels  -->
     <template id="label_fishing_report_mini_document">
         <t t-call="web.basic_layout">
-            <div class="row" style="padding-top: 25px">
-                <div class="col">
-                    <t t-set="barcode" t-value="doc.result_package_id.alias" />
-                    <img
-                        t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
-                        style="width:100%;height:100px"
-                    />
+            <t
+                t-set="count"
+                t-value="doc.label_qty if doc._name == 'stock.picking.line.print' else 1"
+            />
+            <t t-foreach="count" t-as="i">
+                <div class="page">
+                    <div class="row" style="padding-top: 25px">
+                        <div class="col">
+                            <t t-set="barcode" t-value="doc.result_package_id.alias" />
+                            <img
+                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
+                                style="width:100%;height:100px"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:center; font-size: 12pt;">
+                            <span t-out="doc.result_package_id.alias" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align:center; font-size: 12pt;">
+                            <strong t-out="doc.product_id.name" />
+                        </div>
+                    </div>
+                    <p style="page-break-before:always;" />
                 </div>
-            </div>
-            <div class="row">
-                <div class="col" style="text-align:center; font-size: 12pt;">
-                    <span t-out="doc.result_package_id.alias" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col" style="text-align:center; font-size: 12pt;">
-                    <strong t-out="doc.product_id.name" />
-                </div>
-            </div>
+            </t>
         </t>
     </template>
-    <template id="label_fishing_report_mini">
+    <template id="label_fishing_mini">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="stock_production_lot_fishing_label.label_fishing_report_mini_document"
+                />
+            </t>
+        </t>
+    </template>
+    <template id="label_fishing_move_mini">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="stock_production_lot_fishing_label.label_fishing_report_mini_document"
+                />
+            </t>
+        </t>
+    </template>
+    <template id="label_fishing_quant_mini">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t
