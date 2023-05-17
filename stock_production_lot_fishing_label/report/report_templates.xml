@@ -37,6 +37,10 @@
             </t>
             <!-- Header -->
             <div class="header">
+                <t
+                    t-set="show_client_elaborations"
+                    t-value="client_elaborations[doc]"
+                />
                 <div class="row">
                     <div class="col-12 text-center" t-if="show_client_elaborations">
                         <strong

@@ -10,9 +10,14 @@ class WizStockBarcodeSelectionPrinting(models.TransientModel):
     @api.model
     def _get_move_lines(self, picking):
         stock_move_lines = super()._get_move_lines(picking)
-        if self.barcode_report == self.env.ref(
-            "stock_production_lot_fishing_label.action_label_fishing_report"
-        ):
+        if self.barcode_report in [
+            self.env.ref(
+                "stock_production_lot_fishing_label.action_label_fishing_report"
+            ),
+            self.env.ref(
+                "stock_production_lot_fishing_label.action_label_fishing_nutritional_report"
+            ),
+        ]:
             return stock_move_lines.filtered(
                 lambda ml: ml.product_id.default_code and ml.lot_id
             )
