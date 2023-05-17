@@ -29,7 +29,7 @@ class ProductTemplate(models.Model):
                 .value_ids[:1]
                 .name
             )
-            res[key] = value
+            res[key] = value or ""
         # Other fields
         field_list = (
             self.env["ir.config_parameter"]
