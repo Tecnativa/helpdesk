@@ -226,6 +226,15 @@
             </t>
         </t>
     </template>
+    <template id="label_fishing_nutri">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="stock_production_lot_fishing_label.label_fishing_report_document"
+                />
+            </t>
+        </t>
+    </template>
     <!--  Mini fishing labels  -->
     <template id="label_fishing_report_mini_document">
         <t t-call="web.basic_layout">

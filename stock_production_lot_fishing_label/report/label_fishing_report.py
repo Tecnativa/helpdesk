@@ -8,20 +8,49 @@ from odoo.tools import float_is_zero
 
 class LabelFishingReportMixin(models.AbstractModel):
     _name = "label.fishing.report.mixin"
+    based_model = ""
 
-    def _compute_langs(self, move_line=False):
+    def _compute_langs_print_partner(self, model_name, line):
         report_langs = ["ca_ES", "es_ES", "en_US", "fr_FR"]
-        if move_line:
+        print_partner = False
+        if model_name != "stock.quant":
+            move_line = line if model_name == "stock.move.line" else line.move_line_id
             moves = self.env["stock.move"].browse(
                 list(move_line.move_id._rollup_move_dests({move_line.move_id.id}))
             )
             move_sale = moves.filtered("sale_line_id")[:1]
             if move_sale:
+                print_partner = True
                 report_langs = ["es_ES"]
                 lang = move_sale.partner_id.lang
                 if lang != "es_ES":
                     report_langs.append(lang)
-        return report_langs
+        return report_langs, print_partner
+
+    @api.model
+    def _get_report_values(self, docids, data=None):
+        model_name = self.based_model
+        lines_to_print = self.env[model_name].browse(docids)
+        report_langs = {}
+        client_elaborations = {}
+        for line in lines_to_print:
+            langs, client_el = self._compute_langs_print_partner(model_name, line)
+            report_langs[line] = langs
+            client_elaborations[line] = client_el
+        docargs = {
+            "doc_ids": docids,
+            "doc_model": model_name,
+            "docs": lines_to_print,
+            "time": time,
+            "report_langs": report_langs,
+            "float_is_zero": float_is_zero,
+            "show_nutritional_table": self.env.context.get(
+                "show_nutritional_table", False
+            ),
+            "use_second_page": self.env.context.get("use_second_page", False),
+            "client_elaborations": client_elaborations,
+        }
+        return docargs
 
 
 # pylint: disable=R7980
@@ -29,27 +58,20 @@ class LabelFishingReport(models.AbstractModel):
     _inherit = "label.fishing.report.mixin"
     _name = "report.stock_production_lot_fishing_label.label_fishing"
     _description = "Report Fishing Label"
+    based_model = "stock.picking.line.print"
+
+
+# pylint: disable=R7980
+class LabelFishingReportNutri(models.AbstractModel):
+    _inherit = "label.fishing.report.mixin"
+    _name = "report.stock_production_lot_fishing_label.label_fishing_nutri"
+    _description = "Report Fishing Label"
+    based_model = "stock.picking.line.print"
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        model = self.env.context.get("active_model", "stock.picking.line.print")
-        lines_to_print = self.env[model].browse(docids)
-        report_langs = {}
-        for line in lines_to_print:
-            report_langs[line] = self._compute_langs(move_line=line.move_line_id)
-        docargs = {
-            "doc_ids": docids,
-            "doc_model": model,
-            "docs": lines_to_print,
-            "time": time,
-            "report_langs": report_langs,
-            "float_is_zero": float_is_zero,
-            # TODO: Compute values
-            "show_nutritional_table": False,
-            "use_second_page": False,
-            "show_client_elaborations": False,
-        }
-        return docargs
+        self = self.with_context(use_second_page=True, show_nutritional_table=True)
+        return super()._get_report_values(docids, data=data)
 
 
 # pylint: disable=R7980
@@ -57,51 +79,12 @@ class LabelFishingReportMove(models.AbstractModel):
     _inherit = "label.fishing.report.mixin"
     _name = "report.stock_production_lot_fishing_label.label_fishing_move"
     _description = "Report Fishing Label Move"
-
-    @api.model
-    def _get_report_values(self, docids, data=None):
-        model = self.env.context.get("active_model", "stock.move.line")
-        lines_to_print = self.env[model].browse(docids)
-        report_langs = {}
-        for line in lines_to_print:
-            report_langs[line] = self._compute_langs(move_line=line)
-        docargs = {
-            "doc_ids": docids,
-            "doc_model": model,
-            "docs": lines_to_print,
-            "time": time,
-            "report_langs": report_langs,
-            "float_is_zero": float_is_zero,
-            # TODO: Compute values
-            "show_nutritional_table": False,
-            "use_second_page": False,
-            "show_client_elaborations": False,
-        }
-        return docargs
+    based_model = "stock.move.line"
 
 
+# pylint: disable=R7980
 class LabelFishingReportQuant(models.AbstractModel):
     _inherit = "label.fishing.report.mixin"
     _name = "report.stock_production_lot_fishing_label.label_fishing_quant"
     _description = "Report Fishing Label Quant"
-
-    @api.model
-    def _get_report_values(self, docids, data=None):
-        model = self.env.context.get("active_model", "stock.quant")
-        lines_to_print = self.env[model].browse(docids)
-        report_langs = {}
-        for line in lines_to_print:
-            report_langs[line] = self._compute_langs()
-        docargs = {
-            "doc_ids": docids,
-            "doc_model": model,
-            "docs": lines_to_print,
-            "time": time,
-            "report_langs": report_langs,
-            "float_is_zero": float_is_zero,
-            # TODO: Compute values
-            "show_nutritional_table": False,
-            "use_second_page": False,
-            "show_client_elaborations": False,
-        }
-        return docargs
+    based_model = "stock.quant"

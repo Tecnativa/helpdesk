@@ -119,4 +119,21 @@ action = env.ref('stock_production_lot_fishing_label.action_label_fishing_move_r
             ref="stock_production_lot_fishing_label.paperformat_fishing_label_mini"
         />
     </record>
+    <!--  Complete fishing labels Nutritional Info  -->
+    <record id="action_label_fishing_nutritional_report" model="ir.actions.report">
+        <field name="name">Fishing Label Impresion With Nutritional Info</field>
+        <field name="model">stock.picking.line.print</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_file"
+        >stock_production_lot_fishing_label.label_fishing_nutri</field>
+        <field
+            name="report_name"
+        >stock_production_lot_fishing_label.label_fishing_nutri</field>
+        <field
+            name="paperformat_id"
+            ref="stock_production_lot_fishing_label.paperformat_fishing_label"
+        />
+        <field name="is_barcode_label">True</field>
+    </record>
 </odoo>
