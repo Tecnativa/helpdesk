@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_sales_order_filter" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <label for="pricelist_id" position="before">
+                <field name="commitment_date" string="Delivery date" />
+            </label>
+        </field>
+    </record>
+
+</odoo>
