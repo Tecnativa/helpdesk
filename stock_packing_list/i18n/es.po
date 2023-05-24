@@ -1,0 +1,349 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_packing_list
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-24 16:21+0000\n"
+"PO-Revision-Date: 2023-05-24 18:21+0200\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: stock_packing_list
+#: model:ir.actions.report,print_report_name:stock_packing_list.action_report_picking_packing_list
+msgid "'Packing List - %s' % (object.name)"
+msgstr "'Packing List - %s' % (object.name)"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Box Number</strong>"
+msgstr "<strong>Caja Nº</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Box Qty</strong>"
+msgstr "<strong>Cajas:</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Date of Transfer:</strong>"
+msgstr "<strong>Fecha de transferencia:</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>HS Code</strong>"
+msgstr "<strong>Código HS</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Lot</strong>"
+msgstr "<strong>Lote</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Number:</strong>"
+msgstr "<strong>Número:</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Order Date:</strong>"
+msgstr "<strong>Fecha de pedido:</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Order Number:</strong>"
+msgstr "<strong>Número de pedido:</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Package</strong>"
+msgstr "<strong>Paquete</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Pallet Number</strong>"
+msgstr "<strong>Palé Nº</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Product</strong>"
+msgstr "<strong>Producto</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Qty</strong>"
+msgstr "<strong>Ctd.</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Size (cm)</strong>"
+msgstr "<strong>Tamaño (cm)</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Source Document:</strong>"
+msgstr "<strong>Documento origen:</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Volume (m3)</strong>"
+msgstr "<strong>Volumen (m3)</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "<strong>Weight (kg)</strong>"
+msgstr "<strong>Peso (kg)</strong>"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_form
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_tree
+msgid "Add items to package"
+msgstr "Añadir elementos al paquete"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_number
+msgid "Box Number"
+msgstr "Caja Nº"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__create_uid
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__create_date
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__result_package_id
+msgid "Destination Package"
+msgstr "Paquete destino"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__list_item_detail_ids
+msgid "Details"
+msgstr "Detalles"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__display_name
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__height
+msgid "Height"
+msgstr "Altura"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__id
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,help:stock_packing_list.field_stock_packing_list_detail__result_package_id
+msgid "If set, the operations are packed into this package"
+msgstr "Si está establecido, las operaciones se empaquetan en este paquete"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__is_pallet
+msgid "Is a pallet?"
+msgstr "Es un palé?"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_form
+msgid "Items in box"
+msgstr "Elementos en la caja"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail____last_update
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__write_uid
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__write_uid
+msgid "Last Updated by"
+msgstr "Última modificación por"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__write_date
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_length
+msgid "item_item_length"
+msgstr "Largo"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__lot_id
+msgid "Lot/Serial Number"
+msgstr "Lote/Nº de serie"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__name
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_tree
+msgid "Open"
+msgstr "Abrir"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__picking_move_line_ids
+msgid "Operations"
+msgstr "Operaciones"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__package_quantity
+msgid "Package Quantity"
+msgstr "Ctd. de paquetes"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__package_type_id
+msgid "Package Type"
+msgstr "Tipo de paquete"
+
+#. module: stock_packing_list
+#: model:ir.actions.report,name:stock_packing_list.action_report_picking_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.view_picking_form
+msgid "Packing List"
+msgstr "Lista de packing"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__packing_list_item_id
+msgid "Packing List Box"
+msgstr "Caja de lista de packing"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_picking__packing_list_item_ids
+msgid "Packing List Items"
+msgstr "Elementos de lista de packing"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_detail_form
+msgid "Packing List item"
+msgstr "Elemento de lista de packing"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__pallet_number
+msgid "Pallet Number"
+msgstr "Palé Nº"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__picking_id
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__picking_id
+msgid "Picking"
+msgstr "Albarán"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_packing_list
+#: model:ir.model,name:stock_packing_list.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de Producto (Stock Move Line)"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.view_move_line_tree_detailed
+msgid "Put into packing list"
+msgstr "Poner en la lista de packing"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__qty
+msgid "Qty"
+msgstr "Cantidad"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_size
+msgid "Size"
+msgstr "Medida"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__stock_move_line_id
+msgid "Stock Move Line"
+msgstr "Movimientos de Producto (Stock Move Line)"
+
+#. module: stock_packing_list
+#: model:ir.model,name:stock_packing_list.model_stock_packing_list_detail
+msgid "Stock packing list detail"
+msgstr "Detalle del elemento de lista de packing"
+
+#. module: stock_packing_list
+#: model:ir.model,name:stock_packing_list.model_stock_packing_list_item
+msgid "Stock packing list items"
+msgstr "Elementos de lista de packing"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "Summary boxes:"
+msgstr "Resumen bultos:"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "Summary pallet:"
+msgstr "Resumen palés:"
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
+msgid "TOTALS"
+msgstr "TOTALES"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__total_boxes_volume
+msgid "Total Boxes Volume"
+msgstr "Total peso de cajas"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__total_boxes_weight
+msgid "Total Boxes Weight"
+msgstr "Total peso de cajas"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__total_pallet_volume
+msgid "Total Pallet Volume"
+msgstr "Total peso palé"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__total_pallet_weight
+msgid "Total Pallet Weight"
+msgstr "Total peso palé"
+
+#. module: stock_packing_list
+#: model:ir.model,name:stock_packing_list.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__volume
+msgid "Volume"
+msgstr "Volumen"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__weight
+msgid "Weight"
+msgstr "Peso"
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__width
+msgid "Width"
+msgstr "Anchura"

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_packing_list_box_user,stock.packing.list.item user,model_stock_packing_list_item,base.group_user,1,0,0,0
+access_stock_packing_list_box_warehouse_user,stock.packing.list.item warehouse user,model_stock_packing_list_item,stock.group_stock_user,1,1,1,1
+access_stock_packing_list_box_manager,stock.packing.list.item manager,model_stock_packing_list_item,stock.group_stock_manager,1,1,1,1
+access_stock_packing_list_item_user,stock.packing.list.detail user,model_stock_packing_list_detail,base.group_user,1,0,0,0
+access_stock_packing_list_item_warehouse_user,stock.packing.list.detail warehouse user,model_stock_packing_list_detail,stock.group_stock_user,1,1,1,1
+access_stock_packing_list_item_manager,stock.packing.list.detail manager,model_stock_packing_list_detail,stock.group_stock_manager,1,1,1,1

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_picking_packing_list_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+                <t
+                    t-set="partner"
+                    t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"
+                />
+                <t t-if="partner" name="partner_header">
+                    <t t-set="address">
+                        <div
+                            t-esc="partner"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'
+                        />
+                   </t>
+                </t>
+                <div class="page">
+                    <div class="row mt32 mb32">
+                        <div t-if="o.name" class="col-auto" name="div_name">
+                            <strong>Number:</strong>
+                            <p t-field="o.name" />
+                        </div>
+                        <div t-if="o.sale_id" class="col-auto" name="div_sale_id">
+                            <strong>Order Number:</strong>
+                            <p t-field="o.sale_id" />
+                        </div>
+                        <div
+                            t-if="o.sale_id"
+                            class="col-auto"
+                            name="div_sale_id_date_order"
+                        >
+                            <strong>Order Date:</strong>
+                            <p t-field="o.sale_id.date_order" />
+                        </div>
+                        <div t-if="not o.sale_id" class="col-auto" name="div_origin">
+                            <strong>Source Document:</strong>
+                            <p t-field="o.origin" />
+                        </div>
+                        <div t-if="o.date_done" class="col-auto" name="div_date_done">
+                            <strong>Date of Transfer:</strong>
+                            <p t-field="o.date_done" />
+                        </div>
+                    </div>
+                    <t
+                        t-set="packing_list_item_ids_not_is_pallet"
+                        t-value="o.packing_list_item_ids.filtered(lambda x: not x.is_pallet)"
+                    />
+                    <h2>Summary boxes:</h2>
+                    <table
+                        class="table table-sm"
+                        t-if="packing_list_item_ids_not_is_pallet"
+                        name="packing_list_item_ids_not_is_pallet"
+                    >
+                        <thead>
+                            <tr>
+                                <th name="th_sm_items_count"><strong
+                                    >Box Qty</strong></th>
+                                <th name="th_sm_pallet_number"><strong
+                                    >Pallet Number</strong></th>
+                                <th name="th_sm_item_number"><strong
+                                    >Box Number</strong></th>
+                                <th name="th_sm_code"><strong>Product</strong></th>
+                                <th name="th_sm_hs_code"><strong>HS Code</strong></th>
+                                <th name="th_sm_lot"><strong>Lot</strong></th>
+                                <th name="th_sm_package"><strong>Package</strong></th>
+                                <th name="th_sm_qty"><strong>Qty</strong></th>
+                                <th name="th_sm_weight"><strong
+                                    >Weight (kg)</strong></th>
+                                <th name="th_sm_size"><strong>Size (cm)</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t
+                                t-foreach="packing_list_item_ids_not_is_pallet"
+                                t-as="item"
+                            >
+                                <tr t-foreach="item.list_item_detail_ids" t-as="detail">
+                                    <td>
+                                        <span t-field="item.package_quantity" />
+                                    </td>
+                                    <td>
+                                        <span t-field="item.pallet_number" />
+                                    </td>
+                                    <td>
+                                        <span t-field="item.item_number" />
+                                        <t t-if="item.package_quantity &gt; 1">
+                                           - <span
+                                                t-esc="item.package_quantity + item.item_number - 1"
+                                            />
+                                        </t>
+                                    </td>
+                                    <td name="td_product">
+                                        <span t-field="detail.product_id" />
+                                        <span
+                                            t-esc="detail.with_context(lang='es_ES').product_id.display_name"
+                                        />
+                                    </td>
+                                    <td>
+                                        <span t-field="detail.product_id.hs_code" />
+                                    </td>
+                                    <td>
+                                        <span t-field="detail.lot_id" />
+                                    </td>
+                                    <td>
+                                        <span t-field="detail.result_package_id" />
+                                    </td>
+                                    <td>
+                                        <span t-field="detail.qty" />
+                                    </td>
+                                    <td>
+                                        <span t-field="item.weight" />
+                                    </td>
+                                    <td>
+                                        <span t-field="item.item_size" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td />
+                                <td />
+                                <td />
+                                <td />
+                                <td />
+                                <td />
+                                <td name="tf_totals">TOTALS</td>
+                                <td>
+                                    <span
+                                        t-esc="sum(packing_list_item_ids_not_is_pallet.list_item_detail_ids.mapped('qty'))"
+                                    />
+                                </td>
+                                <td>
+                                    <span
+                                        t-esc="round(sum(packing_list_item_ids_not_is_pallet.mapped('weight')),2)"
+                                    />
+                                </td>
+                                <td />
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <t
+                        t-set="packing_list_item_ids_is_pallet"
+                        t-value="o.packing_list_item_ids.filtered(lambda x: x.is_pallet)"
+                    />
+                    <h2>Summary pallet:</h2>
+                    <table
+                        class="table table-sm"
+                        t-if="packing_list_item_ids_is_pallet"
+                        name="packing_list_item_ids_is_pallet"
+                    >
+                        <thead>
+                            <tr>
+                                <th name="th_sm_pallet_number"><strong
+                                    >Pallet Number</strong></th>
+                                <th name="th_sm_weight"><strong
+                                    >Weight (kg)</strong></th>
+                                <th name="th_sm_size"><strong>Size (cm)</strong></th>
+                                <th name="th_sm_volume"><strong
+                                    >Volume (m3)</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="packing_list_item_ids_is_pallet" t-as="box">
+                                <td>
+                                    <span t-field="box.pallet_number" />
+                                </td>
+                                <td>
+                                    <span
+                                        t-esc="sum(packing_list_item_ids_is_pallet.filtered(lambda x: x.pallet_number == box.pallet_number).mapped('weight'))"
+                                    />
+                                </td>
+                                <td>
+                                    <span t-field="box.item_size" />
+                                </td>
+                                <td>
+                                    <span t-field="box.volume" />
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>TOTALS</td>
+                                <td>
+                                    <span
+                                        t-esc="sum(packing_list_item_ids_is_pallet.mapped('total_pallet_weight'))"
+                                    />
+                                </td>
+                                <td />
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+         </t>
+    </template>
+    <template id="report_picking_packing_list">
+        <t t-foreach="docs" t-as="o">
+            <t
+                t-call="stock_packing_list.report_picking_packing_list_document"
+                t-lang="o.partner_id.lang"
+            />
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_packing_list_item_tree" model="ir.ui.view">
+        <field name="name">stock.packing.list.item.tree</field>
+        <field name="model">stock.packing.list.item</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="is_pallet" />
+                <field name="package_type_id" optional="show" />
+                <field name="package_quantity" />
+                <field name="pallet_number" />
+                <field name="item_number" />
+                <field name="item_length" optional="hide" />
+                <field name="width" optional="hide" />
+                <field name="height" optional="hide" />
+                <field name="weight" optional="hide" />
+                <field name="list_item_detail_ids" optional="show" />
+                <button
+                    name="get_formview_action"
+                    string="Open"
+                    class="oe_link"
+                    icon="fa-bars"
+                    type="object"
+                />
+                <button
+                    name="action_fill_package"
+                    type="object"
+                    title="Add items to package"
+                    icon="fa-plus-square"
+                    class="ml16"
+                />
+            </tree>
+        </field>
+    </record>
+    <record id="stock_packing_list_item_form" model="ir.ui.view">
+        <field name="name">stock.packing.list.item.form</field>
+        <field name="model">stock.packing.list.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <header attrs="{'invisible':[('is_pallet', '=', True)]}">
+                    <button
+                        name="action_fill_package"
+                        type="object"
+                        string="Add items to package"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="id" invisible="1" />
+                            <field name="picking_move_line_ids" invisible="1" />
+                            <field
+                                name="is_pallet"
+                                attrs="{'readonly': [('id', '!=', False)]}"
+                            />
+                            <field name="pallet_number" />
+                            <field
+                                name="item_number"
+                                attrs="{'invisible':[('is_pallet', '=', True)]}"
+                            />
+                            <field name="package_type_id" />
+                            <field name="package_quantity" />
+                        </group>
+                        <group>
+                            <field name="item_length" />
+                            <field name="width" />
+                            <field name="height" />
+                            <field name="weight" />
+                            <field
+                                name="total_boxes_weight"
+                                attrs="{'invisible':[('is_pallet', '!=', True)]}"
+                            />
+                            <field
+                                name="total_pallet_weight"
+                                attrs="{'invisible':[('is_pallet', '!=', True)]}"
+                            />
+                        </group>
+                    </group>
+                    <notebook attrs="{'invisible':[('is_pallet', '=', True)]}">
+                        <page string="Items in box">
+                            <field name="list_item_detail_ids" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="stock_packing_list_item_detail_tree" model="ir.ui.view">
+        <field name="name">stock.packing.list.detail.tree</field>
+        <field name="model">stock.packing.list.detail</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="stock_move_line_id" />
+                <field name="product_id" />
+                <field name="qty" />
+            </tree>
+        </field>
+    </record>
+    <record id="stock_packing_list_item_detail_form" model="ir.ui.view">
+        <field name="name">stock.packing.list.detail.form</field>
+        <field name="model">stock.packing.list.detail</field>
+        <field name="arch" type="xml">
+            <form string="Packing List item">
+                <group>
+                    <field name="product_id" />
+                    <field name="qty" />
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>
