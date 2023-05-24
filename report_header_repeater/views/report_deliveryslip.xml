@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_delivery_document"
+        inherit_id="stock.report_delivery_document"
+        priority="999"
+    >
+        <xpath expr="//div[@class='page']" position="inside">
+            <style type="text/css">
+.margin_repeat {
+    margin-left: 10px;
+}
+table thead tr th p {
+    font-weight: normal;
+}
+#informations div {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+            </style>
+        </xpath>
+
+        <!--
+        Prepare container element to move data from standard header to table header
+        -->
+        <xpath expr="//div[hasclass('page')]//table/thead/tr" position="before">
+            <tr class="table-borderless pre_header_info">
+                <td colspan="45" name="pre_header_info">
+                </td>
+            </tr>
+            <tr class="table-borderless header_info">
+                <td colspan="45" name="header_info">
+                </td>
+            </tr>
+        </xpath>
+
+        <!-- Hide address and info block -->
+        <xpath expr="//div[@name='div_outgoing_address']" position="attributes">
+            <attribute name="class">d-none</attribute>
+        </xpath>
+        <xpath expr="//t[@t-set='information_block']/div" position="attributes">
+            <attribute name="class">d-none</attribute>
+        </xpath>
+
+    </template>
+
+</odoo>
