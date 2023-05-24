@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_picking_packing_list_document"
+        inherit_id="stock_packing_list.report_picking_packing_list_document"
+    >
+        <!-- Header -->
+        <xpath expr="//th[@name='th_sm_code']" position="after">
+            <th name="th_sm_scientific_name"><strong>Scientific name</strong></th>
+        </xpath>
+        <xpath expr="//th[@name='th_sm_lot']" position="after">
+            <th name="th_sm_packaging_date"><strong>Packaging date</strong></th>
+            <th name="th_sm_expiration_date"><strong>Expiration date</strong></th>
+        </xpath>
+        <!-- Body -->
+        <xpath expr="//td[@name='td_product']" position="after">
+            <td>
+                <span t-field="detail.scientific_name_ids.name" />
+            </td>
+        </xpath>
+        <xpath expr="//span[@t-field='detail.lot_id']/.." position="after">
+            <td>
+                <span t-field="detail.packaging_date" />
+            </td>
+            <td>
+                <span t-field="detail.expiration_date" />
+            </td>
+        </xpath>
+        <!-- Footer -->
+        <xpath expr="//td[@name='tf_totals']" position="after">
+            <td />
+            <td />
+            <td />
+        </xpath>
+    </template>
+</odoo>
