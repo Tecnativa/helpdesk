@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-24 16:21+0000\n"
-"PO-Revision-Date: 2023-05-24 18:21+0200\n"
-"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"PO-Revision-Date: 2023-05-26 18:55+0200\n"
+"Last-Translator: Carlos Dauden <carlos.dauden@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -144,7 +144,7 @@ msgstr "Nombre mostrado"
 #. module: stock_packing_list
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__height
 msgid "Height"
-msgstr "Altura"
+msgstr "Alto"
 
 #. module: stock_packing_list
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__id
@@ -305,8 +305,8 @@ msgstr "Resumen palés:"
 
 #. module: stock_packing_list
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
-msgid "TOTALS"
-msgstr "TOTALES"
+msgid "TOTAL"
+msgstr "TOTAL"
 
 #. module: stock_packing_list
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__total_boxes_volume
@@ -346,4 +346,4 @@ msgstr "Peso"
 #. module: stock_packing_list
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__width
 msgid "Width"
-msgstr "Anchura"
+msgstr "Ancho"

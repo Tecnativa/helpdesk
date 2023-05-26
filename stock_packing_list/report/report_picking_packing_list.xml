@@ -59,8 +59,10 @@
                                     >Box Qty</strong></th>
                                 <th name="th_sm_pallet_number"><strong
                                     >Pallet Number</strong></th>
-                                <th name="th_sm_item_number"><strong
-                                    >Box Number</strong></th>
+                                <th
+                                    name="th_sm_item_number"
+                                    t-if="'item_number' in optional_columns"
+                                ><strong>Box Number</strong></th>
                                 <th name="th_sm_code"><strong>Product</strong></th>
                                 <th name="th_sm_hs_code"><strong>HS Code</strong></th>
                                 <th name="th_sm_lot"><strong>Lot</strong></th>
@@ -95,7 +97,7 @@
                                         <td>
                                             <span t-field="item.pallet_number" />
                                         </td>
-                                        <td>
+                                        <td t-if="'item_number' in optional_columns">
                                             <span t-field="item.item_number" />
                                             <t t-if="item.package_quantity &gt; 1">
                                                - <span
@@ -130,10 +132,10 @@
                             <tr class="font-weight-bold">
                                 <td />
                                 <td />
+                                <td t-if="'item_number' in optional_columns" />
                                 <td />
                                 <td />
-                                <td />
-                                <td name="tf_totals">TOTALS</td>
+                                <td name="tf_total">TOTAL</td>
                                 <td class="text-right">
                                     <span
                                         t-out="sum(packing_list_item_ids_not_is_pallet.list_item_detail_ids.mapped('qty'))"
@@ -189,7 +191,7 @@
                         </tbody>
                         <tfoot>
                             <tr class="font-weight-bold">
-                                <td>TOTALS</td>
+                                <td>TOTAL</td>
                                 <td class="text-right">
                                     <span
                                         t-out="sum(packing_list_item_ids_is_pallet.mapped('total_pallet_weight'))"
@@ -209,7 +211,9 @@
             <t
                 t-call="stock_packing_list.report_picking_packing_list_document"
                 t-lang="o.partner_id.lang"
-            />
+            >
+                <t t-set="optional_columns" t-value="[]" />
+            </t>
         </t>
     </template>
 </odoo>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-24 16:21+0000\n"
-"PO-Revision-Date: 2023-05-24 16:21+0000\n"
+"POT-Creation-Date: 2023-05-26 16:50+0000\n"
+"PO-Revision-Date: 2023-05-26 16:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -62,11 +62,6 @@ msgstr ""
 
 #. module: stock_packing_list
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
-msgid "<strong>Package</strong>"
-msgstr ""
-
-#. module: stock_packing_list
-#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
 msgid "<strong>Pallet Number</strong>"
 msgstr ""
 
@@ -104,11 +99,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_form
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_tree
 msgid "Add items to package"
-msgstr ""
-
-#. module: stock_packing_list
-#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_number
-msgid "Box Number"
 msgstr ""
 
 #. module: stock_packing_list
@@ -161,6 +151,21 @@ msgid "Is a pallet?"
 msgstr ""
 
 #. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_length
+msgid "Item Length"
+msgstr ""
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_number
+msgid "Item Number"
+msgstr ""
+
+#. module: stock_packing_list
+#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_size
+msgid "Item Size"
+msgstr ""
+
+#. module: stock_packing_list
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_form
 msgid "Items in box"
 msgstr ""
@@ -181,11 +186,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__write_date
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__write_date
 msgid "Last Updated on"
-msgstr ""
-
-#. module: stock_packing_list
-#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_length
-msgid "item_item_length"
 msgstr ""
 
 #. module: stock_packing_list
@@ -272,11 +272,6 @@ msgid "Qty"
 msgstr ""
 
 #. module: stock_packing_list
-#: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__item_size
-msgid "Size"
-msgstr ""
-
-#. module: stock_packing_list
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__stock_move_line_id
 msgid "Stock Move Line"
 msgstr ""
@@ -303,7 +298,7 @@ msgstr ""
 
 #. module: stock_packing_list
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_packing_list_document
-msgid "TOTALS"
+msgid "TOTAL"
 msgstr ""
 
 #. module: stock_packing_list
