@@ -11,7 +11,7 @@
                 <t t-if="partner" name="partner_header">
                     <t t-set="address">
                         <div
-                            t-esc="partner"
+                            t-out="partner"
                             t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'
                         />
                    </t>
@@ -64,11 +64,10 @@
                                 <th name="th_sm_code"><strong>Product</strong></th>
                                 <th name="th_sm_hs_code"><strong>HS Code</strong></th>
                                 <th name="th_sm_lot"><strong>Lot</strong></th>
-                                <th name="th_sm_package"><strong>Package</strong></th>
-                                <th name="th_sm_qty"><strong>Qty</strong></th>
-                                <th name="th_sm_weight"><strong
+                                <th name="th_sm_qty" class="text-right"><strong
+                                    >Qty</strong></th>
+                                <th name="th_sm_weight" class="text-right"><strong
                                     >Weight (kg)</strong></th>
-                                <th name="th_sm_size"><strong>Size (cm)</strong></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,71 +75,79 @@
                                 t-foreach="packing_list_item_ids_not_is_pallet"
                                 t-as="item"
                             >
-                                <tr t-foreach="item.list_item_detail_ids" t-as="detail">
-                                    <td>
-                                        <span t-field="item.package_quantity" />
-                                    </td>
-                                    <td>
-                                        <span t-field="item.pallet_number" />
-                                    </td>
-                                    <td>
-                                        <span t-field="item.item_number" />
-                                        <t t-if="item.package_quantity &gt; 1">
-                                           - <span
-                                                t-esc="item.package_quantity + item.item_number - 1"
+                                <t t-set="detail_qty" t-value="0.0" />
+                                <t
+                                    t-set="detail_items"
+                                    t-value="item.list_item_detail_ids.sorted(key=lambda ln: (ln.product_id, ln.lot_id))"
+                                />
+                                <t t-foreach="detail_items" t-as="detail">
+                                    <t
+                                        t-set="detail_qty"
+                                        t-value="detail_qty + detail.qty"
+                                    />
+                                    <tr
+                                        name="tr_item_detail"
+                                        t-if="detail_last or (detail.product_id, detail.lot_id) != (detail_items[detail_index + 1].product_id, detail_items[detail_index + 1].lot_id)"
+                                    >
+                                        <td>
+                                            <span t-field="item.package_quantity" />
+                                        </td>
+                                        <td>
+                                            <span t-field="item.pallet_number" />
+                                        </td>
+                                        <td>
+                                            <span t-field="item.item_number" />
+                                            <t t-if="item.package_quantity &gt; 1">
+                                               - <span
+                                                    t-out="item.package_quantity + item.item_number - 1"
+                                                />
+                                            </t>
+                                        </td>
+                                        <td name="td_product">
+                                            <span t-field="detail.product_id" />
+                                        </td>
+                                        <td>
+                                            <span t-field="detail.product_id.hs_code" />
+                                        </td>
+                                        <td>
+                                            <span t-field="detail.lot_id" />
+                                        </td>
+                                        <td class="text-right">
+                                            <span
+                                                t-out="detail_qty"
+                                                t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
                                             />
-                                        </t>
-                                    </td>
-                                    <td name="td_product">
-                                        <span t-field="detail.product_id" />
-                                        <span
-                                            t-esc="detail.with_context(lang='es_ES').product_id.display_name"
-                                        />
-                                    </td>
-                                    <td>
-                                        <span t-field="detail.product_id.hs_code" />
-                                    </td>
-                                    <td>
-                                        <span t-field="detail.lot_id" />
-                                    </td>
-                                    <td>
-                                        <span t-field="detail.result_package_id" />
-                                    </td>
-                                    <td>
-                                        <span t-field="detail.qty" />
-                                    </td>
-                                    <td>
-                                        <span t-field="item.weight" />
-                                    </td>
-                                    <td>
-                                        <span t-field="item.item_size" />
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="item.weight" />
+                                        </td>
+                                        <t t-set="detail_qty" t-value="0.0" />
+                                    </tr>
+                                </t>
                             </t>
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <td />
+                            <tr class="font-weight-bold">
                                 <td />
                                 <td />
                                 <td />
                                 <td />
                                 <td />
                                 <td name="tf_totals">TOTALS</td>
-                                <td>
+                                <td class="text-right">
                                     <span
-                                        t-esc="sum(packing_list_item_ids_not_is_pallet.list_item_detail_ids.mapped('qty'))"
+                                        t-out="sum(packing_list_item_ids_not_is_pallet.list_item_detail_ids.mapped('qty'))"
                                     />
                                 </td>
-                                <td>
+                                <td name="tf_item_weight" class="text-right">
                                     <span
-                                        t-esc="round(sum(packing_list_item_ids_not_is_pallet.mapped('weight')),2)"
+                                        t-out="round(sum(packing_list_item_ids_not_is_pallet.mapped('weight')),2)"
                                     />
                                 </td>
-                                <td />
                             </tr>
                         </tfoot>
                     </table>
+
                     <t
                         t-set="packing_list_item_ids_is_pallet"
                         t-value="o.packing_list_item_ids.filtered(lambda x: x.is_pallet)"
@@ -155,10 +162,10 @@
                             <tr>
                                 <th name="th_sm_pallet_number"><strong
                                     >Pallet Number</strong></th>
-                                <th name="th_sm_weight"><strong
+                                <th name="th_sm_weight" class="text-right"><strong
                                     >Weight (kg)</strong></th>
                                 <th name="th_sm_size"><strong>Size (cm)</strong></th>
-                                <th name="th_sm_volume"><strong
+                                <th name="th_sm_volume" class="text-right"><strong
                                     >Volume (m3)</strong></th>
                             </tr>
                         </thead>
@@ -167,27 +174,28 @@
                                 <td>
                                     <span t-field="box.pallet_number" />
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <span
-                                        t-esc="sum(packing_list_item_ids_is_pallet.filtered(lambda x: x.pallet_number == box.pallet_number).mapped('weight'))"
+                                        t-out="sum(packing_list_item_ids_is_pallet.filtered(lambda x: x.pallet_number == box.pallet_number).mapped('weight'))"
                                     />
                                 </td>
                                 <td>
                                     <span t-field="box.item_size" />
                                 </td>
-                                <td>
+                                <td class="text-right">
                                     <span t-field="box.volume" />
                                 </td>
                             </tr>
                         </tbody>
                         <tfoot>
-                            <tr>
+                            <tr class="font-weight-bold">
                                 <td>TOTALS</td>
-                                <td>
+                                <td class="text-right">
                                     <span
-                                        t-esc="sum(packing_list_item_ids_is_pallet.mapped('total_pallet_weight'))"
+                                        t-out="sum(packing_list_item_ids_is_pallet.mapped('total_pallet_weight'))"
                                     />
                                 </td>
+                                <td />
                                 <td />
                             </tr>
                         </tfoot>
