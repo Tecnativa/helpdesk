@@ -20,10 +20,10 @@
         </xpath>
         <xpath expr="//span[@t-field='detail.lot_id']/.." position="after">
             <td>
-                <span t-field="detail.packaging_date" />
+                <span t-field="detail.packaging_date" t-options="{'widget': 'date'}" />
             </td>
             <td>
-                <span t-field="detail.expiration_date" />
+                <span t-field="detail.expiration_date" t-options="{'widget': 'date'}" />
             </td>
         </xpath>
         <!-- Footer -->
