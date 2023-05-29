@@ -15,6 +15,7 @@
         "stock_picking_product_barcode_report",
     ],
     "data": [
+        "views/stock_barcodes_option_view.xml",
         "views/stock_picking_views.xml",
         "wizard/stock_barcodes_read_picking_views.xml",
     ],

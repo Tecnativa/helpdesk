@@ -39,6 +39,13 @@
                     />
                 </button>
             </xpath>
+            <label for="manual_entry" position="after">
+                <field
+                    name="auto_print_on_confirm"
+                    widget="FieldBarcodeBooleanToggle"
+                />
+                <label for="auto_print_on_confirm" />
+            </label>
         </field>
     </record>
 </odoo>

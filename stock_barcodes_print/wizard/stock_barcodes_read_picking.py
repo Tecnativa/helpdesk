@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import logging
 
-from odoo import models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -10,10 +10,13 @@ _logger = logging.getLogger(__name__)
 class WizStockBarcodesReadPicking(models.TransientModel):
     _inherit = "wiz.stock.barcodes.read.picking"
 
+    auto_print_on_confirm = fields.Boolean(string="Auto print")
+
     def action_confirm(self):
-        res = super(WizStockBarcodesReadPicking, self).action_confirm()
+        res = super().action_confirm()
         if (
             res
+            and self.auto_print_on_confirm
             and self.picking_id.picking_type_id.print_label
             and self.picking_id.picking_type_id.default_label_report
         ):
