@@ -17,4 +17,9 @@
         <field name="attribute_id" ref="product_gamma_attribute" />
     </record>
 
+    <record id="product_gamma_canned" model="product.attribute.value">
+        <field name="name">Canned</field>
+        <field name="attribute_id" ref="product_gamma_attribute" />
+    </record>
+
 </odoo>
