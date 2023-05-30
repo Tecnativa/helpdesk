@@ -8,5 +8,6 @@
         <field name="report_file">stock_packing_list.report_picking_packing_list</field>
         <field name="print_report_name">'Packing List - %s' % (object.name)</field>
         <field name="paperformat_id" ref="paperformat_a4_landscape" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
     </record>
 </odoo>
