@@ -12,17 +12,23 @@ class WizStockBarcodesRead(models.AbstractModel):
 
     def reset_qty(self):
         res = super().reset_qty()
-        if self.set_secondary_unit_one_by_one:
+        if self.set_secondary_unit_one_by_one and self.secondary_uom_id:
             self.secondary_uom_qty = 1.0
+        else:
+            self.secondary_uom_qty = 0.0
         return res
 
     def action_clean_values(self):
         res = super().action_clean_values()
-        if self.set_secondary_unit_one_by_one:
+        if self.set_secondary_unit_one_by_one and self.secondary_uom_id:
             self.secondary_uom_qty = 1.0
+        else:
+            self.secondary_uom_qty = 0.0
         return res
 
     @api.onchange("secondary_uom_id", "set_secondary_unit_one_by_one")
     def onchange_secondary_uom_id(self):
-        if self.set_secondary_unit_one_by_one:
+        if self.set_secondary_unit_one_by_one and self.secondary_uom_id:
             self.secondary_uom_qty = 1.0
+        else:
+            self.secondary_uom_qty = 0.0
