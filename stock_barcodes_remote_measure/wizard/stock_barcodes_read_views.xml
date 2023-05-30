@@ -11,7 +11,7 @@
                 <attribute name="widget">remote_measure</attribute>
                 <attribute
                     name="options"
-                >{'uom_field': 'product_uom_id', 'default_user_device': 1}</attribute>
+                >{'uom_field': 'product_uom_id', 'default_user_device': 1, 'allow_additive_measure': True}</attribute>
             </xpath>
         </field>
     </record>
