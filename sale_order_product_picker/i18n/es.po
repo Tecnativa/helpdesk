@@ -300,7 +300,7 @@ msgstr "Origen"
 #: model:ir.model.fields,field_description:sale_order_product_picker.field_sale_order__picker_ids
 #: model_terms:ir.ui.view,arch_db:sale_order_product_picker.view_order_form
 msgid "Picker"
-msgstr "Picker"
+msgstr "Catálogo"
 
 #. module: sale_order_product_picker
 #: model:ir.model.fields,field_description:sale_order_product_picker.field_sale_order__picker_origin_data
