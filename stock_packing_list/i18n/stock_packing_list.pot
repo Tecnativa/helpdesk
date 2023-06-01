@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-26 16:50+0000\n"
-"PO-Revision-Date: 2023-05-26 16:50+0000\n"
+"POT-Creation-Date: 2023-06-01 11:39+0000\n"
+"PO-Revision-Date: 2023-06-01 11:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,58 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_packing_list
+#: model:ir.actions.report,print_report_name:stock_packing_list.action_report_picking_carrier_label
+msgid "'Carrier Labels - %s' % (object.name)"
+msgstr ""
+
+#. module: stock_packing_list
 #: model:ir.actions.report,print_report_name:stock_packing_list.action_report_picking_packing_list
 msgid "'Packing List - %s' % (object.name)"
+msgstr ""
+
+#. module: stock_packing_list
+#: model:ir.actions.report,print_report_name:stock_packing_list.action_report_picking_pallet_label
+msgid "'Pallet Labels - %s' % (object.name)"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "<span>DELIVERY OF GOODS TO:</span>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "<span>DNI</span>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "<span>Final recipient:</span>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "<span>Gross Weight</span>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "<span>I have received in conformity</span>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "<span>PICK NUM:</span><br/>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "<span>Plate</span>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "<span>Signature / stamp</span>"
 msgstr ""
 
 #. module: stock_packing_list
@@ -96,9 +146,39 @@ msgid "<strong>Weight (kg)</strong>"
 msgstr ""
 
 #. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_pallet_label_document
+msgid "<u>CARRIER:</u>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_pallet_label_document
+msgid "<u>DELIVERY ADDRESS:</u>"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_pallet_label_document
+msgid "<u>NUM PALLETS:</u>"
+msgstr ""
+
+#. module: stock_packing_list
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_form
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_tree
 msgid "Add items to package"
+msgstr ""
+
+#. module: stock_packing_list
+#: model:ir.actions.report,name:stock_packing_list.action_report_picking_carrier_label
+msgid "Carrier Labels"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "Copy for"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "Copy for the carrier"
 msgstr ""
 
 #. module: stock_packing_list
@@ -189,6 +269,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "Logo"
+msgstr ""
+
+#. module: stock_packing_list
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_detail__lot_id
 msgid "Lot/Serial Number"
 msgstr ""
@@ -200,6 +285,11 @@ msgid "Name"
 msgstr ""
 
 #. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+msgid "No. Pallets"
+msgstr ""
+
+#. module: stock_packing_list
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_tree
 msgid "Open"
 msgstr ""
@@ -207,6 +297,12 @@ msgstr ""
 #. module: stock_packing_list
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__picking_move_line_ids
 msgid "Operations"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_carrier_label_document
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_pallet_label_document
+msgid "PH:"
 msgstr ""
 
 #. module: stock_packing_list
@@ -238,6 +334,11 @@ msgstr ""
 #. module: stock_packing_list
 #: model_terms:ir.ui.view,arch_db:stock_packing_list.stock_packing_list_item_detail_form
 msgid "Packing List item"
+msgstr ""
+
+#. module: stock_packing_list
+#: model:ir.actions.report,name:stock_packing_list.action_report_picking_pallet_label
+msgid "Pallet Labels"
 msgstr ""
 
 #. module: stock_packing_list
@@ -339,4 +440,9 @@ msgstr ""
 #. module: stock_packing_list
 #: model:ir.model.fields,field_description:stock_packing_list.field_stock_packing_list_item__width
 msgid "Width"
+msgstr ""
+
+#. module: stock_packing_list
+#: model_terms:ir.ui.view,arch_db:stock_packing_list.report_picking_pallet_label_document
+msgid "of"
 msgstr ""

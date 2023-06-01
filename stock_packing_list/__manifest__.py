@@ -16,8 +16,15 @@
         "views/stock_packing_list_item_view.xml",
         "views/stock_packing_list_item_detail_view.xml",
         "views/stock_picking_view.xml",
+        "report/report_picking_carrier_label.xml",
         "report/report_picking_packing_list.xml",
+        "report/report_picking_pallet_label.xml",
         "report/report_views.xml",
     ],
     "installable": True,
+    "assets": {
+        "web.report_assets_common": [
+            "stock_packing_list/static/src/scss/report.scss",
+        ]
+    },
 }

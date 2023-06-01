@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_picking_carrier_label_document">
+        <t t-call="web.basic_layout">
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id" />
+                </t>
+                <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                    <t t-set="company" t-value="o.company_id.sudo()" />
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company" />
+                </t>
+            </t>
+            <t
+                t-set="pallet_item_ids"
+                t-value="doc.packing_list_item_ids.filtered('is_pallet')"
+            />
+            <t t-set="pallet_count" t-value="len(pallet_item_ids)" />
+            <div class="page">
+                <t t-foreach="2" t-as="label_copy">
+                    <table class="mt-5 carrier-table" style="font-size: 12pt">
+                        <tbody>
+                            <tr style="font-size: 8pt">
+                                <td name="logo" colspan="2" rowspan="4">
+                                    <center><img
+                                            t-if="company.logo"
+                                            t-att-src="image_data_uri(company.logo)"
+                                            style="max-height: 100px;"
+                                            alt="Logo"
+                                        /></center>
+                                    <div name="company_address">
+                                        <ul
+                                            class="list-unstyled"
+                                            t-if="company.company_details or forced_vat"
+                                        >
+                                            <li t-if="company.company_details"> <t
+                                                    t-esc="company.company_details"
+                                                /></li>
+                                            <li t-if="forced_vat">
+                                                <t
+                                                    t-esc="company.country_id.vat_label or 'Tax ID'"
+                                                />:
+                                                <span t-esc="forced_vat" />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td name="company_name" class="text-center" colspan="2">
+                                    <h3 t-field="company.name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" colspan="2">
+                                    <span>DELIVERY OF GOODS TO:</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <span t-field="doc.carrier_id" /><br />
+                                    <span>*<span
+                                            t-field="doc.sale_id.incoterm"
+                                        />*</span>
+                                </td>
+                                <td>
+                                    <span>PICK NUM:</span><br />
+                                    <span t-field="doc.name" />
+                                </td>
+                            </tr>
+                            <tr name="date">
+                                <td class="text-right" colspan="2">
+                                    <span
+                                        t-field="doc.date"
+                                        t-options="{'widget': 'date'}"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p>No. Pallets</p></td>
+                                <td class="text-center">
+                                    <span t-out="pallet_count" />
+                                </td>
+                                <td><span>Gross Weight</span></td>
+                                <td class="text-center">
+                                    <span><span t-field="doc.weight" /> <span
+                                            t-field="doc.weight_uom_name"
+                                        /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span>Final recipient:</span>
+                                </td>
+                                <td class="text-center" colspan="2">
+                                    <span><u
+                                            class="font-weight-bold"
+                                            t-field="doc.partner_id.commercial_partner_id.name"
+                                        /></span><br />
+                                    <span t-field="doc.partner_id.street" /><br />
+                                    <span><span t-field="doc.partner_id.zip" /> <span
+                                            t-field="doc.partner_id.city"
+                                        /></span><br />
+                                    <span t-field="doc.partner_id.country_id" /><br />
+                                    <span>PH: <span
+                                            t-esc="doc.partner_id.mobile or doc.partner_id.phone"
+                                        /></span><br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <span>I have received in conformity</span>
+                                    <ol>
+                                        <li>
+                                            <span>Signature / stamp</span>
+                                        </li>
+                                        <li>
+                                            <span>DNI</span>
+                                        </li>
+                                        <li>
+                                            <span>Plate</span>
+                                        </li>
+                                    </ol>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        class="text-right text-muted"
+                        style="width: 100%"
+                        t-if="not label_copy"
+                    >
+                        Copy for the carrier
+                    </div>
+                    <div
+                        class="text-right text-muted"
+                        style="width: 100%"
+                        t-if="label_copy"
+                    >
+                        Copy for <span t-field="company.name" />
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+    <template id="report_picking_carrier_label">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="stock_packing_list.report_picking_carrier_label_document" />
+            </t>
+        </t>
+    </template>
+    <record id="action_report_picking_carrier_label" model="ir.actions.report">
+        <field name="name">Carrier Labels</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_packing_list.report_picking_carrier_label</field>
+        <field
+            name="report_file"
+        >stock_packing_list.report_picking_carrier_label</field>
+        <field name="print_report_name">'Carrier Labels - %s' % (object.name)</field>
+        <field
+            name="paperformat_id"
+            ref="stock_packing_list.paperformat_euro_no_footer_header"
+        />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+    </record>
+</odoo>
