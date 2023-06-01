@@ -56,7 +56,7 @@ msgstr "Comentario del proveedor"
 #. module: sale_order_product_picker_supplierinfo
 #: model:ir.model.fields.selection,name:sale_order_product_picker_supplierinfo.selection__sale_order__picker_origin_data__supplierinfo
 msgid "Vendor pricelists"
-msgstr "Tarifa de compra"
+msgstr "Tarifas de proveedor"
 
 #. module: sale_order_product_picker_supplierinfo
 #: model:ir.model,name:sale_order_product_picker_supplierinfo.model_sale_order_picker
