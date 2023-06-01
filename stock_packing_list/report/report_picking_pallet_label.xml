@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_picking_pallet_label_document">
+        <t t-call="web.external_layout">
+            <t
+                t-set="pallet_item_ids"
+                t-value="doc.packing_list_item_ids.filtered('is_pallet')"
+            />
+            <t t-set="pallet_count" t-value="len(pallet_item_ids)" />
+            <t t-foreach="pallet_item_ids" t-as="pallet_item">
+                <div class="page font-weight-bold">
+                    <div style="min-height: 50px">
+                        <h2><u>CARRIER:</u> <span t-field="doc.carrier_id" /></h2>
+                        <h2><u>NUM PALLETS:</u> <span
+                                t-out="pallet_item.pallet_number"
+                            /> of <span t-out="pallet_count" /></h2>
+                    </div>
+                    <div class="mt-5" style="min-height: 500px" name="address">
+                        <h2><u>DELIVERY ADDRESS:</u></h2>
+                        <br />
+                        <div class="text-center">
+                            <h1><u
+                                    t-field="doc.partner_id.commercial_partner_id.name"
+                                /></h1>
+                            <h2 t-field="doc.partner_id.street" />
+                            <h2><span t-field="doc.partner_id.zip" /> <span
+                                    t-field="doc.partner_id.city"
+                                /></h2>
+                            <h2 t-field="doc.partner_id.country_id" />
+                            <h2>PH: <span
+                                    t-esc="doc.partner_id.mobile or doc.partner_id.phone"
+                                /></h2>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="report_picking_pallet_label">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="stock_packing_list.report_picking_pallet_label_document" />
+            </t>
+        </t>
+    </template>
+    <record id="action_report_picking_pallet_label" model="ir.actions.report">
+        <field name="name">Pallet Labels</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_packing_list.report_picking_pallet_label</field>
+        <field name="report_file">stock_packing_list.report_picking_pallet_label</field>
+        <field name="print_report_name">'Pallet Labels - %s' % (object.name)</field>
+        <field
+            name="paperformat_id"
+            ref="stock_packing_list.paperformat_euro_no_footer"
+        />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+    </record>
+</odoo>
