@@ -9,6 +9,8 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
+    "post_init_hook": "_post_init_hook",
+    "uninstall_hook": "_uninstall_hook",
     "depends": ["sale_stock"],
     "data": [
         "security/ir.model.access.csv",
