@@ -11,6 +11,7 @@
     "application": False,
     "installable": True,
     "depends": [
+        "company_sanitary_registry",
         "product_drained_weight",
         "sale_elaboration",
         "stock_production_lot_fishing_info",
