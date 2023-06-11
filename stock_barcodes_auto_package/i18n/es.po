@@ -20,7 +20,7 @@ msgstr ""
 #. module: stock_barcodes_auto_package
 #: model:ir.model.fields,field_description:stock_barcodes_auto_package.field_wiz_stock_barcodes_read_picking__auto_put_in_pack_on_read
 msgid "Auto package"
-msgstr "Auto empaquetar"
+msgstr "Auto empaq."
 
 #. module: stock_barcodes_auto_package
 #: model:ir.model.fields,field_description:stock_barcodes_auto_package.field_stock_barcodes_option_group__auto_put_in_pack_on_read
