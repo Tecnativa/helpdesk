@@ -9,7 +9,7 @@
                 <field name="vendor_comment" />
             </xpath>
             <xpath expr="//kanban//div[@name='action']" position="before">
-                <t t-if="record.vendor_id">
+                <t t-if="record.vendor_id.raw_value">
                     <div class="row mt8 mb8">
                         <div class="col-12">
                             <strong>Vendor: </strong><field name="vendor_id" />
