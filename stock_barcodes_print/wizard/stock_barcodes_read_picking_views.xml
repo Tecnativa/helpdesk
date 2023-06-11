@@ -43,8 +43,12 @@
                 <field
                     name="auto_print_on_confirm"
                     widget="FieldBarcodeBooleanToggle"
+                    attrs="{'invisible': [('display_menu', '=', True)]}"
                 />
-                <label for="auto_print_on_confirm" />
+                <label
+                    for="auto_print_on_confirm"
+                    attrs="{'invisible': [('display_menu', '=', True)]}"
+                />
             </label>
         </field>
     </record>

@@ -8,8 +8,12 @@
                 <field
                     name="set_secondary_unit_one_by_one"
                     widget="FieldBarcodeBooleanToggle"
+                    attrs="{'invisible': [('display_menu', '=', True)]}"
                 />
-                <div class="mr4"><strong>1 by 1</strong></div>
+                <div
+                    class="mr4"
+                    attrs="{'invisible': [('display_menu', '=', True)]}"
+                ><strong>1 by 1</strong></div>
             </label>
         </field>
     </record>
