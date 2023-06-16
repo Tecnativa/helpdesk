@@ -4,7 +4,7 @@
 from odoo import fields, models
 
 
-class ProductAttributeValue(models.Model):
+class ProductAttribute(models.Model):
     _inherit = "product.attribute"
 
     is_country_attr = fields.Boolean()
