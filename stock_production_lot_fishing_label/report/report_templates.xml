@@ -2,7 +2,7 @@
 <odoo>
     <template id="basic_layout_fishing_label_freezing">
         <span
-            t-if="o.env.ref('product_fishing.product_gamma_c') in o.product_id.gamma_ids"
+            t-if="env.ref('product_fishing.product_gamma_c') in o['product_id'].gamma_ids"
         >Freezing</span>
         <span t-else="">Packed</span>
     </template>
@@ -18,10 +18,10 @@
     <template id="basic_layout_fishing_label">
         <t t-call="web.html_container">
             <t t-if="not o" t-set="o" t-value="doc" />
-            <t t-set="langs" t-value="report_langs[o]" />
+            <t t-set="langs" t-value="report_langs[o['id']]" />
             <t
                 t-set="o"
-                t-value="o.move_line_id if o._name == 'stock.picking.line.print' else o"
+                t-value="o['move_line_id'] if doc_model == 'stock.picking.line.print' and not summarized else o"
             />
             <t t-if="not company">
                 <!-- Multicompany -->
@@ -39,14 +39,14 @@
             <div class="header">
                 <t
                     t-set="show_client_elaborations"
-                    t-value="client_elaborations[doc]"
+                    t-value="client_elaborations[doc['id']]"
                 />
                 <div class="row">
                     <div class="col-12 text-center" t-if="show_client_elaborations">
                         <strong
                             style="font-size: 16pt;"
-                            t-if="o._name != 'stock.quant'"
-                            t-field="o.picking_partner_id"
+                            t-if="doc_model != 'stock.quant'"
+                            t-field="o['picking_partner_id'].display_name"
                         />
                     </div>
                 </div>
@@ -55,18 +55,23 @@
                         <t t-foreach="langs" t-as="lang">
                             <strong
                                 style="font-size: 20pt;"
-                                t-field="o.with_context(lang=lang, display_default_code=False).product_id"
+                                t-field="o['product_id'].with_context(lang=lang).name"
                             />
                             <br t-if="lang != langs[-1]" />
                         </t>
                     </div>
                     <div class="col-3 pt-2" id="extra_heading">
-                        <t t-if="show_client_elaborations">
+                        <div t-if="show_client_elaborations">
                             <span
-                                t-if="o._name != 'stock.quant'"
-                                t-out="', '.join(o.move_id.elaboration_ids.mapped('code'))"
+                                t-if="doc_model != 'stock.quant'"
+                                t-out="', '.join(o['move_id'].elaboration_ids.mapped('code'))"
                             />
-                        </t>
+                        </div>
+<!--                        <div t-if="summarized" style="font-size: 12pt">-->
+<!--                            <span-->
+<!--                                t-out="'-'.join(o['result_package_ids'].mapped(lambda pack: pack.alias or pack.display_name))"-->
+<!--                            />-->
+<!--                        </div>-->
                     </div>
                 </div>
                 <table
@@ -116,71 +121,75 @@
                             <td>
                                 <!-- TODO: Freezing date -->
                                 <strong
-                                    t-field="o.lot_id.packaging_date"
+                                    t-field="o['lot_id'].packaging_date"
                                     t-options='{"widget": "date"}'
                                 />
                             </td>
                             <td>
                                 <strong
-                                    t-field="o.lot_id.expiration_date"
+                                    t-field="o['lot_id'].expiration_date"
                                     t-options='{"widget": "date"}'
                                 />
                             </td>
-                            <td><strong t-field="o.lot_id" /></td>
+                            <td><strong t-field="o['lot_id'].display_name" /></td>
                             <td>
                                 <t
-                                    t-if="o.product_uom_id.category_id == o.env.ref('uom.product_uom_categ_kgm')"
+                                    t-if="o['product_uom_id'].category_id == env.ref('uom.product_uom_categ_kgm')"
                                 >
                                     <strong
-                                        t-if="o._name == 'stock.quant'"
-                                        t-field="o.quantity"
+                                        t-if="doc_model == 'stock.quant'"
+                                        t-out="o['quantity']"
                                     />
-                                    <strong t-else="" t-field="o.qty_done" />
-                                    <strong t-field="o.product_uom_id" />
+                                    <strong t-else="" t-out="o['qty_done']" />
+                                    <strong
+                                        t-field="o['product_uom_id'].display_name"
+                                    />
                                 </t>
                                 <t t-else="">
                                     <strong
-                                        t-if="o._name == 'stock.quant'"
-                                        t-out="o.quantity * o.product_id.net_weight"
+                                        t-if="doc_model == 'stock.quant'"
+                                        t-out="o['quantity'] * o['product_id'].net_weight"
                                     />
                                     <strong
                                         t-else=""
-                                        t-out="o.qty_done * o.product_id.net_weight"
+                                        t-out="o['qty_done'] * o['product_id'].net_weight"
                                     />
-                                    <strong t-field="o.product_id.weight_uom_name" />
+                                    <strong t-field="o['product_id'].weight_uom_name" />
                                 </t>
                             </td>
                             <t
                                 t-set="precision"
-                                t-value="o.env['decimal.precision'].precision_get('Product Unit of Measure')"
+                                t-value="env['decimal.precision'].precision_get('Product Unit of Measure')"
                             />
                             <td
-                                t-if="not float_is_zero(o.product_id.drained_weight, precision_digits=precision)"
+                                t-if="not float_is_zero(o['product_id'].drained_weight, precision_digits=precision)"
                             >
                                 <t
-                                    t-if="o.product_uom_id.category_id == o.env.ref('uom.product_uom_categ_kgm')"
+                                    t-if="o['product_uom_id'].category_id == env.ref('uom.product_uom_categ_kgm')"
                                 >
                                     <!-- TODO: Asegurarse del cálculo -->
                                     <strong
-                                        t-if="o._name == 'stock.quant'"
-                                        t-out="o.quantity * (o.product_id.drained_weight / o.product_id.net_weight)"
+                                        t-if="doc_model == 'stock.quant'"
+                                        t-out="o['quantity'] * (o['product_id'].drained_weight / o['product_id'].net_weight)"
                                     />
                                     <strong
                                         t-else=""
-                                        t-out="o.qty_done * (o.product_id.drained_weight / o.product_id.net_weight)"
+                                        t-out="o['qty_done'] * (o['product_id'].drained_weight / o['product_id'].net_weight)"
                                     />
-                                    <strong t-field="o.product_uom_id" />
+                                    <strong
+                                        t-field="o['product_uom_id'].display_name"
+                                    />
                                 </t>
                                 <t t-else="">
                                     <strong
-                                        t-if="o._name == 'stock.quant'"
-                                        t-out="o.quantity * o.product_id.drained_weight"
+                                        t-if="doc_model == 'stock.quant'"
+                                        t-out="o['quantity'] * o['product_id'].drained_weight"
                                     />
                                     <strong
                                         t-else=""
-                                        t-out="o.qty_done * o.product_id.drained_weight"
+                                        t-out="o['qty_done'] * o['product_id'].drained_weight"
                                     />
-                                    <strong t-field="o.product_id.weight_uom_name" />
+                                    <strong t-field="o['product_id'].weight_uom_name" />
                                 </t>
                             </td>
                         </tr>
@@ -190,9 +199,8 @@
             <!-- Content -->
             <div
                 class="article"
-                t-att-data-oe-model="o and o._name"
-                t-att-data-oe-id="o and o.id"
-                t-att-data-oe-lang="o and o.env.context.get('lang')"
+                t-att-data-oe-model="doc_model"
+                t-att-data-oe-lang="env.context.get('lang')"
             >
                 <t t-out="0" />
             </div>
@@ -230,7 +238,7 @@
                             <div class="col">
                                 <t
                                     t-set="barcode"
-                                    t-value="'240' + o.product_id.default_code + '10' + o.lot_id.name"
+                                    t-value="'240' + o['product_id'].default_code + '10' + o['lot_id'].name"
                                 />
                                 <img
                                     t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
@@ -244,15 +252,16 @@
                                 style="text-align:center; font-size: 12pt;"
                             >
                                 <span
-                                    t-out="'(240)' + o.product_id.default_code + '(10)' + o.lot_id.name"
+                                    t-out="'(240)' + o['product_id'].default_code + '(10)' + o['lot_id'].name"
                                 />
                             </div>
                         </div>
                     </div>
                     <div class="col-2 text-center">
                         <strong
-                            t-if="o._name != 'stock.quant'"
-                            t-out="o.result_package_id.alias or o.result_package_id.name"
+                            t-if="doc_model != 'stock.quant'"
+                            style="font-size: 25pt"
+                            t-out="o['result_package_id'].alias or o['result_package_id'].display_name"
                         />
                     </div>
                 </div>

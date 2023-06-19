@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_barcode_selection_printing" model="ir.ui.view">
+        <field name="model">stock.picking.print</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_product_barcode_report.view_stock_barcode_selection_printing"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode_report']/.." position="after">
+                <field name="can_be_summarized" invisible="1" />
+                <div attrs="{'invisible': [('can_be_summarized', '=', False)]}">
+                    <label for="is_summary_label" />
+                    <field name="is_summary_label" />
+                    <div attrs="{'invisible': [('is_summary_label', '=', False)]}">
+                        <strong>Label Quantity</strong>
+                        <br />
+                        <field name="label_qty" />
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

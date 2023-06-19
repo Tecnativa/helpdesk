@@ -27,28 +27,34 @@
     </template>
     <template id="label_fishing_report_document_nutrition_facts">
         <div class="row">
+            <t
+                t-set="show_nutritional_table"
+                t-value="show_nutritional_table or product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_f')"
+            />
             <div
                 t-att-class="'col-6' if show_nutritional_table else 'col-12'"
                 id="conservation"
             />
             <div class="col-6" id="nutritional_table" t-if="show_nutritional_table">
                 <t t-call="nutritional_info.nutritional_info_table">
-                    <t t-set="main_object" t-value="doc.lot_id" />
-                    <t t-set="alt_object" t-value="doc.product_id" />
-                    <t t-set="langs" t-value="report_langs[doc]" />
+                    <t t-set="main_object" t-value="lot" />
+                    <t t-set="alt_object" t-value="product" />
+                    <t t-set="langs" t-value="report_langs[doc['id']]" />
                 </t>
             </div>
         </div>
     </template>
     <template id="label_fishing_report_document">
         <t t-call="stock_production_lot_fishing_label.basic_layout_fishing_label">
+            <t t-set="lot" t-value="doc['lot_id']" />
+            <t t-set="product" t-value="doc['product_id']" />
             <t
                 t-set="count"
-                t-value="doc.label_qty if doc._name == 'stock.picking.line.print' else 1"
+                t-value="doc['label_qty'] if doc_model == 'stock.picking.line.print' else 1"
             />
             <t t-foreach="count" t-as="i">
                 <div class="page" style="font-size: 16pt;">
-                    <t t-set="langs" t-value="report_langs[doc]" />
+                    <t t-set="langs" t-value="report_langs[doc['id']]" />
                     <div class="row" id="scientific_name">
                         <div class="col-6">
                             <t t-foreach="langs" t-as="lang">
@@ -60,7 +66,7 @@
                             </t>
                         </div>
                         <div class="col-6">
-                            <i t-field="doc.product_id.scientific_name_ids[:1].name" />
+                            <i t-field="product.scientific_name_ids[:1].name" />
                         </div>
                     </div>
                     <div class="row" id="fishing_zone">
@@ -76,7 +82,7 @@
                         <div class="col-6">
                             <t t-foreach="langs" t-as="lang">
                                 <span
-                                    t-field="doc.lot_id.fao_fishing_area_id.with_context(lang=lang).name"
+                                    t-field="lot.fao_fishing_area_id.with_context(lang=lang).name"
                                 />
                                 <span t-if="lang != langs[-1]"> / </span>
                             </t>
@@ -95,7 +101,7 @@
                         <div class="col-6">
                             <t t-foreach="langs" t-as="lang">
                                 <span
-                                    t-field="doc.lot_id.harvesting_id.with_context(lang=lang).name"
+                                    t-field="lot.harvesting_id.with_context(lang=lang).name"
                                 />
                                 <span t-if="lang != langs[-1]"> / </span>
                             </t>
@@ -114,7 +120,7 @@
                         <div class="col-6">
                             <t t-foreach="langs" t-as="lang">
                                 <span
-                                    t-field="doc.lot_id.fao_fishing_technique_id.with_context(lang=lang).name"
+                                    t-field="lot.fao_fishing_technique_id.with_context(lang=lang).name"
                                 />
                                 <span t-if="lang != langs[-1]"> / </span>
                             </t>
@@ -131,7 +137,7 @@
                             </t>
                         </div>
                         <div class="col-6">
-                            <span t-field="doc.lot_id.fishing_ship_id.name" />
+                            <span t-field="lot.fishing_ship_id.name" />
                         </div>
                     </div>
                     <div class="row" id="origin">
@@ -147,7 +153,7 @@
                         <div class="col-6">
                             <t t-foreach="langs" t-as="lang">
                                 <span
-                                    t-field="doc.lot_id.country_id.with_context(lang=lang).name"
+                                    t-field="lot.country_id.with_context(lang=lang).name"
                                 />
                                 <span t-if="lang != langs[-1]"> / </span>
                             </t>
@@ -166,7 +172,7 @@
                         <div class="col-6">
                             <t t-foreach="langs" t-as="lang">
                                 <span
-                                    t-field="doc.lot_id.presentation_id.with_context(lang=lang).name"
+                                    t-field="lot.presentation_id.with_context(lang=lang).name"
                                 />
                                 <span t-if="lang != langs[-1]"> / </span>
                             </t>
@@ -184,11 +190,13 @@
                         </div>
                         <div class="col-6">
                             <span
-                                t-out="', '.join(doc.product_id.preservation_condition_ids.mapped('name'))"
+                                t-out="', '.join(product.preservation_condition_ids.mapped('name'))"
                             />
                         </div>
                     </div>
-                    <t t-if="use_second_page">
+                    <t
+                        t-if="use_second_page or product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_f')"
+                    >
                         <p style="page-break-before:always;" />
                         <t
                             t-call="stock_production_lot_fishing_label.label_fishing_report_document_nutrition_facts"
@@ -240,7 +248,7 @@
         <t t-call="web.basic_layout">
             <t
                 t-set="count"
-                t-value="doc.label_qty if doc._name == 'stock.picking.line.print' else 1"
+                t-value="doc['label_qty'] if doc_model == 'stock.picking.line.print' else 1"
             />
             <t t-foreach="count" t-as="i">
                 <div class="page">
@@ -248,7 +256,7 @@
                         <div class="col">
                             <t
                                 t-set="barcode"
-                                t-value="doc.result_package_id.alias or doc.result_package_id.name"
+                                t-value="doc['result_package_id'].alias or doc['result_package_id'].display_name"
                             />
                             <img
                                 t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
@@ -258,14 +266,14 @@
                     </div>
                     <div class="row">
                         <div class="col" style="text-align:center; font-size: 12pt;">
-                            <span t-out="barcode" />
+                            <span
+                                t-out="doc['result_package_id'].alias or doc['result_package_id'].display_name"
+                            />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col" style="text-align:center; font-size: 12pt;">
-                            <strong
-                                t-field="doc.with_context(display_default_code=False).product_id"
-                            />
+                            <strong t-out="doc['product_id'].name" />
                         </div>
                     </div>
                     <p style="page-break-before:always;" />
