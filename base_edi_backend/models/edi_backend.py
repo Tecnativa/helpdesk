@@ -452,9 +452,9 @@ class EdiBackend(models.Model):
         try:
             with self._ftp_connection() as ftp:
                 if ftp.getwelcome():
-                    raise exceptions.Warning(_("Connection Test OK!"))
-        except exceptions.Warning:
-            raise exceptions.Warning(_("Connection Test OK!")) from exceptions.Warning
+                    raise exceptions.UserError(_("Connection Test OK!"))
+        except exceptions.UserError:
+            raise
         except Exception:
             raise exceptions.ValidationError(
                 _("Connection Test Failed! %s") % Exception
@@ -501,9 +501,9 @@ class EdiBackend(models.Model):
         try:
             with self._sftp_connection() as sftp:
                 if sftp.pwd():
-                    raise exceptions.Warning(_("Connection Test OK!"))
-        except exceptions.Warning:
-            raise exceptions.Warning(_("Connection Test OK!")) from exceptions.Warning
+                    raise exceptions.UserError(_("Connection Test OK!"))
+        except exceptions.UserError:
+            raise
         except Exception:
             raise exceptions.ValidationError(
                 _("Connection Test Failed! %s") % Exception
