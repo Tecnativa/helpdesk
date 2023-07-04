@@ -246,7 +246,10 @@
                 <div class="page">
                     <div class="row" style="padding-top: 25px">
                         <div class="col">
-                            <t t-set="barcode" t-value="doc.result_package_id.alias" />
+                            <t
+                                t-set="barcode"
+                                t-value="doc.result_package_id.alias or doc.result_package_id.name"
+                            />
                             <img
                                 t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
                                 style="width:100%;height:100px"
@@ -255,12 +258,14 @@
                     </div>
                     <div class="row">
                         <div class="col" style="text-align:center; font-size: 12pt;">
-                            <span t-out="doc.result_package_id.alias" />
+                            <span t-out="barcode" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col" style="text-align:center; font-size: 12pt;">
-                            <strong t-out="doc.product_id.name" />
+                            <strong
+                                t-field="doc.with_context(display_default_code=False).product_id"
+                            />
                         </div>
                     </div>
                     <p style="page-break-before:always;" />

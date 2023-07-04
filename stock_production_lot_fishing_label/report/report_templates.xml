@@ -55,7 +55,7 @@
                         <t t-foreach="langs" t-as="lang">
                             <strong
                                 style="font-size: 20pt;"
-                                t-field="o.with_context(lang=lang).product_id.name"
+                                t-field="o.with_context(lang=lang, display_default_code=False).product_id"
                             />
                             <br t-if="lang != langs[-1]" />
                         </t>
@@ -252,7 +252,7 @@
                     <div class="col-2 text-center">
                         <strong
                             t-if="o._name != 'stock.quant'"
-                            t-field="o.result_package_id.alias"
+                            t-out="o.result_package_id.alias or o.result_package_id.name"
                         />
                     </div>
                 </div>
