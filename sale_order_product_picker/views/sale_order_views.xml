@@ -279,11 +279,11 @@
     <record id="action_open_picker_views" model="ir.actions.act_window">
         <field name="name">Commercial Quotations</field>
         <field name="res_model">sale.order</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
         <field
             name="view_ids"
             eval="[(5, 0, 0),
-                (0, 0, {'view_mode': 'tree'}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('sale.view_quotation_tree')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('view_order_form')})]"
         />
     </record>
