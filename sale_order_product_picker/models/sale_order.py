@@ -83,9 +83,20 @@ class SaleOrder(models.Model):
         if product_filter.domain:
             domain = expression.AND([domain, literal_eval(product_filter.domain)])
         if self.picker_product_attribute_value_id:
+            # If attribute create variant then filter by variant attribute value
+            # else filter by template attribute value
+            if (
+                self.picker_product_attribute_value_id.attribute_id.create_variant
+                != "no_variant"
+            ):
+                attribute_field = (
+                    "product_template_variant_value_ids.product_attribute_value_id"
+                )
+            else:
+                attribute_field = "attribute_line_ids.value_ids"
             domain.append(
                 (
-                    "attribute_line_ids.value_ids",
+                    attribute_field,
                     "=",
                     self.picker_product_attribute_value_id.id,
                 )
