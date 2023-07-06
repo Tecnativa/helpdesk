@@ -184,6 +184,9 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                     }
                 }
             }
+            if (!pickerRecord) {
+                return;
+            }
             return {
                 operation: "UPDATE",
                 id: pickerRecord.id,
