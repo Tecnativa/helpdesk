@@ -582,7 +582,7 @@ class EdiBackend(models.Model):
                     </p>
                 </body>
             """,
-            "notification": False,
+            "is_notification": False,
             "auto_delete": False,
             "attachment_ids": [(0, 0, {"name": file_name, "datas": file})],
         }
