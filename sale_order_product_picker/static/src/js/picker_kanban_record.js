@@ -154,6 +154,11 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
          */
         _onQuickAddClicked: async function (ev) {
             const $target = $(ev.currentTarget);
+            const handler = (ev) => {
+                $target.removeAttr("disabled");
+                ev.preventDefault();
+            };
+            window.addEventListener("unhandledrejection", handler);
             $target.attr("disabled", "disabled");
             var $kanban = this.$el.parent(".o_picker_kanban");
             if (!$kanban.length) {
@@ -173,8 +178,15 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                     operation: "CREATE",
                     editable: "bottom",
                 });
-                var id = changes.filter((change) => change.name === "order_line")[0]
+                const id = changes.filter((change) => change.name === "order_line")[0]
                     .value.data[0].id;
+                const idHandler = () => {
+                    list._setValue({
+                        operation: "DELETE",
+                        ids: [id],
+                    });
+                };
+                window.addEventListener("unhandledrejection", idHandler);
                 // Charging form fields to perform onchanges.
                 var viewInfo = {
                     fieldInfo: list.attrs.views.form.fieldsInfo.form,
@@ -202,6 +214,7 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                     Object.keys(dataLine),
                     {viewType: "form"}
                 );
+                window.removeEventListener("unhandledrejection", idHandler);
             } else if (lines.length === 1) {
                 const id = lines[0].line.id;
                 // Charging form fields to perform onchanges.
@@ -238,6 +251,7 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                 $target.removeAttr("disabled");
                 this._openMultiLineModalPicker(list, lines, ctx);
             }
+            window.removeEventListener("unhandledrejection", handler);
         },
         /**
          * Add new record using form to lines.
