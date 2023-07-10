@@ -6,14 +6,14 @@
         inherit_id="purchase.report_purchasequotation_document"
     >
         <!-- Header data -->
-        <th name="th_quantity" position="after">
-            <th name="vendor_comment"><strong>Comment</strong></th>
-        </th>
+<!--        <th name="th_quantity" position="after">-->
+<!--            <th name="vendor_comment"><strong>Comment</strong></th>-->
+<!--        </th>-->
         <!-- Content data -->
-        <xpath expr="//span[@t-field='order_line.product_qty']/.." position="after">
-            <td id="vendor_comment">
+        <xpath expr="//td[@id='product']" position="inside">
+            <div id="vendor_comment">
                 <span t-field="order_line.vendor_comment" />
-            </td>
+            </div>
         </xpath>
     </template>
 
