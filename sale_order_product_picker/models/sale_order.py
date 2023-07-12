@@ -7,6 +7,7 @@ from datetime import timedelta
 
 from odoo import api, fields, models
 from odoo.osv import expression
+from odoo.tools import float_compare
 
 
 class SaleOrder(models.Model):
@@ -216,3 +217,18 @@ class SaleOrder(models.Model):
             reverse=True,
         )
         return found_lines[:limit]
+
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    list_price = fields.Float(related="product_id.list_price")
+    is_different_price = fields.Boolean(compute="_compute_is_different_price")
+
+    @api.depends("list_price", "price_unit")
+    def _compute_is_different_price(self):
+        digits = self.env["decimal.precision"].precision_get("Product Price")
+        for line in self:
+            line.is_different_price = bool(
+                float_compare(line.price_unit, line.list_price, precision_digits=digits)
+            )

@@ -11,3 +11,12 @@
 .o_form_view.o_form_editable .o_row > div {
     width: auto !important;
 }
+// This is used to show list price stroke
+.price_picker {
+    display: flex;
+
+    span[name="list_price"] {
+        text-decoration: line-through;
+        margin-left: 5px;
+    }
+}
