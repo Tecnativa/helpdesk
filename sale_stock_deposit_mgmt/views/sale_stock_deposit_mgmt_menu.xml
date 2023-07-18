@@ -14,8 +14,10 @@
         <field name="res_model">stock.picking</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[
-            ('owner_restriction', '=', 'partner_picking'),
+            ('owner_restriction', '=', 'picking_partner'),
+            '|',
             ('partner_id.user_id', '=', uid),
+            ('create_uid', '=', uid),
             ]</field>
         <field
             name="context"
