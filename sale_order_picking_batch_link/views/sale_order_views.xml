@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Tecnativa - Stefan Ungureanu
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+        <record id="sale_stock_form_picking_batch" model="ir.ui.view">
+            <field name="name">Sale Order Form Picking Batch</field>
+            <field name="model">sale.order</field>
+            <field
+            name="inherit_id"
+            ref="sale_stock.view_order_form_inherit_sale_stock"
+        />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='sale_shipping']" position="inside">
+                    <field
+                    name="picking_batch_ids"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('picking_batch_ids', '=', [])]}"
+                />
+                </xpath>
+            </field>
+        </record>
+
+</odoo>
