@@ -3,6 +3,7 @@
 # License AGPL-3 - See https://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import api, fields, models
+from odoo.tools import float_compare
 
 
 class SaleOrderPicker(models.Model):
@@ -26,6 +27,8 @@ class SaleOrderPicker(models.Model):
         string="Unit Price", compute="_compute_price_unit", digits="Product Price"
     )
     currency_id = fields.Many2one(related="order_id.currency_id", depends=["order_id"])
+    list_price = fields.Float(related="product_id.list_price")
+    is_different_price = fields.Boolean(compute="_compute_is_different_price")
 
     # TODO: Dummy fields to remove
     state = fields.Selection(
@@ -119,3 +122,11 @@ class SaleOrderPicker(models.Model):
         so_line = self.order_id.order_line.new({"product_id": self.product_id.id})
         so_line.product_id_change()
         self.order_id.order_line += so_line
+
+    @api.depends("list_price", "price_unit")
+    def _compute_is_different_price(self):
+        digits = self.env["decimal.precision"].precision_get("Product Price")
+        for line in self:
+            line.is_different_price = bool(
+                float_compare(line.price_unit, line.list_price, precision_digits=digits)
+            )

@@ -67,6 +67,36 @@
             <attribute name="widget">numeric_step</attribute>
             <attribute name="options">{'auto_select': True}</attribute>
         </xpath>
+        <xpath
+                expr="//field[@name='order_line']/form//field[@name='price_unit']"
+                position="before"
+            >
+            <label for="price_unit" />
+            <div class="price_picker">
+                <field name="is_different_price" invisible="1" />
+                <field
+                        name="list_price"
+                        widget="monetary"
+                        class="oe_inline"
+                        attrs="{'invisible': [('is_different_price', '=', False)]}"
+                    />
+            </div>
+        </xpath>
+        <xpath
+                expr="//field[@name='order_line']/form//field[@name='list_price']"
+                position="before"
+            >
+            <xpath
+                    expr="//field[@name='order_line']/form//field[@name='price_unit']"
+                    position="move"
+                />
+        </xpath>
+        <xpath
+                expr="//field[@name='order_line']/form//field[@name='list_price']"
+                position="attributes"
+            >
+            <attribute name="class" add="oe_inline" separator=" " />
+        </xpath>
             <xpath
                 expr="//field[@name='order_line']/kanban//field[@name='company_id']"
                 position="after"
@@ -82,6 +112,22 @@
                 <field name="is_mto" />
                 <field name="display_qty_widget" />
                 <field name="state" />
+                <field name="is_different_price" />
+                <field name="list_price" />
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/kanban//t[@t-esc='record.price_unit.value']/.."
+                position="attributes"
+            >
+                <attribute name="class" add="price_picker" separator=" " />
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/kanban//t[@t-esc='record.price_unit.value']"
+                position="after"
+            >
+                <div t-if="record.is_different_price.raw_value" class="text-muted">
+                    <field name="list_price" widget="monetary" />
+                </div>
             </xpath>
             <xpath
                 expr="//field[@name='order_line']/kanban//div[hasclass('no-gutters')]"
@@ -173,6 +219,8 @@
                             <field name="display_qty_widget" />
                             <field name="state" />
                             <field name="currency_id" />
+                            <field name="is_different_price" />
+                            <field name="list_price" />
                             <templates>
                                 <t t-name="kanban-box">
                                     <div class="oe_kanban_card oe_kanban_global_click">
@@ -216,12 +264,21 @@
                                                     <!-- TODO: Use pretty element -->
                                                     <div class="row">
                                                         <div
-                                                            class="col-12 font-weight-bold"
+                                                            class="col-12 font-weight-bold price_picker"
                                                         >
                                                             <field
                                                                 name="price_unit"
                                                                 widget="monetary"
                                                             />
+                                                            <div
+                                                                t-if="record.is_different_price.raw_value"
+                                                                class="text-muted"
+                                                            >
+                                                                <field
+                                                                    name="list_price"
+                                                                    widget="monetary"
+                                                                />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div
