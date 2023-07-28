@@ -16,6 +16,7 @@
             ref="stock_production_lot_fishing_label.paperformat_fishing_label"
         />
         <field name="is_barcode_label">True</field>
+        <field name="can_be_summarized">True</field>
     </record>
     <record id="action_label_fishing_move_report" model="ir.actions.report">
         <field name="name">Fishing Label Impresion</field>
@@ -135,5 +136,6 @@ action = env.ref('stock_production_lot_fishing_label.action_label_fishing_move_r
             ref="stock_production_lot_fishing_label.paperformat_fishing_label"
         />
         <field name="is_barcode_label">True</field>
+        <field name="can_be_summarized">True</field>
     </record>
 </odoo>
