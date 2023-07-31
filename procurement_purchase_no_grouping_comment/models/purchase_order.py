@@ -31,6 +31,16 @@ class PurchaseOrderLine(models.Model):
             values,
         )
 
+    def _prepare_stock_move_vals(
+        self, picking, price_unit, product_uom_qty, product_uom
+    ):
+        vals = super()._prepare_stock_move_vals(
+            picking, price_unit, product_uom_qty, product_uom
+        )
+        if self.vendor_comment:
+            vals["vendor_comment"] = self.vendor_comment
+        return vals
+
     @api.model
     def _prepare_purchase_order_line_from_procurement(
         self, product_id, product_qty, product_uom, company_id, values, po
