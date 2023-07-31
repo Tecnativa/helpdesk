@@ -208,39 +208,31 @@
         </t>
     </template>
     <template id="label_fishing">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
-                <t
-                    t-call="stock_production_lot_fishing_label.label_fishing_report_document"
-                />
-            </t>
+        <t t-foreach="docs" t-as="doc">
+            <t
+                t-call="stock_production_lot_fishing_label.label_fishing_report_document"
+            />
         </t>
     </template>
     <template id="label_fishing_move">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
-                <t
-                    t-call="stock_production_lot_fishing_label.label_fishing_report_document"
-                />
-            </t>
+        <t t-foreach="docs" t-as="doc">
+            <t
+                t-call="stock_production_lot_fishing_label.label_fishing_report_document"
+            />
         </t>
     </template>
     <template id="label_fishing_quant">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
-                <t
-                    t-call="stock_production_lot_fishing_label.label_fishing_report_document"
-                />
-            </t>
+        <t t-foreach="docs" t-as="doc">
+            <t
+                t-call="stock_production_lot_fishing_label.label_fishing_report_document"
+            />
         </t>
     </template>
     <template id="label_fishing_nutri">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
-                <t
-                    t-call="stock_production_lot_fishing_label.label_fishing_report_document"
-                />
-            </t>
+        <t t-foreach="docs" t-as="doc">
+            <t
+                t-call="stock_production_lot_fishing_label.label_fishing_report_document"
+            />
         </t>
     </template>
     <!--  Mini fishing labels  -->
