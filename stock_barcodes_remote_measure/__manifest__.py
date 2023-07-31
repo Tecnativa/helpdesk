@@ -17,4 +17,9 @@
     "data": [
         "wizard/stock_barcodes_read_views.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "stock_barcodes_remote_measure/static/src/**/*.js",
+        ],
+    },
 }
