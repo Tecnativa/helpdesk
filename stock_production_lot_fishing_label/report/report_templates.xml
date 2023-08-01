@@ -17,8 +17,25 @@
     </template>
     <template id="basic_layout_fishing_label">
         <t t-call="web.html_container">
+            <t
+                t-set="show_client_elaborations"
+                t-value="client_elaborations[doc['id']]"
+            />
+            <t t-set="langs" t-value="report_langs[doc['id']]" />
+            <t t-set="data_report_margin_top" t-value="30 if len(langs) == 4 else 21" />
+            <t
+                t-set="data_report_margin_top"
+                t-value="data_report_margin_top + 3 if show_client_elaborations else data_report_margin_top"
+            />
+            <t
+                t-set="data_report_header_spacing"
+                t-value="30 if len(langs) == 4 else 21"
+            />
+            <t
+                t-set="data_report_header_spacing"
+                t-value="data_report_header_spacing + 3 if show_client_elaborations else data_report_header_spacing"
+            />
             <t t-if="not o" t-set="o" t-value="doc" />
-            <t t-set="langs" t-value="report_langs[o['id']]" />
             <t
                 t-set="o"
                 t-value="o['move_line_id'] if doc_model == 'stock.picking.line.print' and not summarized else o"
@@ -37,21 +54,17 @@
             </t>
             <!-- Header -->
             <div class="header">
-                <t
-                    t-set="show_client_elaborations"
-                    t-value="client_elaborations[doc['id']]"
-                />
                 <div class="row">
                     <div class="col-12 text-center" t-if="show_client_elaborations">
                         <strong
-                            style="font-size: 16pt;"
+                            style="font-size: 18pt;"
                             t-if="doc_model != 'stock.quant'"
                             t-field="o['picking_partner_id'].display_name"
                         />
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-12">
                         <t t-foreach="langs" t-as="lang">
                             <strong
                                 style="font-size: 20pt;"
@@ -60,11 +73,18 @@
                             <br t-if="lang != langs[-1]" />
                         </t>
                     </div>
-                    <div class="col-3 pt-2" id="extra_heading">
-                        <div t-if="show_client_elaborations">
-                            <span
-                                t-if="doc_model != 'stock.quant'"
-                                t-out="', '.join(o['move_id'].elaboration_ids.mapped('code'))"
+                </div>
+                <div class="row">
+                    <div class="col-12 text-right" id="extra_heading">
+                        <div
+                            t-if="show_client_elaborations and doc_model != 'stock.quant' and o['move_id'].elaboration_ids"
+                        >
+                            <i
+                                t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
+                            />
+                            <br />
+                            <i
+                                t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang=o['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
                             />
                         </div>
 <!--                        <div t-if="summarized" style="font-size: 12pt">-->

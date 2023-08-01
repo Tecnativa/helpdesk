@@ -27,7 +27,7 @@
     ],
     "assets": {
         "web.report_assets_common": [
-            "stock_production_lot_fishing_label/static/src/scss/nutrition_table_style.scss",
+            "stock_production_lot_fishing_label/static/src/scss/*.scss",
         ]
     },
 }
