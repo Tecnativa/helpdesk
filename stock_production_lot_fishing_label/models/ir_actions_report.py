@@ -22,4 +22,4 @@ class IrActionsReport(models.Model):
                 )
                 pdfs.append(pdf)
             return self._merge_pdfs(pdfs), "pdf"
-        return super()._render_qweb_pdf(self, res_ids=res_ids, data=data)
+        return super()._render_qweb_pdf(res_ids=res_ids, data=data)
