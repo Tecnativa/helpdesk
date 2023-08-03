@@ -11,6 +11,10 @@
     "depends": [
         "stock_barcodes",
     ],
-    "data": ["wizard/stock_barcodes_read_picking_views.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/stock_sequence_data.xml",
+        "wizard/stock_barcodes_read_picking_views.xml",
+    ],
     "installable": True,
 }
