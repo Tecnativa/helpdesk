@@ -13,7 +13,7 @@
                 <field name="item_length" optional="hide" />
                 <field name="width" optional="hide" />
                 <field name="height" optional="hide" />
-                <field name="weight" optional="hide" />
+                <field name="weight" optional="show" />
                 <field name="list_item_detail_ids" optional="show" />
                 <button
                     name="get_formview_action"
@@ -28,6 +28,7 @@
                     title="Add items to package"
                     icon="fa-plus-square"
                     class="ml16"
+                    attrs="{'invisible': [('is_pallet', '=', True)]}"
                 />
             </tree>
         </field>
