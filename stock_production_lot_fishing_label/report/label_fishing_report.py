@@ -35,8 +35,9 @@ class LabelFishingReportMixin(models.AbstractModel):
             reference_line = lines[0]
             filtered_lines = lines.filtered(
                 lambda line: line.product_id == reference_line.product_id
+                and line.result_package_id.master_box_id
+                == reference_line.result_package_id.master_box_id
                 and line.lot_id == reference_line.lot_id
-                and line.result_package_id == reference_line.result_package_id
             )
             lines -= filtered_lines
             summarized_lines.append(
