@@ -63,6 +63,13 @@
                         />
                     </div>
                 </div>
+                <div class="row" t-if="summarized">
+                    <div class="col-12 text-right">
+                        <strong style="font-size: 19pt;">
+                            CAJA MASTER BOX
+                        </strong>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <t t-foreach="langs" t-as="lang">
@@ -87,11 +94,11 @@
                                 t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang=o['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
                             />
                         </div>
-<!--                        <div t-if="summarized" style="font-size: 12pt">-->
-<!--                            <span-->
-<!--                                t-out="'-'.join(o['result_package_ids'].mapped(lambda pack: pack.alias or pack.display_name))"-->
-<!--                            />-->
-<!--                        </div>-->
+                        <div t-if="summarized" style="font-size: 12pt">
+                            <span
+                                t-out="', '.join(o['result_package_ids'].mapped(lambda pack: pack.alias or pack.display_name))"
+                            />
+                        </div>
                     </div>
                 </div>
                 <table
@@ -99,6 +106,12 @@
                     style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 16pt;width:100%"
                 >
                     <tbody>
+                        <tr t-if="summarized">
+                            <td
+                                colspan="3"
+                                class="text-left"
+                            >Según etiqueta de la unidad de venta</td>
+                        </tr>
                         <tr>
                             <td>
                                 <t t-foreach="langs" t-as="lang">

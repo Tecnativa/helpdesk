@@ -14,6 +14,7 @@
         "company_sanitary_registry",
         "product_drained_weight",
         "sale_elaboration",
+        "stock_barcodes_master_box",
         "stock_production_lot_fishing_info",
         "stock_picking_product_barcode_report",
         "nutritional_info_stock_lot",
