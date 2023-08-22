@@ -53,6 +53,7 @@ class LabelFishingReportMixin(models.AbstractModel):
                     "product_uom_id": reference_line.move_line_id.product_uom_id,
                     "qty_done": sum(filtered_lines.mapped("quantity")),
                     "result_package_id": reference_line.result_package_id,
+                    "result_package_ids": filtered_lines.mapped("result_package_id"),
                     "move_line_id": reference_line.move_line_id,
                 }
             )
