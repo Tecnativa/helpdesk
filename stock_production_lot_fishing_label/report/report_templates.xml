@@ -28,12 +28,20 @@
                 t-value="data_report_margin_top + 3 if show_client_elaborations else data_report_margin_top"
             />
             <t
+                t-set="data_report_margin_top"
+                t-value="data_report_margin_top + 6 if summarized else data_report_margin_top"
+            />
+            <t
                 t-set="data_report_header_spacing"
                 t-value="30 if len(langs) == 4 else 21"
             />
             <t
                 t-set="data_report_header_spacing"
                 t-value="data_report_header_spacing + 3 if show_client_elaborations else data_report_header_spacing"
+            />
+            <t
+                t-set="data_report_header_spacing"
+                t-value="data_report_header_spacing + 6 if summarized else data_report_header_spacing"
             />
             <t t-if="not o" t-set="o" t-value="doc" />
             <t
@@ -101,17 +109,15 @@
                         </div>
                     </div>
                 </div>
+                <i
+                    style="font-size: 16pt"
+                    t-if="summarized"
+                >Según etiqueta de la unidad de venta</i>
                 <table
                     class="text-center"
                     style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 16pt;width:100%"
                 >
                     <tbody>
-                        <tr t-if="summarized">
-                            <td
-                                colspan="3"
-                                class="text-left"
-                            >Según etiqueta de la unidad de venta</td>
-                        </tr>
                         <tr>
                             <td>
                                 <t t-foreach="langs" t-as="lang">
