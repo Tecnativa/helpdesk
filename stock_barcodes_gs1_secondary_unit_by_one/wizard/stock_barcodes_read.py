@@ -32,3 +32,12 @@ class WizStockBarcodesRead(models.AbstractModel):
             self.secondary_uom_qty = 1.0
         else:
             self.secondary_uom_qty = 0.0
+
+    def _set_focus_on_qty_input(self, field_name=None):
+        if (
+            field_name is None
+            and self.set_secondary_unit_one_by_one
+            and self.secondary_uom_id
+        ):
+            field_name = "product_qty"
+        return super()._set_focus_on_qty_input(field_name=field_name)
