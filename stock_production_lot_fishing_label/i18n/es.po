@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-15 12:22+0000\n"
-"PO-Revision-Date: 2023-05-15 14:30+0200\n"
+"POT-Creation-Date: 2023-09-05 15:10+0000\n"
+"PO-Revision-Date: 2023-09-05 17:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
@@ -33,14 +33,9 @@ msgid "<span>Boat</span>"
 msgstr "<span>Carco</span>"
 
 #. module: stock_production_lot_fishing_label
-#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
-msgid "<span>CE</span>"
-msgstr "<span>CE</span>"
-
-#. module: stock_production_lot_fishing_label
-#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
-msgid "<span>ES</span>"
-msgstr "<span>ES</span>"
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label_drained_weight
+msgid "<span>Drained Weight</span>"
+msgstr "<span>Peso Escurrido</span>"
 
 #. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label_expiration
@@ -88,13 +83,43 @@ msgid "<span>Scientific N.</span>"
 msgstr "<span>N. Científico</span>"
 
 #. module: stock_production_lot_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
+msgid ""
+"<strong style=\"font-size: 19pt;\">\n"
+"                            CAJA MASTER BOX\n"
+"                        </strong>"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.view_stock_barcode_selection_printing
+msgid ""
+"<strong>Label Quantity</strong>\n"
+"                        <br/>"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_ir_actions_report__can_be_summarized
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_picking_print__can_be_summarized
+msgid "Can Be Summarized"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_move_report
+#: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_quant_report
 #: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_report
-#: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_report_mini
 #: model:ir.actions.server,name:stock_production_lot_fishing_label.print_picking_label_fishing_report
 msgid "Fishing Label Impresion"
 msgstr ""
 
 #. module: stock_production_lot_fishing_label
+#: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_nutritional_report
+msgid "Fishing Label Impresion With Nutritional Info"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_move_report_mini
+#: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_quant_report_mini
+#: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_report_mini
 #: model:ir.actions.server,name:stock_production_lot_fishing_label.print_picking_label_fishing_report_mini
 msgid "Fishing Label Mini Impresion"
 msgstr ""
@@ -105,16 +130,63 @@ msgid "Freezing"
 msgstr "Fecha de congelación"
 
 #. module: stock_production_lot_fishing_label
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_picking_print__is_summary_label
+msgid "Is Summary Label"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label_freezing
 msgid "Packed"
 msgstr "Fecha de envasado"
 
 #. module: stock_production_lot_fishing_label
-#: model:ir.model,name:stock_production_lot_fishing_label.model_report_stock_production_lot_fishing_label_label_fishing_report
+#: model:ir.model,name:stock_production_lot_fishing_label.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_report_stock_production_lot_fishing_label_label_fishing
+#: model:ir.model,name:stock_production_lot_fishing_label.model_report_stock_production_lot_fishing_label_label_fishing_nutri
 msgid "Report Fishing Label"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_report_stock_production_lot_fishing_label_label_fishing_move
+msgid "Report Fishing Label Move"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_report_stock_production_lot_fishing_label_label_fishing_quant
+msgid "Report Fishing Label Quant"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
+msgid "Según etiqueta de la unidad de venta"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_ir_actions_report__single_rendering
+msgid "Single Rendering"
 msgstr ""
 
 #. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
 msgid "Tel."
 msgstr "Tel."
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_stock_picking_print
+msgid "Wizard to select how many barcodes have to be printed"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_label_fishing_report_mixin
+msgid "label.fishing.report.mixin"
+msgstr ""
+
+#~ msgid "<span>CE</span>"
+#~ msgstr "<span>CE</span>"
+
+#~ msgid "<span>ES</span>"
+#~ msgstr "<span>ES</span>"
