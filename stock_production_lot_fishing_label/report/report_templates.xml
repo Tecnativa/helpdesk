@@ -90,7 +90,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 text-right" id="extra_heading">
+                    <div
+                        class="col-12 text-right"
+                        style="font-size: 13pt;"
+                        id="extra_heading"
+                    >
                         <div
                             t-if="show_client_elaborations and doc_model != 'stock.quant' and o['move_id'].elaboration_ids"
                         >
@@ -176,8 +180,8 @@
                                     t-if="o['product_uom_id'].category_id == env.ref('uom.product_uom_categ_kgm')"
                                 >
                                     <strong
-                                        t-if="doc_model == 'stock.quant'"
-                                        t-out="o['quantity']"
+                                        t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
+                                        t-out="doc['quantity']"
                                     />
                                     <strong t-else="" t-out="o['qty_done']" />
                                     <strong
@@ -186,8 +190,8 @@
                                 </t>
                                 <t t-else="">
                                     <strong
-                                        t-if="doc_model == 'stock.quant'"
-                                        t-out="o['quantity'] * o['product_id'].net_weight"
+                                        t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
+                                        t-out="doc['quantity'] * o['product_id'].net_weight"
                                     />
                                     <strong
                                         t-else=""
