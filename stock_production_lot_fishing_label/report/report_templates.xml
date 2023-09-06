@@ -120,6 +120,10 @@
                     style="font-size: 16pt"
                     t-if="summarized"
                 >Según etiqueta de la unidad de venta</i>
+                <t
+                    t-set="precision"
+                    t-value="env['decimal.precision'].precision_get('Product Unit of Measure')"
+                />
                 <table
                     class="text-center"
                     style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 16pt;width:100%"
@@ -214,10 +218,6 @@
                                     <strong t-field="o['product_id'].weight_uom_name" />
                                 </t>
                             </td>
-                            <t
-                                t-set="precision"
-                                t-value="env['decimal.precision'].precision_get('Product Unit of Measure')"
-                            />
                             <td
                                 t-if="not float_is_zero(o['product_id'].drained_weight, precision_digits=precision)"
                             >
