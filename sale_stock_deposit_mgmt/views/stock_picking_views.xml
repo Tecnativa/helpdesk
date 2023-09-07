@@ -26,9 +26,13 @@
                 <attribute
                     name="domain"
                 >[('id', 'in', parent.product_owner_ids)]</attribute>
-                <attribute
-                    name="context"
-                >{'so_product_stock_inline': True, 'force_restricted_owner_id': parent.owner_id}</attribute>
+                <attribute name="context" operation="update">
+                    {
+                        "sp_product_stock_inline": True,
+                        "warehouse": parent.picking_type_warehouse_id,
+                        'force_restricted_owner_id': parent.owner_id
+                     }
+                </attribute>
             </xpath>
             <xpath
                 expr="//field[@name='move_ids_without_package']/form//field[@name='product_id']"
@@ -37,9 +41,14 @@
                 <attribute
                     name="domain"
                 >[('id', 'in', parent.product_owner_ids)]</attribute>
-                <attribute
-                    name="context"
-                >{'so_product_stock_inline': True, 'force_restricted_owner_id': parent.owner_id}</attribute>
+                <attribute name="context" operation="update">
+                    {
+                        "sp_product_stock_inline": True,
+                        "warehouse": parent.picking_type_warehouse_id,
+                        'force_restricted_owner_id': parent.owner_id
+                     }
+                </attribute>
+
             </xpath>
         </field>
     </record>

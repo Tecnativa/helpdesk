@@ -14,6 +14,7 @@
     "depends": [
         "sale_stock",
         "stock_owner_restriction",
+        "base_view_inheritance_extension",
     ],
     "data": [
         "security/ir.model.access.csv",
