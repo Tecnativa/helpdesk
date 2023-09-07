@@ -11,6 +11,7 @@ class SaleOrder(models.Model):
         comodel_name="stock.picking.batch",
         string="Batch Pickings",
         compute="_compute_picking_batch_ids",
+        compute_sudo=True,
     )
 
     @api.depends("picking_ids", "picking_ids.batch_id")
