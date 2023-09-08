@@ -12,6 +12,7 @@
     "installable": True,
     "depends": ["sale_stock", "stock_picking_batch"],
     "data": [
+        "security/ir.model.access.csv",
         "views/sale_order_views.xml",
     ],
 }
