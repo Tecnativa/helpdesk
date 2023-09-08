@@ -29,7 +29,6 @@
                 <attribute name="context" operation="update">
                     {
                         "sp_product_stock_inline": True,
-                        "warehouse": parent.picking_type_warehouse_id,
                         'force_restricted_owner_id': parent.owner_id
                      }
                 </attribute>
@@ -44,7 +43,6 @@
                 <attribute name="context" operation="update">
                     {
                         "sp_product_stock_inline": True,
-                        "warehouse": parent.picking_type_warehouse_id,
                         'force_restricted_owner_id': parent.owner_id
                      }
                 </attribute>
