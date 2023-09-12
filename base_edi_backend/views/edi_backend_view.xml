@@ -226,7 +226,7 @@
             <search>
                 <field
                     name="name"
-                    filter_domain="['|', '|', ('display_name', 'ilike', self), ('code', '=', self)]"
+                    filter_domain="['|', ('name', 'ilike', self), ('code', '=', self)]"
                 />
                 <filter
                     name="export"
