@@ -9,11 +9,15 @@
     "license": "AGPL-3",
     "category": "Inventory",
     "depends": [
-        "stock_barcodes",
+        "stock_barcodes_gs1_secondary_unit",
+        "stock_barcodes_auto_package",
     ],
     "data": [
         "security/ir.model.access.csv",
         "data/stock_sequence_data.xml",
+        "views/product_views.xml",
+        "views/stock_quant_package_views.xml",
+        "views/stock_quant_master_box_views.xml",
         "wizard/stock_barcodes_read_picking_views.xml",
     ],
     "installable": True,

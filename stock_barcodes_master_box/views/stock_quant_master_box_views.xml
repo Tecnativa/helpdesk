@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="quant_master_box_search_view" model="ir.ui.view">
+        <field name="name">stock.quant.master.box.search</field>
+        <field name="model">stock.quant.master.box</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="package_ids" />
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_master_box_tree">
+        <field name="name">stock.quant.master.box.tree</field>
+        <field name="model">stock.quant.master.box</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="package_ids" optional="hide" widget="many2many_tags" />
+                <field name='company_id' groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_master_box_form">
+        <field name="name">stock.quant.master.box.form</field>
+        <field name="model">stock.quant.master.box</field>
+        <field name="arch" type="xml">
+            <form>
+<!--                <header>-->
+<!--                    <button name="unpack" string="Unpack" type="object"/>-->
+<!--                </header>-->
+                <sheet>
+<!--                    <div class="oe_button_box" name="button_box">-->
+<!--                        <button class="oe_stat_button" name="action_view_picking"-->
+<!--                        string="Package Transfers" type="object"-->
+<!--                        widget="statinfo" icon="fa-arrows-v"/>-->
+<!--                    </div>-->
+                    <div class="oe_title">
+                        <label for="name" string="Master box" />
+                        <h1><field
+                                name="name"
+                                class="oe_inline"
+                                placeholder="e.g. MB0000007"
+                            /></h1>
+                    </div>
+                    <separator string="Content" />
+                    <field name="package_ids" />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_quant_master_box_view">
+        <field name="context">{}</field>
+        <field name="name">Master boxes</field>
+        <field name="res_model">stock.quant.master.box</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_quant_master_box"
+        name="Master boxes"
+        parent="stock.menu_stock_inventory_control"
+        action="action_quant_master_box_view"
+        sequence="112"
+    />
+</odoo>

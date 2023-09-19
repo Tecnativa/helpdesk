@@ -6,6 +6,4 @@ from odoo import fields, models
 class StockQuantPackage(models.Model):
     _inherit = "stock.quant.package"
 
-    master_box_id = fields.Many2one(
-        comodel_name="stock.quant.master.box", ondelete="restrict"
-    )
+    master_box_id = fields.Many2one(comodel_name="stock.quant.master.box")

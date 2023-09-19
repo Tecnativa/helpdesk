@@ -1,6 +1,6 @@
 # Copyright 2023 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from odoo import fields, models
+from odoo import _, fields, models
 
 
 class WizStockBarcodesReadPicking(models.TransientModel):
@@ -27,3 +27,75 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         sml = super().create_new_stock_move_line(moves_todo, available_qty)
         self._assig_master_box_to_package(sml)
         return sml
+
+    def action_print_master_box(self):
+        # TODO: Definir lo se va a imprimir por defecto
+        pass
+        # report = self.picking_id.picking_type_id.default_label_report
+        # last_sml = self.picking_id.move_line_ids.sorted(key="write_date", reverse=True)[
+        #     :1
+        # ]
+        # wiz = (
+        #     self.env["stock.picking.print"]
+        #     .with_context(
+        #         stock_move_line_to_print=last_sml.id,
+        #         active_model="stock.picking",
+        #         active_ids=self.picking_id.ids,
+        #     )
+        #     .create(
+        #         {
+        #             "barcode_report": report.id,
+        #         }
+        #     )
+        # )
+        # wiz._onchange_picking_ids()
+        # return wiz.print_labels()
+
+    def process_barcode_master_box_id(self):
+        if self.env.context.get("force_master_box", False):
+            master_box = self.master_box_id.name
+        else:
+            master_box = self.barcode
+        quant_domain = [
+            ("package_id.master_box_id.name", "=", master_box),
+        ]
+        quants = self.env["stock.quant"].search(quant_domain)
+        if not quants:
+            self._set_messagge_info("more_match", _("Master box not fount"))
+            return False
+        # Retrieve master box quants to generate sml if needed
+        sml_vals_list = []
+        for quant in quants:
+            sml = self.picking_id.move_line_ids.filtered(
+                lambda ln: ln.package_id
+                and ln.product_id == quant.product_id
+                and ln.package_id == quant.package_id
+                and ln.lot_id == quant.lot_id
+            )
+            if sml:
+                sml.qty_done = quant.quantity
+            else:
+                if self.product_id != quant.product_id:
+                    self._set_messagge_info(
+                        "not_found", _("Master box contains other product")
+                    )
+                    return False
+                sml_vals_list.append(
+                    {
+                        "company_id": self.picking_id.company_id.id,
+                        "picking_id": self.picking_id.id,
+                        "product_id": quant.product_id.id,
+                        "product_uom_id": self.product_uom_id.id,
+                        "location_id": quant.location_id.id,
+                        "location_dest_id": self.location_dest_id.id,
+                        "lot_id": quant.lot_id.id,
+                        "package_id": quant.package_id.id,
+                        "result_package_id": quant.package_id.id,
+                        "owner_id": quant.owner_id.id,
+                        "secondary_uom_id": self.secondary_uom_id.id,
+                        "qty_done": quant.quantity,
+                    }
+                )
+        if sml_vals_list:
+            self.env["stock.move.line"].create(sml_vals_list)
+        return True

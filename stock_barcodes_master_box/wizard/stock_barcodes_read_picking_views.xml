@@ -11,7 +11,7 @@
                     <div class="mt4">
                         <strong class="d-none d-sm-block">Master Box</strong>
                         <span
-                            class="fa fa-cubes d-sm-none oe_span_small_icon"
+                            class="fa fa-object-group d-sm-none oe_span_small_icon"
                             title="Master Box"
                         />
                         <field
@@ -28,6 +28,7 @@
                             type="object"
                             icon="fa-trash fa-1x"
                             title="Clean master box info"
+                            attrs="{'invisible': [('master_box_id', '=', False)]}"
                         />
                         <button
                             id="btn_create_master_box"
@@ -37,9 +38,52 @@
                             icon="fa-plus fa-1x"
                             title="Create master box"
                         />
+                        <button
+                            class="btn btn-warning btn-sm oe_kanban_action_button pull-right mr4"
+                            name="action_print_master_box"
+                            type="object"
+                            icon="fa-print fa-1x"
+                            title="Print master box label"
+                            attrs="{'invisible': [('master_box_id', '=', False)]}"
+                        />
+                        <button
+                            class="btn btn-primary btn-sm oe_kanban_action_button pull-right mr4"
+                            name="process_barcode_master_box_id"
+                            type="object"
+                            icon="fa-sort-amount-asc fa-1x"
+                            title="Process master box content"
+                            attrs="{'invisible': ['|', ('master_box_id', '=', False), ('auto_put_in_pack_on_read', '=', True)]}"
+                            confirm="All content will be added to lines. Are you sure?"
+                            context="{'force_master_box': True}"
+                        />
                     </div>
                 </group>
             </xpath>
+            <xpath
+                expr="//field[@name='move_line_ids']/tree/field[@name='result_package_id']"
+                position="after"
+            >
+                <field name="master_box_id" />
+            </xpath>
+            <xpath
+                expr="//field[@name='move_line_ids']/kanban//field[@name='result_package_id']/../../.."
+                position="after"
+            >
+                <div class="row">
+                    <div class="col-4" />
+                    <t t-if="record.master_box_id.raw_value">
+                        <div class="col-4">
+                            Master box: <field name="master_box_id" />
+                        </div>
+                    </t>
+                </div>
+            </xpath>
+<!--            <xpath expr="//field[@name='move_line_ids']/.." position="before">-->
+<!--                <button name="process_barcode_master_box_id" type="object"-->
+<!--                        string="Master box content"-->
+<!--                        context="{'force_master_box': True}"-->
+<!--                />-->
+<!--            </xpath>-->
         </field>
     </record>
 </odoo>

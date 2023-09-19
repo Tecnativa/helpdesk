@@ -16,8 +16,11 @@ class StockQuantMasterBox(models.Model):
         )
         or _("Unknown Master Box"),
     )
-
     company_id = fields.Many2one(
         comodel_name="res.company",
         default=lambda self: self.env.company.id,
+    )
+    active = fields.Boolean(default=True)
+    package_ids = fields.One2many(
+        comodel_name="stock.quant.package", inverse_name="master_box_id"
     )
