@@ -197,7 +197,7 @@ class StockPickingProductChangeLine(models.TransientModel):
                 # To avoid sale_elaboration dependency.
                 # Copy elaboration data
                 for elaboration in origin_so_line.elaboration_ids:
-                    line_form.elaboration_ids.add = elaboration
+                    line_form.elaboration_ids.add(elaboration)
                 line_form.elaboration_note = origin_so_line.elaboration_note
             new_line_vals = line_form._values_to_save()
         return new_line_vals
