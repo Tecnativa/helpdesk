@@ -18,13 +18,14 @@
         "stock_production_lot_fishing_info",
         "stock_picking_product_barcode_report",
         "nutritional_info_stock_lot",
+        "stock_barcodes_master_box",
     ],
     "data": [
         "data/paperformat_label.xml",
         "report/report_templates.xml",
+        "report/report_fishing_label_master_box_template.xml",
         "report/report_fishing_label_template.xml",
         "report/report_label_barcode.xml",
-        "wizards/stock_barcode_selection_printing.xml",
     ],
     "assets": {
         "web.report_assets_common": [
