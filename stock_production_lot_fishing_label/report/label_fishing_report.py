@@ -13,7 +13,7 @@ class LabelFishingReportMixin(models.AbstractModel):
     def _compute_langs_print_partner(self, model_name, line):
         report_langs = ["ca_ES", "es_ES", "en_US", "fr_FR"]
         print_partner = False
-        if model_name != "stock.quant":
+        if model_name not in ["stock.quant", "stock.quant.master.box"]:
             move_line = (
                 line if model_name == "stock.move.line" else line["move_line_id"]
             )
@@ -33,30 +33,55 @@ class LabelFishingReportMixin(models.AbstractModel):
         summarized_lines = []
         while lines:
             reference_line = lines[0]
-            filtered_lines = lines.filtered(
-                lambda line: line.product_id == reference_line.product_id
-                and line.result_package_id.master_box_id
-                == reference_line.result_package_id.master_box_id
-                and line.lot_id == reference_line.lot_id
-            )
-            lines -= filtered_lines
-            summarized_lines.append(
-                {
-                    "id": str(reference_line.lot_id.id)
-                    + str(reference_line.product_id.id)
-                    + str(reference_line.move_line_id.picking_id.id),
-                    "lot_id": reference_line.lot_id,
-                    "product_id": reference_line.product_id,
-                    "label_qty": reference_line.wizard_id.label_qty,
-                    "picking_partner_id": reference_line.move_line_id.picking_partner_id,
-                    "move_id": reference_line.move_line_id.move_id,
-                    "product_uom_id": reference_line.move_line_id.product_uom_id,
-                    "qty_done": sum(filtered_lines.mapped("quantity")),
-                    "result_package_id": reference_line.result_package_id,
-                    "result_package_ids": filtered_lines.mapped("result_package_id"),
-                    "move_line_id": reference_line.move_line_id,
-                }
-            )
+            if reference_line._name == "stock.quant":
+                filtered_quants = lines.filtered(
+                    lambda line: line.product_id == reference_line.product_id
+                    and line.package_id.master_box_id
+                    == reference_line.package_id.master_box_id
+                )
+                lines -= filtered_quants
+                summarized_lines.append(
+                    {
+                        "id": str(reference_line.product_id.id)
+                        + str(reference_line.package_id.master_box_id.id),
+                        "lot_id": reference_line.lot_id,
+                        "lot_ids": filtered_quants.lot_id,
+                        "product_id": reference_line.product_id,
+                        "product_uom_id": reference_line.product_uom_id,
+                        "qty_done": sum(filtered_quants.mapped("quantity")),
+                        "result_package_id": reference_line.package_id,
+                        "result_package_ids": filtered_quants.package_id,
+                        "master_box_id": reference_line.package_id.master_box_id,
+                    }
+                )
+            else:
+                picking_smls = reference_line.move_line_id.picking_id.move_line_ids
+                filtered_smls = picking_smls.filtered(
+                    lambda line: line.product_id == reference_line.product_id
+                    and line.result_package_id.master_box_id
+                    == reference_line.result_package_id.master_box_id
+                )
+                lines = lines.filtered(
+                    lambda line: line.move_line_id not in filtered_smls
+                )
+                summarized_lines.append(
+                    {
+                        "id": str(reference_line.product_id.id)
+                        + str(reference_line.result_package_id.master_box_id.id),
+                        "lot_id": reference_line.lot_id,
+                        "lot_ids": filtered_smls.lot_id,
+                        "product_id": reference_line.product_id,
+                        "label_qty": reference_line.label_qty,
+                        "picking_partner_id": reference_line.move_line_id.picking_partner_id,
+                        "move_id": reference_line.move_line_id.move_id,
+                        "product_uom_id": reference_line.move_line_id.product_uom_id,
+                        "qty_done": sum(filtered_smls.mapped("qty_done")),
+                        "result_package_id": reference_line.result_package_id,
+                        "result_package_ids": filtered_smls.result_package_id,
+                        "move_line_id": reference_line.move_line_id,
+                        "master_box_id": reference_line.result_package_id.master_box_id,
+                    }
+                )
         return summarized_lines
 
     @api.model
@@ -66,11 +91,19 @@ class LabelFishingReportMixin(models.AbstractModel):
         lines_to_print = self.env[model_name].browse(docids)
         report_langs = {}
         client_elaborations = {}
-        if self.based_model == "stock.picking.line.print":
-            wiz = lines_to_print[:1].wizard_id
-            if wiz.is_summary_label:
+        if model_name in ["stock.picking.line.print", "stock.quant.master.box"]:
+            if model_name == "stock.quant.master.box":
                 summarized = True
-                lines_to_print = self._get_summarized_lines(lines_to_print)
+                master_boxes = lines_to_print
+                quants = master_boxes.package_ids.quant_ids
+                lines_to_print = self._get_summarized_lines(quants)
+            else:
+                wiz = lines_to_print[:1].wizard_id
+                if wiz.barcode_report == self.env.ref(
+                    "stock_production_lot_fishing_label.action_label_master_box_report"
+                ):
+                    summarized = True
+                    lines_to_print = self._get_summarized_lines(lines_to_print)
         for line in lines_to_print:
             langs, client_el = self._compute_langs_print_partner(model_name, line)
             report_langs[line["id"]] = langs
@@ -116,6 +149,14 @@ class LabelFishingReportNutri(models.AbstractModel):
 
 
 # pylint: disable=R7980
+class LabelFishingReportMasterBox(models.AbstractModel):
+    _inherit = "label.fishing.report.mixin"
+    _name = "report.stock_production_lot_fishing_label.label_master_box"
+    _description = "Report Fishing Label"
+    based_model = "stock.picking.line.print"
+
+
+# pylint: disable=R7980
 class LabelFishingReportMove(models.AbstractModel):
     _inherit = "label.fishing.report.mixin"
     _name = "report.stock_production_lot_fishing_label.label_fishing_move"
@@ -129,3 +170,10 @@ class LabelFishingReportQuant(models.AbstractModel):
     _name = "report.stock_production_lot_fishing_label.label_fishing_quant"
     _description = "Report Fishing Label Quant"
     based_model = "stock.quant"
+
+
+class LabelFishingReportStockQuantMasterBox(models.AbstractModel):
+    _inherit = "label.fishing.report.mixin"
+    _name = "report.stock_production_lot_fishing_label.label_master_box_sqmb"
+    _description = "Report Fishing Label Master Box"
+    based_model = "stock.quant.master.box"

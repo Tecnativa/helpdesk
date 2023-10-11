@@ -32,7 +32,7 @@
             />
             <t
                 t-set="data_report_margin_top"
-                t-value="data_report_margin_top + 6 if summarized else data_report_margin_top"
+                t-value="data_report_margin_top - 1 if summarized else data_report_margin_top"
             />
             <t
                 t-set="data_report_header_spacing"
@@ -44,7 +44,7 @@
             />
             <t
                 t-set="data_report_header_spacing"
-                t-value="data_report_header_spacing + 6 if summarized else data_report_header_spacing"
+                t-value="data_report_header_spacing - 1 if summarized else data_report_header_spacing"
             />
             <t t-if="not o" t-set="o" t-value="doc" />
             <t
@@ -76,7 +76,7 @@
                 </div>
                 <div class="row" t-if="summarized">
                     <div class="col-12 text-right">
-                        <strong style="font-size: 19pt;">
+                        <strong style="font-size: 45pt;">
                             CAJA MASTER BOX
                         </strong>
                     </div>
@@ -109,22 +109,15 @@
                                 t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang=o['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
                             />
                         </div>
-                        <div t-if="summarized" style="font-size: 12pt">
-                            <span
-                                t-out="', '.join(o['result_package_ids'].mapped(lambda pack: pack.alias or pack.display_name))"
-                            />
-                        </div>
                     </div>
                 </div>
-                <i
-                    style="font-size: 16pt"
-                    t-if="summarized"
-                >Según etiqueta de la unidad de venta</i>
                 <t
                     t-set="precision"
                     t-value="env['decimal.precision'].precision_get('Product Unit of Measure')"
                 />
+                <div t-if="summarized" style="border-top: 1px solid black;" />
                 <table
+                    t-if="not summarized"
                     class="text-center"
                     style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 16pt;width:100%"
                 >
@@ -295,7 +288,7 @@
                             <div class="col">
                                 <t
                                     t-set="barcode"
-                                    t-value="'240' + o['product_id'].default_code + '10' + o['lot_id'].name"
+                                    t-value="'240' + o['product_id'].default_code + '10' + o['lot_id'].name if not summarized else o['master_box_id'].name"
                                 />
                                 <img
                                     t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
@@ -309,14 +302,14 @@
                                 style="text-align:center; font-size: 12pt;"
                             >
                                 <span
-                                    t-out="'(240)' + o['product_id'].default_code + '(10)' + o['lot_id'].name"
+                                    t-out="'(240)' + o['product_id'].default_code + '(10)' + o['lot_id'].name if not summarized else o['master_box_id'].name"
                                 />
                             </div>
                         </div>
                     </div>
                     <div class="col-2 text-center">
                         <strong
-                            t-if="doc_model != 'stock.quant'"
+                            t-if="doc_model != 'stock.quant' and not summarized"
                             style="font-size: 25pt"
                             t-out="o['result_package_id'].alias or o['result_package_id'].display_name"
                         />

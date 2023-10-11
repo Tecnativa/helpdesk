@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="label_fishing_master_box_traceability">
+        <span>Traceability</span>
+    </template>
+    <template id="label_fishing_master_box_ingredients">
+        <span>Ingredients</span>
+    </template>
+    <template id="label_fishing_master_box_conservation">
+        <span>Conservation</span>
+    </template>
+    <template id="label_fishing_master_box_how_to_use">
+        <span>How to use</span>
+    </template>
+    <template id="label_fishing_master_box_label">
+        <span>According to the sales unit label</span>
+    </template>
+    <template id="label_fishing_master_box_report_document">
+        <t t-call="stock_production_lot_fishing_label.basic_layout_fishing_label">
+            <t t-set="o" t-value="doc" />
+            <t t-set="langs" t-value="report_langs[doc['id']]" />
+            <t
+                t-set="count"
+                t-value="doc['label_qty'] if doc_model == 'stock.picking.line.print' else 1"
+            />
+            <t t-foreach="count" t-as="i">
+                <div class="page" style="font-size: 16pt;">
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>LOTS:</strong>
+                            <br />
+                            <span t-esc="', '.join([x.name for x in doc['lot_ids']])" />
+                            <br /><br />
+                            <strong>PACKAGES:</strong>
+                            <br />
+                            <span
+                                t-esc="', '.join([x.name for x in doc['result_package_ids']])"
+                            />
+                        </div>
+                        <div class="col-6">
+                            <strong>TOTAL NET WEIGHT:</strong>
+                            <br />
+                            <span t-esc="doc['qty_done']" />
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <strong t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_freezing"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </strong>
+                            <br />
+                            <strong t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_expiration"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </strong>
+                            <br />
+                            <strong t-foreach="langs" t-as="lang">
+                                <span
+                                    t-call="stock_production_lot_fishing_label.label_fishing_master_box_traceability"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </strong>
+                            <br />
+                            <strong t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_master_box_ingredients"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </strong>
+                            <br />
+                            <strong t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_master_box_conservation"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </strong>
+                            <br />
+                            <strong t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_master_box_how_to_use"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </strong>
+                        </div>
+                        <div class="col-6" style="font-size: 25pt;">
+                            <t t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_master_box_label"
+                                    t-lang="lang"
+                                />
+                                <br />
+                            </t>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="label_master_box">
+        <t t-foreach="docs" t-as="doc">
+            <t
+                t-call="stock_production_lot_fishing_label.label_fishing_master_box_report_document"
+            />
+        </t>
+    </template>
+    <template id="label_master_box_sqmb">
+        <t t-foreach="docs" t-as="doc">
+            <t
+                t-call="stock_production_lot_fishing_label.label_fishing_master_box_report_document"
+            />
+        </t>
+    </template>
+</odoo>

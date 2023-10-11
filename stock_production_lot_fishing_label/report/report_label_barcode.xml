@@ -16,7 +16,6 @@
             ref="stock_production_lot_fishing_label.paperformat_fishing_label"
         />
         <field name="is_barcode_label">True</field>
-        <field name="can_be_summarized">True</field>
         <field name="single_rendering">True</field>
     </record>
     <record id="action_label_fishing_move_report" model="ir.actions.report">
@@ -139,7 +138,43 @@ action = env.ref('stock_production_lot_fishing_label.action_label_fishing_move_r
             ref="stock_production_lot_fishing_label.paperformat_fishing_label"
         />
         <field name="is_barcode_label">True</field>
-        <field name="can_be_summarized">True</field>
         <field name="single_rendering">True</field>
+    </record>
+    <!--  Complete fishing labels MASTER BOX  -->
+    <record id="action_label_master_box_report" model="ir.actions.report">
+        <field name="name">Fishing Label Impresion Master Box</field>
+        <field name="model">stock.picking.line.print</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_file"
+        >stock_production_lot_fishing_label.label_master_box</field>
+        <field
+            name="report_name"
+        >stock_production_lot_fishing_label.label_master_box</field>
+        <field
+            name="paperformat_id"
+            ref="stock_production_lot_fishing_label.paperformat_fishing_label"
+        />
+        <field name="is_barcode_label">True</field>
+        <field name="single_rendering">True</field>
+    </record>
+    <record id="action_label_fishing_master_box_sqmb" model="ir.actions.report">
+        <field name="name">Fishing Label Impresion Master Box</field>
+        <field name="model">stock.quant.master.box</field>
+        <field
+            name="binding_model_id"
+            ref="stock_barcodes_master_box.model_stock_quant_master_box"
+        />
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_file"
+        >stock_production_lot_fishing_label.label_master_box_sqmb</field>
+        <field
+            name="report_name"
+        >stock_production_lot_fishing_label.label_master_box_sqmb</field>
+        <field
+            name="paperformat_id"
+            ref="stock_production_lot_fishing_label.paperformat_fishing_label"
+        />
     </record>
 </odoo>
