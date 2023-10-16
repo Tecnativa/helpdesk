@@ -17,3 +17,16 @@ class WizStockBarcodesReadTodo(models.TransientModel):
         ):
             return (line.location_id, line.product_id, line.lot_id, line.master_box_id)
         return key
+
+    def todo_values_after_hook(self, todo_vals):
+        for elem in todo_vals.values():
+            secondary_uom_id = elem.get("secondary_uom_id", False)
+            if secondary_uom_id:
+                secondary_uom = self.env["product.secondary.unit"].browse(
+                    secondary_uom_id
+                )
+                if secondary_uom.is_master_box:
+                    elem["secondary_uom_qty"] = (
+                        elem["product_uom_qty"] / secondary_uom.factor or 1.0
+                    )
+        return todo_vals
