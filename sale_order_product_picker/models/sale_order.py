@@ -39,6 +39,12 @@ class SaleOrder(models.Model):
         help="Filter products by attribute value",
         store=False,
     )
+    picker_order = fields.Selection(
+        selection=[
+            ("categ_id", "Category"),
+        ],
+        store=False,
+    )
     product_name_search = fields.Char(string="Search product", store=False)
 
     @api.model
@@ -114,10 +120,17 @@ class SaleOrder(models.Model):
             return None
         Product = self.env["product.product"]
         domain = self._get_picker_product_domain()
+        order = None
+        if self.picker_order:
+            order = self.picker_order
         if self.product_name_search:
             product_ids = Product._name_search(self.product_name_search, args=domain)
+            if order:
+                product_ids = Product.search(
+                    [("id", "in", product_ids)], order=order
+                ).ids
         else:
-            product_ids = Product.search(domain).ids
+            product_ids = Product.search(domain, order=order).ids
         return product_ids
 
     # TODO: Use field list instead overwrite method
@@ -126,7 +139,9 @@ class SaleOrder(models.Model):
             lambda sol: sol.product_id.id == picker_data["product_id"][0]
         )
 
-    @api.depends(lambda s: ["partner_id"] + s._get_picker_trigger_search_fields())
+    @api.depends(
+        lambda s: ["partner_id", "picker_order"] + s._get_picker_trigger_search_fields()
+    )
     def _compute_picker_ids(self):
         for order in self:
             product_ids = order._get_picker_product_ids()
@@ -189,7 +204,7 @@ class SaleOrder(models.Model):
             "is_in_order": bool(so_lines),
             "product_uom_qty": sum(so_lines.mapped("product_uom_qty")),
             "qty_delivered": group_line.get("qty_delivered", 0),
-            "times_delivered": group_line.get("product_id_count", 0),
+            "times_delivered": group_line.get("__count", 0),
         }
         return vals
 
@@ -202,20 +217,30 @@ class SaleOrder(models.Model):
 
     def _get_product_picker_data_sale_order(self):
         limit = self._get_product_picker_limit()
-        found_lines = self.env["sale.order.line"].read_group(
-            self._product_picker_data_sale_order_domain(),
-            ["product_id", "qty_delivered"],
-            ["product_id"],
-        )
         # Manual ordering that circumvents ORM limitations
-        found_lines = sorted(
-            found_lines,
-            key=lambda res: (
-                res["product_id_count"],
-                res["qty_delivered"],
-            ),
-            reverse=True,
-        )
+        if self.picker_order == "categ_id":
+            found_lines = self.env["sale.order.line"].read_group(
+                self._product_picker_data_sale_order_domain(),
+                ["product_id", "categ_id", "qty_delivered"],
+                ["product_id", "categ_id"],
+                lazy=False,
+            )
+            found_lines = sorted(found_lines, key=lambda res: res["categ_id"][0])
+        else:
+            found_lines = self.env["sale.order.line"].read_group(
+                self._product_picker_data_sale_order_domain(),
+                ["product_id", "qty_delivered"],
+                ["product_id"],
+                lazy=False,
+            )
+            found_lines = sorted(
+                found_lines,
+                key=lambda res: (
+                    res["__count"],
+                    res["qty_delivered"],
+                ),
+                reverse=True,
+            )
         return found_lines[:limit]
 
 
@@ -224,6 +249,9 @@ class SaleOrderLine(models.Model):
 
     list_price = fields.Float(related="product_id.list_price")
     is_different_price = fields.Boolean(compute="_compute_is_different_price")
+    categ_id = fields.Many2one(
+        "product.category", related="product_id.categ_id", store=True
+    )
 
     @api.depends("list_price", "price_unit")
     def _compute_is_different_price(self):
