@@ -23,6 +23,10 @@
                 t-set="count"
                 t-value="doc['label_qty'] if doc_model == 'stock.picking.line.print' else 1"
             />
+            <t
+                t-set="net_weight"
+                t-value="o['product_id'].weight_type != 'variable' and o['product_id'].net_weight or 1.0"
+            />
             <t t-foreach="count" t-as="i">
                 <div class="page" style="font-size: 16pt;">
                     <div class="row">
@@ -40,7 +44,7 @@
                         <div class="col-6">
                             <strong>TOTAL NET WEIGHT:</strong>
                             <br />
-                            <span t-esc="doc['qty_done']" />
+                            <span t-esc="doc['qty_done'] * net_weight" /> Kg
                         </div>
                     </div>
                     <div class="row mt-3">
