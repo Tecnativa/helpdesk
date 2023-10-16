@@ -29,27 +29,8 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         return sml
 
     def action_print_master_box(self):
-        # TODO: Definir lo se va a imprimir por defecto
+        # TODO: Mover desde donde se imprime ahora la etiqueta de master box
         pass
-        # report = self.picking_id.picking_type_id.default_label_report
-        # last_sml = self.picking_id.move_line_ids.sorted(key="write_date", reverse=True)[
-        #     :1
-        # ]
-        # wiz = (
-        #     self.env["stock.picking.print"]
-        #     .with_context(
-        #         stock_move_line_to_print=last_sml.id,
-        #         active_model="stock.picking",
-        #         active_ids=self.picking_id.ids,
-        #     )
-        #     .create(
-        #         {
-        #             "barcode_report": report.id,
-        #         }
-        #     )
-        # )
-        # wiz._onchange_picking_ids()
-        # return wiz.print_labels()
 
     def process_barcode_master_box_id(self):
         if self.env.context.get("force_master_box", False):
@@ -98,4 +79,7 @@ class WizStockBarcodesReadPicking(models.TransientModel):
                 )
         if sml_vals_list:
             self.env["stock.move.line"].create(sml_vals_list)
+        # Recalcular moves todo
+        # self.fill_todo_records()
+        # self._compute_todo_line_display_ids()
         return True
