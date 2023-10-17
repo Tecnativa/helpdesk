@@ -120,11 +120,10 @@ class SaleOrder(models.Model):
             return None
         Product = self.env["product.product"]
         domain = self._get_picker_product_domain()
-        order = None
-        if self.picker_order:
-            order = self.picker_order
+        order = self.picker_order or None
         if self.product_name_search:
             product_ids = Product._name_search(self.product_name_search, args=domain)
+            # Research to sort _name_search ids instead of browse sorted
             if order:
                 product_ids = Product.search(
                     [("id", "in", product_ids)], order=order
@@ -217,7 +216,6 @@ class SaleOrder(models.Model):
 
     def _get_product_picker_data_sale_order(self):
         limit = self._get_product_picker_limit()
-        # Manual ordering that circumvents ORM limitations
         if self.picker_order == "categ_id":
             found_lines = self.env["sale.order.line"].read_group(
                 self._product_picker_data_sale_order_domain(),
@@ -233,6 +231,7 @@ class SaleOrder(models.Model):
                 ["product_id"],
                 lazy=False,
             )
+            # Manual ordering that circumvents ORM limitations
             found_lines = sorted(
                 found_lines,
                 key=lambda res: (
