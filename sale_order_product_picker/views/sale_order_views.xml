@@ -196,6 +196,10 @@
                             name="picker_product_attribute_value_id"
                             options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
                         />
+                        <div>
+                            <label string="Order" for="picker_order" class="mx-3" />
+                            <field name="picker_order" widget="selection_badge" />
+                        </div>
                     </div>
                     <field name="picker_ids" limit="80">
                         <kanban class="o_picker_kanban">
@@ -246,10 +250,17 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-6 text-muted">
-                                                            Quantity: <field
-                                                                name="product_uom_qty"
-                                                            />
+                                                        <div class="col-6">
+                                                            <span class="text-muted">
+                                                                Quantity:
+                                                            </span>
+                                                            <span
+                                                                t-attf-class="#{record.product_uom_qty.raw_value ? 'font-weight-bold' : 'text-muted'}"
+                                                            >
+                                                                <field
+                                                                    name="product_uom_qty"
+                                                                />
+                                                            </span>
                                                         </div>
                                                         <!-- TODO: Use stock widget -->
                                                         <div
@@ -304,7 +315,9 @@
                                                             >
                                                                 <strong
                                                                     style="font-size: 1.2em"
-                                                                >+1</strong>
+                                                                >+1 <field
+                                                                        name="uom_id"
+                                                                    /></strong>
                                                             </button>
                                                         </div>
                                                     </div>

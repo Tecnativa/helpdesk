@@ -16,6 +16,7 @@ class SaleOrderPicker(models.Model):
     sale_line_id = fields.Many2one(comodel_name="sale.order.line")
     is_in_order = fields.Boolean()
     product_uom_qty = fields.Float(string="Quantity", digits="Product Unit of Measure")
+    uom_id = fields.Many2one(comodel_name="uom.uom", related="product_id.uom_id")
     qty_available = fields.Float(
         string="On Hand",
         digits="Product Unit of Measure",
@@ -26,6 +27,7 @@ class SaleOrderPicker(models.Model):
     price_unit = fields.Float(
         string="Unit Price", compute="_compute_price_unit", digits="Product Price"
     )
+    category_id = fields.Many2one("product.category", related="product_id.categ_id")
     currency_id = fields.Many2one(related="order_id.currency_id", depends=["order_id"])
     list_price = fields.Float(related="product_id.list_price")
     is_different_price = fields.Boolean(compute="_compute_is_different_price")
