@@ -26,6 +26,7 @@
         "report/report_fishing_label_master_box_template.xml",
         "report/report_fishing_label_template.xml",
         "report/report_label_barcode.xml",
+        "wizards/stock_barcode_selection_printing.xml",
     ],
     "assets": {
         "web.report_assets_common": [
