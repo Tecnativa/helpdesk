@@ -83,3 +83,13 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         # self.fill_todo_records()
         # self._compute_todo_line_display_ids()
         return True
+
+    def action_mass_move_lines(self):
+        ctx = dict(self.env.context, default_stock_barcode_wiz_id=self.id)
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "wiz.stock.barcodes.new.move.lines",
+            "view_mode": "form",
+            "target": "new",
+            "context": ctx,
+        }

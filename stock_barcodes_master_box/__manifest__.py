@@ -18,6 +18,7 @@
         "views/product_views.xml",
         "views/stock_quant_package_views.xml",
         "views/stock_quant_master_box_views.xml",
+        "wizard/stock_barcodes_new_move_line_views.xml",
         "wizard/stock_barcodes_read_picking_views.xml",
     ],
     "installable": True,

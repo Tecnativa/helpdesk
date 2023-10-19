@@ -1,0 +1,55 @@
+<odoo>
+    <record id="stock_barcodes_new_move_line_wiz" model="ir.ui.view">
+        <field name="name">wiz.stock.barcodes.new.move.lines.form</field>
+        <field name="model">wiz.stock.barcodes.new.move.lines</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="stock_barcode_wiz_id" invisible="1" />
+                    <field name="product_id" options="{'no_open': True}" />
+                    <label for="product_uom_qty_pending" string="Pending Qty" />
+                    <div>
+                        <field name="product_uom_qty_pending" />
+                        <span> - </span>
+                        <field name="product_uom" options="{'no_open': True}" />
+                    </div>
+                </group>
+                <group>
+                    <field
+                        name="product_uom_qty"
+                        widget="numeric_step"
+                        options="{'auto_select': True}"
+                    />
+                    <field
+                        name="package_qty"
+                        widget="numeric_step"
+                        options="{'auto_select': True}"
+                    />
+                    <field
+                        name="master_box_qty"
+                        widget="numeric_step"
+                        options="{'auto_select': True}"
+                    />
+                </group>
+                <group string="Result">
+                    <field name="total_packages" />
+                    <field name="total_master_box" />
+                </group>
+                <footer>
+                    <button
+                        name="action_confirm"
+                        type="object"
+                        string="Confirm"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" special="cancel" class="btn-secondary" />
+                    <label
+                        for="print_master_box_label"
+                        string="Print master box label"
+                    />
+                    <field name="print_master_box_label" widget="boolean_toggle" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

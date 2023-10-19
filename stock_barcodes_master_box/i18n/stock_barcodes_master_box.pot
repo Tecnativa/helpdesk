@@ -1,0 +1,273 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_barcodes_master_box
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-19 19:22+0000\n"
+"PO-Revision-Date: 2023-10-19 19:22+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_barcodes_read_picking_form
+msgid ""
+"<strong class=\"d-none d-sm-block\">Master Box</strong>\n"
+"                        <span class=\"fa fa-object-group d-sm-none oe_span_small_icon\" title=\"Master Box\"/>"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__active
+msgid "Active"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_barcodes_read_picking_form
+msgid "All content will be added to lines. Are you sure?"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.stock_barcodes_new_move_line_wiz
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_barcodes_read_picking_form
+msgid "Clean master box info"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.stock_barcodes_new_move_line_wiz
+msgid "Confirm"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_quant_master_box_form
+msgid "Content"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_barcodes_read_picking_form
+msgid "Create master box"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__create_uid
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__create_date
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__display_name
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_wiz_stock_barcodes_new_move_lines
+msgid "Generate new stock move lines according a wizard values"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__id
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_product_secondary_unit__is_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_move__is_master_box
+msgid "Is Master Box"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box____last_update
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__write_uid
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__write_date
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_barcodes_read_picking_form
+msgid "Mass master box creation"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_move_line__master_box_id
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_package__master_box_id
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_read_picking__master_box_id
+msgid "Master Box"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_stock_quant_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_quant_master_box_form
+msgid "Master box"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: code:addons/stock_barcodes_master_box/wizard/stock_barcodes_read_picking.py:0
+#, python-format
+msgid "Master box contains other product"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: code:addons/stock_barcodes_master_box/wizard/stock_barcodes_read_picking.py:0
+#, python-format
+msgid "Master box not fount"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__name
+msgid "Master box ref."
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_barcodes_read_picking_form
+msgid "Master box:"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.actions.act_window,name:stock_barcodes_master_box.action_quant_master_box_view
+#: model:ir.ui.menu,name:stock_barcodes_master_box.menu_quant_master_box
+msgid "Master boxes"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_stock_quant_master_box__package_ids
+msgid "Package"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_stock_quant_package
+msgid "Packages"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__master_box_qty
+msgid "Packages by master box"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__product_uom_qty_pending
+msgid "Pending Qty"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__print_master_box_label
+msgid "Print Master Box Label"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_barcodes_read_picking_form
+msgid "Print master box label"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_barcodes_read_picking_form
+msgid "Process master box content"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__product_uom_qty
+msgid "Product Qty"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_product_secondary_unit
+msgid "Product Secondary Unit"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__package_qty
+msgid "Quantity per package"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_stock_quant
+msgid "Quants"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.stock_barcodes_new_move_line_wiz
+msgid "Result"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__stock_barcode_wiz_id
+msgid "Stock Barcode Wiz"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__total_master_box
+msgid "Total Master Box"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model.fields,field_description:stock_barcodes_master_box.field_wiz_stock_barcodes_new_move_lines__total_packages
+msgid "Total Packages"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: code:addons/stock_barcodes_master_box/models/stock_quant_master_box.py:0
+#, python-format
+msgid "Unknown Master Box"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_wiz_stock_barcodes_read_picking
+msgid "Wizard to read barcode on picking"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model:ir.model,name:stock_barcodes_master_box.model_wiz_stock_barcodes_read_todo
+msgid "Wizard to read barcode todo"
+msgstr ""
+
+#. module: stock_barcodes_master_box
+#: model_terms:ir.ui.view,arch_db:stock_barcodes_master_box.view_stock_quant_master_box_form
+msgid "e.g. MB0000007"
+msgstr ""

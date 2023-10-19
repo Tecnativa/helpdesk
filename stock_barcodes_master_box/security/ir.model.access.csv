@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_stock_quant_master_box_user,stock.quant.master.box user,model_stock_quant_master_box,base.group_user,1,0,0,0
 access_stock_quant_master_box_stock_user,stock.quant.master.box stock user,model_stock_quant_master_box,stock.group_stock_user,1,1,1,1
+stock_barcodes_master_box.access_wiz_stock_barcodes_new_move_lines,access_wiz_stock_barcodes_new_move_lines,stock_barcodes_master_box.model_wiz_stock_barcodes_new_move_lines,base.group_user,1,1,1,1

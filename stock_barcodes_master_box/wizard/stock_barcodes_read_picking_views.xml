@@ -56,6 +56,13 @@
                             confirm="All content will be added to lines. Are you sure?"
                             context="{'force_master_box': True}"
                         />
+                        <button
+                            class="btn btn-primary btn-sm oe_kanban_action_button pull-right mr4"
+                            name="action_mass_move_lines"
+                            type="object"
+                            icon="fa-cogs fa-1x"
+                            title="Mass master box creation"
+                        />
                     </div>
                 </group>
             </xpath>
