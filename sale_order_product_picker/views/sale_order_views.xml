@@ -315,9 +315,15 @@
                                                             >
                                                                 <strong
                                                                     style="font-size: 1.2em"
-                                                                >+1 <field
+                                                                >+1 </strong>
+                                                                <br />
+                                                                <strong
+                                                                    style="font-size: 0.8em"
+                                                                >
+                                                                    <field
                                                                         name="uom_id"
-                                                                    /></strong>
+                                                                    />
+                                                                </strong>
                                                             </button>
                                                         </div>
                                                     </div>
