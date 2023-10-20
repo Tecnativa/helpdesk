@@ -13,6 +13,7 @@
     "depends": [
         "company_sanitary_registry",
         "product_drained_weight",
+        "product_expiry",
         "sale_elaboration",
         "stock_barcodes_master_box",
         "stock_production_lot_fishing_info",
