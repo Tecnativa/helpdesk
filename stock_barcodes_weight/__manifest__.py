@@ -9,8 +9,7 @@
     "license": "AGPL-3",
     "category": "Extra Tools",
     "depends": [
-        "stock_barcodes",
-        "stock_secondary_unit",
+        "stock_barcodes_gs1_secondary_unit",
         "product_attribute_value_range",
         "stock_picking_product_change",
     ],

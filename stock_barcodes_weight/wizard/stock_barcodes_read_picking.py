@@ -38,9 +38,10 @@ class WizStockBarcodesReadPicking(models.TransientModel):
 
     def check_done_conditions(self):
         res = super().check_done_conditions()
-        if res:
+        if res and self.secondary_uom_id and self.secondary_uom_qty:
+            unitary_weight = self.product_qty / (self.secondary_uom_qty or 1.0)
             recommended_product = self._get_product_by_caliber(
-                self.product_id, self.product_qty
+                self.product_id, unitary_weight
             )
             if recommended_product != self.product_id and not self.env.context.get(
                 "force_create_move", False
