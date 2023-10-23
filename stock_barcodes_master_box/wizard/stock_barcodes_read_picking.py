@@ -1,6 +1,7 @@
 # Copyright 2023 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from odoo import _, fields, models
+from odoo.exceptions import UserError
 
 
 class WizStockBarcodesReadPicking(models.TransientModel):
@@ -85,6 +86,8 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         return True
 
     def action_mass_move_lines(self):
+        if not self.product_id:
+            raise UserError(_("There is no product readed"))
         ctx = dict(self.env.context, default_stock_barcode_wiz_id=self.id)
         return {
             "type": "ir.actions.act_window",
