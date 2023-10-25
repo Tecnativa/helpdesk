@@ -32,10 +32,15 @@
                 t-value="show_nutritional_table or product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_f')"
             />
             <div
-                t-att-class="'col-6' if show_nutritional_table else 'col-12'"
+                t-att-class="'col-9' if show_nutritional_table else 'col-12'"
                 id="conservation"
             />
-            <div class="col-6" id="nutritional_table" t-if="show_nutritional_table">
+            <div
+                style="font-size: 10pt"
+                class="col-3 pt-1"
+                id="nutritional_table"
+                t-if="show_nutritional_table"
+            >
                 <t t-call="nutritional_info.nutritional_info_table">
                     <t t-set="main_object" t-value="lot" />
                     <t t-set="alt_object" t-value="product" />
@@ -55,153 +60,451 @@
             <t t-foreach="count" t-as="i">
                 <div class="page" style="font-size: 16pt;">
                     <t t-set="langs" t-value="report_langs[doc['id']]" />
-                    <div class="row" id="scientific_name">
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_scientific"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <i t-field="product.scientific_name_ids[:1].name" />
-                        </div>
-                    </div>
-                    <div class="row" id="fishing_zone">
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_fish_zone"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <span
-                                    t-field="lot.fao_fishing_area_id.with_context(lang=lang).name"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                    </div>
-                    <div class="row" id="production_method">
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_production_method"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <span
-                                    t-field="lot.harvesting_id.with_context(lang=lang).name"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                    </div>
-                    <div class="row" id="fishing_art">
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_fishing_art"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <span
-                                    t-field="lot.fao_fishing_technique_id.with_context(lang=lang).name"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                    </div>
-                    <div class="row" id="boat">
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_boat"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <span t-field="lot.fishing_ship_id.name" />
-                        </div>
-                    </div>
-                    <div class="row" id="origin">
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_origin"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <span
-                                    t-field="lot.country_id.with_context(lang=lang).name"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                    </div>
-                    <div class="row" id="presentation">
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_presentation"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <span
-                                    t-field="lot.presentation_id.with_context(lang=lang).name"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                    </div>
-                    <div class="row" id="keep_at">
-                        <div class="col-6">
-                            <t t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_keep_at"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <span
-                                t-out="', '.join(product.preservation_condition_ids.mapped('name'))"
-                            />
-                        </div>
-                    </div>
-                    <t
-                        t-if="use_second_page or product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_f')"
-                    >
-                        <p style="page-break-before:always;" />
-                        <t
-                            t-call="stock_production_lot_fishing_label.label_fishing_report_document_nutrition_facts"
-                        />
-                    </t>
+                    <table style="width: 100%">
+                        <thead>
+                            <tr t-if="show_client_elaborations">
+                                <td class="text-center">
+                                    <strong
+                                        style="font-size: 18pt;"
+                                        t-if="doc_model != 'stock.quant'"
+                                        t-field="doc['picking_partner_id'].display_name"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t t-foreach="langs" t-as="lang">
+                                        <strong
+                                            t-attf-style="font-size: {{'12pt' if lang_index &gt; 1 else '20pt'}}; display: block; line-height:100%"
+                                            t-field="product.with_context(lang=lang).name"
+                                        />
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td
+                                    class="text-right"
+                                    style="font-size: 13pt;"
+                                    id="extra_heading"
+                                >
+                                    <div
+                                        t-if="show_client_elaborations and doc_model != 'stock.quant' and doc['move_id'].elaboration_ids"
+                                    >
+                                        <i
+                                            t-out="', '.join(doc['move_id'].elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
+                                        />
+                                        <br />
+                                        <i
+                                            t-out="', '.join(doc['move_id'].elaboration_ids.with_context(lang=doc['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t
+                                        t-set="precision"
+                                        t-value="env['decimal.precision'].precision_get('Product Unit of Measure')"
+                                    />
+                                    <table
+                                        class="text-center"
+                                        style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 16pt;width:100%"
+                                    >
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <t t-foreach="langs" t-as="lang">
+                                                        <t
+                                                            t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_freezing"
+                                                            t-lang="lang"
+                                                        />
+                                                        <span
+                                                            t-if="lang != langs[-1]"
+                                                        > / </span>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <t t-foreach="langs" t-as="lang">
+                                                        <t
+                                                            t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_expiration"
+                                                            t-lang="lang"
+                                                        />
+                                                        <span
+                                                            t-if="lang != langs[-1]"
+                                                        > / </span>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <t t-foreach="langs" t-as="lang">
+                                                        <t
+                                                            t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_lot_num"
+                                                            t-lang="lang"
+                                                        />
+                                                        <span
+                                                            t-if="lang != langs[-1]"
+                                                        > / </span>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <t t-foreach="langs" t-as="lang">
+                                                        <t
+                                                            t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_net_weight"
+                                                            t-lang="lang"
+                                                        />
+                                                        <span
+                                                            t-if="lang != langs[-1]"
+                                                        > / </span>
+                                                    </t>
+                                                </td>
+                                                <td
+                                                    t-if="not float_is_zero(product.drained_weight, precision_digits=precision)"
+                                                >
+                                                    <t t-foreach="langs" t-as="lang">
+                                                        <t
+                                                            t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_drained_weight"
+                                                            t-lang="lang"
+                                                        />
+                                                        <span
+                                                            t-if="lang != langs[-1]"
+                                                        > / </span>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <strong
+                                                        t-field="lot.packaging_date"
+                                                        t-options='{"widget": "date"}'
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <strong
+                                                        t-field="lot.expiration_date"
+                                                        t-options='{"widget": "date"}'
+                                                    />
+                                                </td>
+                                                <td><strong
+                                                        t-field="lot.display_name"
+                                                    /></td>
+                                                <t
+                                                    t-set="uom"
+                                                    t-value="doc['product_uom_id'] if doc_model != 'stock.picking.line.print' else doc['uom_id']"
+                                                />
+                                                <td>
+                                                    <t
+                                                        t-if="uom.category_id == env.ref('uom.product_uom_categ_kgm')"
+                                                    >
+                                                        <strong
+                                                            t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
+                                                            t-out="doc['quantity']"
+                                                        />
+                                                        <strong
+                                                            t-else=""
+                                                            t-out="doc['qty_done']"
+                                                        />
+                                                        <strong
+                                                            t-field="uom.display_name"
+                                                        />
+                                                    </t>
+                                                    <t t-else="">
+                                                        <strong
+                                                            t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
+                                                            t-out="doc['quantity'] * product.net_weight"
+                                                        />
+                                                        <strong
+                                                            t-else=""
+                                                            t-out="doc['qty_done'] * product.net_weight"
+                                                        />
+                                                        <strong
+                                                            t-field="product.weight_uom_name"
+                                                        />
+                                                    </t>
+                                                </td>
+                                                <td
+                                                    t-if="not float_is_zero(product.drained_weight, precision_digits=precision)"
+                                                >
+                                                    <t
+                                                        t-if="uom.category_id == env.ref('uom.product_uom_categ_kgm')"
+                                                    >
+                                                        <strong
+                                                            t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
+                                                            t-out="doc['quantity'] * (product.drained_weight / product.net_weight)"
+                                                        />
+                                                        <strong
+                                                            t-else=""
+                                                            t-out="doc['qty_done'] * (product.drained_weight / product.net_weight)"
+                                                        />
+                                                        <strong
+                                                            t-field="uom.display_name"
+                                                        />
+                                                    </t>
+                                                    <t t-else="">
+                                                        <strong
+                                                            t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
+                                                            t-out="doc['quantity'] * product.drained_weight"
+                                                        />
+                                                        <strong
+                                                            t-else=""
+                                                            t-out="doc['qty_done'] * product.drained_weight"
+                                                        />
+                                                        <strong
+                                                            t-field="product.weight_uom_name"
+                                                        />
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="row" id="scientific_name">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_scientific"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <strong><i
+                                                    t-field="product.scientific_name_ids[:1].name"
+                                                /></strong>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row" id="fishing_zone">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_fish_zone"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <t t-foreach="langs" t-as="lang">
+                                                <strong>
+                                                    <span
+                                                        t-field="lot.fao_fishing_area_id.with_context(lang=lang).name"
+                                                    />
+                                                    <span
+                                                        t-if="lang != langs[-1]"
+                                                    > / </span>
+                                                </strong>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row" id="production_method">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_production_method"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <t t-foreach="langs" t-as="lang">
+                                                <strong>
+                                                    <span
+                                                        t-field="lot.harvesting_id.with_context(lang=lang).name"
+                                                    />
+                                                    <span
+                                                        t-if="lang != langs[-1]"
+                                                    > / </span>
+                                                </strong>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row" id="fishing_art">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_fishing_art"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <t t-foreach="langs" t-as="lang">
+                                                <strong>
+                                                    <span
+                                                        t-field="lot.fao_fishing_technique_id.with_context(lang=lang).name"
+                                                    />
+                                                    <span
+                                                        t-if="lang != langs[-1]"
+                                                    > / </span>
+                                                </strong>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row" id="boat">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_boat"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <strong
+                                                t-field="lot.fishing_ship_id.name"
+                                            />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row" id="origin">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_origin"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <t t-foreach="langs" t-as="lang">
+                                                <strong>
+                                                    <span
+                                                        t-field="lot.country_id.with_context(lang=lang).name"
+                                                    />
+                                                    <span
+                                                        t-if="lang != langs[-1]"
+                                                    > / </span>
+                                                </strong>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row" id="presentation">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_presentation"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <t t-foreach="langs" t-as="lang">
+                                                <strong>
+                                                    <span
+                                                        t-field="lot.presentation_id.with_context(lang=lang).name"
+                                                    />
+                                                    <span
+                                                        t-if="lang != langs[-1]"
+                                                    > / </span>
+                                                </strong>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row" id="keep_at">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_keep_at"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <strong
+                                                t-out="', '.join(product.preservation_condition_ids.mapped('name'))"
+                                            />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td
+                                    t-if="use_second_page or product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_f')"
+                                >
+                                    <t
+                                        t-call="stock_production_lot_fishing_label.label_fishing_report_document_nutrition_facts"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <p style="page-break-before:always;" />
                 </div>
             </t>

@@ -2,7 +2,7 @@
 <odoo>
     <template id="basic_layout_fishing_label_freezing">
         <span
-            t-if="env.ref('product_fishing.product_gamma_c') in o['product_id'].gamma_ids"
+            t-if="env.ref('product_fishing.product_gamma_c') in doc['product_id'].gamma_ids"
         >Freezing</span>
         <span t-else="">Packed</span>
     </template>
@@ -25,32 +25,7 @@
                 t-value="client_elaborations[doc['id']]"
             />
             <t t-set="langs" t-value="report_langs[doc['id']]" />
-            <t t-set="data_report_margin_top" t-value="30 if len(langs) == 4 else 21" />
-            <t
-                t-set="data_report_margin_top"
-                t-value="data_report_margin_top + 3 if show_client_elaborations else data_report_margin_top"
-            />
-            <t
-                t-set="data_report_margin_top"
-                t-value="data_report_margin_top - 1 if summarized else data_report_margin_top"
-            />
-            <t
-                t-set="data_report_header_spacing"
-                t-value="30 if len(langs) == 4 else 21"
-            />
-            <t
-                t-set="data_report_header_spacing"
-                t-value="data_report_header_spacing + 3 if show_client_elaborations else data_report_header_spacing"
-            />
-            <t
-                t-set="data_report_header_spacing"
-                t-value="data_report_header_spacing - 1 if summarized else data_report_header_spacing"
-            />
             <t t-if="not o" t-set="o" t-value="doc" />
-            <t
-                t-set="o"
-                t-value="o['move_line_id'] if doc_model == 'stock.picking.line.print' and not summarized else o"
-            />
             <t t-if="not company">
                 <!-- Multicompany -->
                 <t t-if="company_id">
@@ -63,189 +38,6 @@
                     <t t-set="company" t-value="res_company" />
                 </t>
             </t>
-            <!-- Header -->
-            <div class="header">
-                <div class="row">
-                    <div class="col-12 text-center" t-if="show_client_elaborations">
-                        <strong
-                            style="font-size: 18pt;"
-                            t-if="doc_model != 'stock.quant'"
-                            t-field="o['picking_partner_id'].display_name"
-                        />
-                    </div>
-                </div>
-                <div class="row" t-if="summarized">
-                    <div class="col-12 text-right">
-                        <strong style="font-size: 45pt;">
-                            CAJA MASTER BOX
-                        </strong>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <t t-foreach="langs" t-as="lang">
-                            <strong
-                                style="font-size: 20pt;"
-                                t-field="o['product_id'].with_context(lang=lang).name"
-                            />
-                            <br t-if="lang != langs[-1]" />
-                        </t>
-                    </div>
-                </div>
-                <div class="row">
-                    <div
-                        class="col-12 text-right"
-                        style="font-size: 13pt;"
-                        id="extra_heading"
-                    >
-                        <div
-                            t-if="show_client_elaborations and doc_model != 'stock.quant' and o['move_id'].elaboration_ids"
-                        >
-                            <i
-                                t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
-                            />
-                            <br />
-                            <i
-                                t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang=o['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <t
-                    t-set="precision"
-                    t-value="env['decimal.precision'].precision_get('Product Unit of Measure')"
-                />
-                <div t-if="summarized" style="border-top: 1px solid black;" />
-                <table
-                    t-if="not summarized"
-                    class="text-center"
-                    style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 16pt;width:100%"
-                >
-                    <tbody>
-                        <tr>
-                            <td>
-                                <t t-foreach="langs" t-as="lang">
-                                    <t
-                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_freezing"
-                                        t-lang="lang"
-                                    />
-                                    <span t-if="lang != langs[-1]"> / </span>
-                                </t>
-                            </td>
-                            <td>
-                                <t t-foreach="langs" t-as="lang">
-                                    <t
-                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_expiration"
-                                        t-lang="lang"
-                                    />
-                                    <span t-if="lang != langs[-1]"> / </span>
-                                </t>
-                            </td>
-                            <td>
-                                <t t-foreach="langs" t-as="lang">
-                                    <t
-                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_lot_num"
-                                        t-lang="lang"
-                                    />
-                                    <span t-if="lang != langs[-1]"> / </span>
-                                </t>
-                            </td>
-                            <td>
-                                <t t-foreach="langs" t-as="lang">
-                                    <t
-                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_net_weight"
-                                        t-lang="lang"
-                                    />
-                                    <span t-if="lang != langs[-1]"> / </span>
-                                </t>
-                            </td>
-                            <td
-                                t-if="not float_is_zero(o['product_id'].drained_weight, precision_digits=precision)"
-                            >
-                                <t t-foreach="langs" t-as="lang">
-                                    <t
-                                        t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_drained_weight"
-                                        t-lang="lang"
-                                    />
-                                    <span t-if="lang != langs[-1]"> / </span>
-                                </t>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <!-- TODO: Freezing date -->
-                                <strong
-                                    t-field="o['lot_id'].packaging_date"
-                                    t-options='{"widget": "date"}'
-                                />
-                            </td>
-                            <td>
-                                <strong
-                                    t-field="o['lot_id'].expiration_date"
-                                    t-options='{"widget": "date"}'
-                                />
-                            </td>
-                            <td><strong t-field="o['lot_id'].display_name" /></td>
-                            <td>
-                                <t
-                                    t-if="o['product_uom_id'].category_id == env.ref('uom.product_uom_categ_kgm')"
-                                >
-                                    <strong
-                                        t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
-                                        t-out="doc['quantity']"
-                                    />
-                                    <strong t-else="" t-out="o['qty_done']" />
-                                    <strong
-                                        t-field="o['product_uom_id'].display_name"
-                                    />
-                                </t>
-                                <t t-else="">
-                                    <strong
-                                        t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
-                                        t-out="doc['quantity'] * o['product_id'].net_weight"
-                                    />
-                                    <strong
-                                        t-else=""
-                                        t-out="o['qty_done'] * o['product_id'].net_weight"
-                                    />
-                                    <strong t-field="o['product_id'].weight_uom_name" />
-                                </t>
-                            </td>
-                            <td
-                                t-if="not float_is_zero(o['product_id'].drained_weight, precision_digits=precision)"
-                            >
-                                <t
-                                    t-if="o['product_uom_id'].category_id == env.ref('uom.product_uom_categ_kgm')"
-                                >
-                                    <!-- TODO: Asegurarse del cálculo -->
-                                    <strong
-                                        t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
-                                        t-out="doc['quantity'] * (o['product_id'].drained_weight / o['product_id'].net_weight)"
-                                    />
-                                    <strong
-                                        t-else=""
-                                        t-out="o['qty_done'] * (o['product_id'].drained_weight / o['product_id'].net_weight)"
-                                    />
-                                    <strong
-                                        t-field="o['product_uom_id'].display_name"
-                                    />
-                                </t>
-                                <t t-else="">
-                                    <strong
-                                        t-if="doc_model == 'stock.quant'"
-                                        t-out="o['quantity'] * o['product_id'].drained_weight"
-                                    />
-                                    <strong
-                                        t-else=""
-                                        t-out="o['qty_done'] * o['product_id'].drained_weight"
-                                    />
-                                    <strong t-field="o['product_id'].weight_uom_name" />
-                                </t>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             <!-- Content -->
             <div
                 class="article"
@@ -285,15 +77,11 @@
                     </div>
                     <div class="col-5">
                         <div class="row pl-3">
-                            <div class="col">
-                                <t
-                                    t-set="barcode"
-                                    t-value="'240' + o['product_id'].default_code + '10' + o['lot_id'].name if not summarized else o['master_box_id'].name"
-                                />
-                                <img
-                                    t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
-                                    style="width:100%;height:60px"
-                                />
+                            <div
+                                class="col"
+                                t-field="doc.barcode"
+                                t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:75px;', 'img_align': 'center'}"
+                            >
                             </div>
                         </div>
                         <div class="row pl-3">
@@ -301,9 +89,7 @@
                                 class="col"
                                 style="text-align:center; font-size: 12pt;"
                             >
-                                <span
-                                    t-out="'(240)' + o['product_id'].default_code + '(10)' + o['lot_id'].name if not summarized else o['master_box_id'].name"
-                                />
+                                <span t-field="doc.barcode_human_readable" />
                             </div>
                         </div>
                     </div>
