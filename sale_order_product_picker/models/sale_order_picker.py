@@ -17,6 +17,7 @@ class SaleOrderPicker(models.Model):
     is_in_order = fields.Boolean()
     product_uom_qty = fields.Float(string="Quantity", digits="Product Unit of Measure")
     uom_id = fields.Many2one(comodel_name="uom.uom", related="product_id.uom_id")
+    unit_name = fields.Char(compute="_compute_unit_name")
     qty_available = fields.Float(
         string="On Hand",
         digits="Product Unit of Measure",
@@ -146,3 +147,12 @@ class SaleOrderPicker(models.Model):
             line.is_different_price = bool(
                 float_compare(line.price_unit, line.list_price, precision_digits=digits)
             )
+
+    @api.depends("product_id")
+    def _compute_unit_name(self):
+        secondary_unit_installed = "sale_secondary_uom_id" in self.product_id._fields
+        for line in self:
+            if secondary_unit_installed and line.product_id.sale_secondary_uom_id:
+                line.unit_name = line.product_id.sale_secondary_uom_id.display_name
+            else:
+                line.unit_name = line.product_id.uom_id.name

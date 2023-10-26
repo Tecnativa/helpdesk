@@ -320,7 +320,7 @@
                                                                     style="font-size: 0.8em"
                                                                 >
                                                                     <field
-                                                                        name="uom_id"
+                                                                        name="unit_name"
                                                                     />
                                                                 </strong>
                                                             </button>
