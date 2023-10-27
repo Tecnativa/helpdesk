@@ -11,7 +11,6 @@
     "installable": True,
     "depends": ["product"],
     "data": [
-        "data/product_allergen_data.xml",
         "data/product_gamma_data.xml",
         "data/product_fishing_scientific_name.xml",
         "data/product_harvesting_data.xml",

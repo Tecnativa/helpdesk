@@ -19,9 +19,6 @@ class ProductTemplate(models.Model):
         comodel_name="product.attribute.value",
         compute="_compute_gamma_ids",
     )
-    allergens_ids = fields.Many2many(
-        comodel_name="product.attribute.value", compute="_compute_allergens_ids"
-    )
     production_method_ids = fields.Many2many(
         comodel_name="product.attribute.value", compute="_compute_production_method_ids"
     )
@@ -65,11 +62,6 @@ class ProductTemplate(models.Model):
     def _compute_gamma_ids(self):
         self._set_attribute_values(
             "product_fishing.product_gamma_attribute", "gamma_ids"
-        )
-
-    def _compute_allergens_ids(self):
-        self._set_attribute_values(
-            "product_fishing.product_allergens_attribute", "allergens_ids"
         )
 
     def _compute_production_method_ids(self):
