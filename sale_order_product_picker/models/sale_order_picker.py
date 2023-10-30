@@ -72,10 +72,14 @@ class SaleOrderPicker(models.Model):
         """
         Get product price unit from product list price or from last sale price
         """
-        price_origin = fields.first(self).order_id.picker_price_origin or "pricelist"
+        sale_order = fields.first(self).order_id
+        price_origin = sale_order.picker_price_origin or "pricelist"
+        use_delivery_address = sale_order.use_delivery_address
         for line in self:
             if price_origin == "last_sale_price":
-                line.price_unit = line._get_last_sale_price_product()
+                line.price_unit = line._get_last_sale_price_product(
+                    use_delivery_address
+                )
             else:
                 line.price_unit = line.product_id.with_context(
                     **line._get_picker_price_unit_context()
@@ -96,22 +100,32 @@ class SaleOrderPicker(models.Model):
             line.display_qty_widget = True
             line.state = "draft"
 
-    def _get_last_sale_price_product(self):
+    def _get_last_sale_price_product(self, use_delivery_address=False):
         """
         Get last price from last order.
         Use sudo to read sale order from other users like as other commercials.
         """
         self.ensure_one()
+        domain = [
+            ("company_id", "=", self.order_id.company_id.id),
+            ("state", "not in", ("draft", "sent", "cancel")),
+            ("product_id", "=", self.product_id.id),
+        ]
+        if use_delivery_address:
+            domain.append(
+                (
+                    "order_id.partner_shipping_id",
+                    "=",
+                    self.order_id.partner_shipping_id.id,
+                )
+            )
+        else:
+            domain.append(("order_partner_id", "=", self.order_id.partner_id.id))
         so_line = (
             self.env["sale.order.line"]
             .sudo()
             .search(
-                [
-                    ("company_id", "=", self.order_id.company_id.id),
-                    ("order_partner_id", "=", self.order_id.partner_id.id),
-                    ("state", "not in", ("draft", "sent", "cancel")),
-                    ("product_id", "=", self.product_id.id),
-                ],
+                domain,
                 limit=1,
                 order="id DESC",
             )
