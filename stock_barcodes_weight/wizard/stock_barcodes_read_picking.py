@@ -62,6 +62,11 @@ class WizStockBarcodesReadPicking(models.TransientModel):
             lambda ln: ln.product_id == self.recommended_product_id
         )
         if not moves:
+            if not self.selected_pending_move_id:
+                self._set_messagge_info("more_match", _("Select a pending move"))
+                self.visible_change_product = False
+                self.visible_force_done = False
+                return False
             move = self.selected_pending_move_id.stock_move_ids[:1]
             wiz = self.env["stock.picking.product.change.wiz"].create(
                 {
@@ -98,11 +103,17 @@ class WizStockBarcodesReadPicking(models.TransientModel):
                 )
             self.lot_id = lot
         self.product_id = self.recommended_product_id
+        self.secondary_uom_id = self.recommended_product_id.secondary_uom_ids[:1]
         self.fill_todo_records()
         self.todo_line_id = self.todo_line_ids.filtered(
             lambda t: t._origin.state == "pending"
             and t.product_id == self.recommended_product_id
         )[:1]
         res = self.with_context(force_create_move=True).action_confirm()
+        self.visible_change_product = False
+        return res
+
+    def action_clean_values(self):
+        res = super().action_clean_values()
         self.visible_change_product = False
         return res
