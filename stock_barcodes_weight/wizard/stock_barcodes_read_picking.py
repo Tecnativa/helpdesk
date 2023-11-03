@@ -109,7 +109,9 @@ class WizStockBarcodesReadPicking(models.TransientModel):
             lambda t: t._origin.state == "pending"
             and t.product_id == self.recommended_product_id
         )[:1]
-        res = self.with_context(force_create_move=True).action_confirm()
+        res = self.with_context(
+            force_create_move=True, skip_done_force_state=True
+        ).action_confirm()
         self.visible_change_product = False
         return res
 
