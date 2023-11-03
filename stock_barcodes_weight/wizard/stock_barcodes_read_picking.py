@@ -119,3 +119,8 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         res = super().action_clean_values()
         self.visible_change_product = False
         return res
+
+    def update_fields_after_determine_todo(self, move_line):
+        res = super().update_fields_after_determine_todo(move_line)
+        self.selected_pending_move_id = move_line
+        return res
