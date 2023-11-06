@@ -34,9 +34,6 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
 
     @api.depends(lambda s: s._get_field_gs1_depends())
     def _compute_barcode(self):
-        fnc_char = self.env.ref(
-            "barcodes_gs1_nomenclature.default_gs1_nomenclature"
-        ).gs1_separator_fnc1
         for record in self:
             pattern = ""
             if not record.product_id.barcode:
@@ -51,7 +48,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
                     pattern += "15{}".format(
                         format_date(lot.expiration_date, format="YYMdd")
                     )
-                pattern += f"{fnc_char}10{lot.name}"
+                pattern += f"10{lot.name}"
             record.barcode = pattern
 
     @api.depends(lambda s: s._get_field_gs1_depends())
