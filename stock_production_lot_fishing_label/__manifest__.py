@@ -11,6 +11,7 @@
     "application": False,
     "installable": True,
     "depends": [
+        "stock_barcodes_gs1_generator",
         "company_sanitary_registry",
         "product_drained_weight",
         "product_expiry",
