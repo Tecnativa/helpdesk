@@ -21,7 +21,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
         if self._name != "stock.production.lot":
             field_list.append("lot_id")
         if self._qty_field:
-            field_list.append(self._qty_field)
+            field_list.extend(self._qty_field)
         return field_list
 
     def _get_lot_record(self):
