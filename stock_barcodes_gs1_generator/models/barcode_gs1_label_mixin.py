@@ -8,7 +8,7 @@ from odoo import api, fields, models
 class BarcodeGs1LabelMixin(models.AbstractModel):
     _name = "barcode.gs1.label.mixin"
     _description = "Barcode Gs1 Label Mixin"
-    _qty_field = []
+    _qty_field = False
 
     barcode = fields.Char(compute="_compute_barcode")
     barcode_human_readable = fields.Char(compute="_compute_barcode_human_readable")
@@ -21,7 +21,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
         if self._name != "stock.production.lot":
             field_list.append("lot_id")
         if self._qty_field:
-            field_list.extend(self._qty_field)
+            field_list.append(self._qty_field)
         return field_list
 
     def _get_lot_record(self):
@@ -34,6 +34,9 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
 
     @api.depends(lambda s: s._get_field_gs1_depends())
     def _compute_barcode(self):
+        fnc_char = self.env.ref(
+            "barcodes_gs1_nomenclature.default_gs1_nomenclature"
+        ).gs1_separator_fnc1
         for record in self:
             pattern = ""
             if not record.product_id.barcode:
@@ -41,14 +44,14 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
                 continue
             pattern += f"01{record.product_id.barcode}"
             if self._qty_field:
-                pattern += f"3103{str(int(record[self._qty_field[0]] * 1000)).zfill(6)}"
+                pattern += f"3103{str(int(record[self._qty_field] * 1000)).zfill(6)}"
             lot = self._get_lot_record()
             if lot:
                 if lot.expiration_date:
                     pattern += "15{}".format(
                         format_date(lot.expiration_date, format="YYMdd")
                     )
-                pattern += f"10{lot.name}"
+                pattern += f"{fnc_char}10{lot.name}"
             record.barcode = pattern
 
     @api.depends(lambda s: s._get_field_gs1_depends())
@@ -60,9 +63,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
                 continue
             pattern += f"(01){record.product_id.barcode}"
             if self._qty_field:
-                pattern += (
-                    f"(3103){str(int(record[self._qty_field[0]] * 1000)).zfill(6)}"
-                )
+                pattern += f"(3103){str(int(record[self._qty_field] * 1000)).zfill(6)}"
             lot = self._get_lot_record()
             if lot:
                 if lot.expiration_date:

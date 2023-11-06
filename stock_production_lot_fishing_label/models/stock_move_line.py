@@ -7,4 +7,4 @@ from odoo import models
 class StockMoveLine(models.Model):
     _inherit = ["stock.move.line", "barcode.gs1.label.mixin"]
     _name = "stock.move.line"
-    _qty_field = ["qty_done"]
+    _qty_field = "qty_done"

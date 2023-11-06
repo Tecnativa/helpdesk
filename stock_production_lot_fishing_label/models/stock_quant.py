@@ -8,4 +8,4 @@ from odoo import models
 class StockQuant(models.Model):
     _inherit = ["stock.quant", "barcode.gs1.label.mixin"]
     _name = "stock.quant"
-    _qty_field = ["quantity"]
+    _qty_field = "quantity"
