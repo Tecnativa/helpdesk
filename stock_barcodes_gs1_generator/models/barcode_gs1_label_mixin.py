@@ -34,12 +34,13 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
 
     @api.depends(lambda s: s._get_field_gs1_depends())
     def _compute_barcode(self):
+        product_identifier = self.env.context("product_gs1_identifier", "02")
         for record in self:
             pattern = ""
             if not record.product_id.barcode:
                 record.barcode = ""
                 continue
-            pattern += f"01{record.product_id.barcode}"
+            pattern += f"{product_identifier}{record.product_id.barcode}"
             if self._qty_field:
                 pattern += f"3103{str(int(record[self._qty_field] * 1000)).zfill(6)}"
             lot = self._get_lot_record()
@@ -53,12 +54,13 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
 
     @api.depends(lambda s: s._get_field_gs1_depends())
     def _compute_barcode_human_readable(self):
+        product_identifier = self.env.context("product_gs1_identifier", "02")
         for record in self:
             pattern = ""
             if not record.product_id.barcode:
                 record.barcode_human_readable = ""
                 continue
-            pattern += f"(01){record.product_id.barcode}"
+            pattern += f"({product_identifier}){record.product_id.barcode}"
             if self._qty_field:
                 pattern += f"(3103){str(int(record[self._qty_field] * 1000)).zfill(6)}"
             lot = self._get_lot_record()
