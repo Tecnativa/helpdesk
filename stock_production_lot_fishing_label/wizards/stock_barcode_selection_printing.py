@@ -34,4 +34,4 @@ class WizStockBarcodeSelectionPrinting(models.TransientModel):
 class ProductPrintingQty(models.TransientModel):
     _inherit = ["stock.picking.line.print", "barcode.gs1.label.mixin"]
     _name = "stock.picking.line.print"
-    _qty_field = ["quantity"]
+    _qty_field = "quantity"
