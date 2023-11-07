@@ -34,7 +34,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
 
     @api.depends(lambda s: s._get_field_gs1_depends())
     def _compute_barcode(self):
-        product_identifier = self.env.context("product_gs1_identifier", "02")
+        product_identifier = self.env.context.get("product_gs1_identifier", "02")
         for record in self:
             pattern = ""
             if not record.product_id.barcode:
@@ -54,7 +54,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
 
     @api.depends(lambda s: s._get_field_gs1_depends())
     def _compute_barcode_human_readable(self):
-        product_identifier = self.env.context("product_gs1_identifier", "02")
+        product_identifier = self.env.context.get("product_gs1_identifier", "02")
         for record in self:
             pattern = ""
             if not record.product_id.barcode:
