@@ -66,12 +66,14 @@ class WizStockBarcodesNewMoveLines(models.TransientModel):
         self.stock_barcode_wiz_id.master_box_id = False
 
         max_packages = self.total_master_box * int(self.master_box_qty)
-        for package_index in range(
-            self.total_master_box and max_packages or self.total_packages
-        ):
+        elements_count = self.total_master_box and max_packages or self.total_packages
+        for package_index in range(elements_count):
             if self.master_box_qty and package_index % self.master_box_qty == 0:
                 # If there is a previous masterbox print the label
-                if self.print_master_box_label:
+                if (
+                    self.print_master_box_label
+                    and self.stock_barcode_wiz_id.master_box_id
+                ):
                     self.stock_barcode_wiz_id.action_print_master_box()
                 # new master box
                 new_master_box = self.env["stock.quant.master.box"].create({})
@@ -81,7 +83,12 @@ class WizStockBarcodesNewMoveLines(models.TransientModel):
             self.stock_barcode_wiz_id.result_package_id = new_package
             self.stock_barcode_wiz_id.product_qty = self.package_qty
             # Confirming each package
-            self.stock_barcode_wiz_id.action_confirm()
+            if package_index < elements_count - 1:
+                self.stock_barcode_wiz_id.with_context(
+                    skip_clean_values=True
+                ).action_confirm()
+            else:
+                self.stock_barcode_wiz_id.action_confirm()
         self.stock_barcode_wiz_id.master_box_id = False
 
         # Recompute moves todo
