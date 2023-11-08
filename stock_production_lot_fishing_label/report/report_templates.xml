@@ -77,9 +77,26 @@
                     </div>
                     <div class="col-5">
                         <div class="row pl-3">
+                            <t t-if="summarized">
+                                <t t-set="barcode" t-value="o['master_box_id'].name" />
+                                <t
+                                    t-set="barcode_human_readable"
+                                    t-value="o['master_box_id'].name"
+                                />
+                            </t>
+                            <t t-else="">
+                                <t
+                                    t-set="barcode"
+                                    t-value="o['lot_id'].with_context(product_gs1_identifier='01').barcode"
+                                />
+                                <t
+                                    t-set="barcode_human_readable"
+                                    t-value="o['lot_id'].with_context(product_gs1_identifier='01').barcode_human_readable"
+                                />
+                            </t>
                             <div
                                 class="col"
-                                t-field="doc.with_context(product_gs1_identifier='01').barcode"
+                                t-out="barcode"
                                 t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:75px;', 'img_align': 'center'}"
                             >
                             </div>
@@ -89,9 +106,7 @@
                                 class="col"
                                 style="text-align:center; font-size: 12pt;"
                             >
-                                <span
-                                    t-field="doc.with_context(product_gs1_identifier='01').barcode_human_readable"
-                                />
+                                <span t-out="barcode_human_readable" />
                             </div>
                         </div>
                     </div>
