@@ -43,7 +43,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
             pattern += f"{product_identifier}{record.product_id.barcode}"
             if self._qty_field:
                 pattern += f"3103{str(int(record[self._qty_field] * 1000)).zfill(6)}"
-            lot = self._get_lot_record()
+            lot = record._get_lot_record()
             if lot:
                 if lot.expiration_date:
                     pattern += "15{}".format(
@@ -63,7 +63,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
             pattern += f"({product_identifier}){record.product_id.barcode}"
             if self._qty_field:
                 pattern += f"(3103){str(int(record[self._qty_field] * 1000)).zfill(6)}"
-            lot = self._get_lot_record()
+            lot = record._get_lot_record()
             if lot:
                 if lot.expiration_date:
                     pattern += "(15){}".format(
