@@ -40,7 +40,18 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
             if not record.product_id.barcode:
                 record.barcode = ""
                 continue
-            pattern += f"{product_identifier}{record.product_id.barcode}"
+            # pattern += f"{product_identifier}{record.product_id.barcode}" + '&#29'
+            # fnc = "\x1d"
+            # pp = r"(Alt029|#|\x1D)"
+            if len(record.product_id.barcode) == 14:
+                product_barcode = record.product_id.barcode
+            else:
+                # zero left padding
+                product_barcode = record.product_id.barcode.zfill(14)
+                # Send GS (Group separator non ASCII char)
+                # product_barcode = record.product_id.barcode + '^029'
+
+            pattern += f"{product_identifier}{product_barcode}"
             if self._qty_field:
                 pattern += f"3103{str(int(record[self._qty_field] * 1000)).zfill(6)}"
             lot = record._get_lot_record()
@@ -54,20 +65,14 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
 
     @api.depends(lambda s: s._get_field_gs1_depends())
     def _compute_barcode_human_readable(self):
-        product_identifier = self.env.context.get("product_gs1_identifier", "02")
+        gs1_nomenclature = self.env.ref(
+            "barcodes_gs1_nomenclature.default_gs1_nomenclature"
+        )
         for record in self:
-            pattern = ""
-            if not record.product_id.barcode:
-                record.barcode_human_readable = ""
-                continue
-            pattern += f"({product_identifier}){record.product_id.barcode}"
-            if self._qty_field:
-                pattern += f"(3103){str(int(record[self._qty_field] * 1000)).zfill(6)}"
-            lot = record._get_lot_record()
-            if lot:
-                if lot.expiration_date:
-                    pattern += "(15){}".format(
-                        format_date(lot.expiration_date, format="YYMdd")
-                    )
-                pattern += f"(10){lot.name}"
-            record.barcode_human_readable = pattern
+            # Try parse the barcode generated to print set a human readable string
+            gs1_list = gs1_nomenclature.parse_barcode(record.barcode)
+            readable_string = ""
+            for element in gs1_list:
+                # Use string_value key to keep the original values without format
+                readable_string += f"({element['ai']}){element['string_value']}"
+            record.barcode_human_readable = readable_string
