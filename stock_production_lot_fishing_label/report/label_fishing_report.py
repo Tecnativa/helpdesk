@@ -128,6 +128,7 @@ class LabelFishingReportMixin(models.AbstractModel):
             "use_second_page": self.env.context.get("use_second_page", False),
             "client_elaborations": client_elaborations,
             "company_id": self.env.company,
+            "get_gs1_barcode": self.env["barcode.gs1.label.mixin"].get_gs1_barcode,
         }
         return docargs
 

@@ -86,12 +86,18 @@
                             </t>
                             <t t-else="">
                                 <t
-                                    t-set="barcode"
-                                    t-value="o['lot_id'].with_context(product_gs1_identifier='01').barcode"
+                                    t-set="barcode_gs1_complete"
+                                    t-value="get_gs1_barcode(o, [
+                                        ('01', 'product_id.barcode'),
+                                        ('3103', '_qty_field'),
+                                        ('15', 'lot_id.expiration_date'),
+                                        ('10', 'lot_id.name'),
+                                    ])"
                                 />
+                                <t t-set="barcode" t-value="barcode_gs1_complete[0]" />
                                 <t
                                     t-set="barcode_human_readable"
-                                    t-value="o['lot_id'].with_context(product_gs1_identifier='01').barcode_human_readable"
+                                    t-value="barcode_gs1_complete[1]"
                                 />
                             </t>
                             <div
