@@ -1,5 +1,7 @@
 # Copyright 2023 Tecnativa - Carlos Roca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from datetime import date, datetime
+
 from babel.dates import format_date
 
 from odoo import api, fields, models
@@ -76,3 +78,25 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
                 # Use string_value key to keep the original values without format
                 readable_string += f"({element['ai']}){element['string_value']}"
             record.barcode_human_readable = readable_string
+
+    @api.model
+    def get_gs1_barcode(self, record, gs1_structure_list):
+        gs1_barcode = ""
+        gs1_barcode_human_readable = ""
+        for ai, field_path in gs1_structure_list:
+            value = record
+            for fname in field_path.split("."):
+                if fname in value:
+                    value = value[fname]
+                elif hasattr(value, fname):
+                    fname = getattr(value, fname)
+                    value = value[fname]
+            if ai in ("01", "02"):
+                value = value.zfill(14)
+            if ai in ("3103",):
+                value = str(int(value * 1000)).zfill(6)
+            if isinstance(value, (date, datetime)):
+                value = format_date(value, format="YYMdd")
+            gs1_barcode += f"{ai}{value}"
+            gs1_barcode_human_readable += f"({ai}){value}"
+        return gs1_barcode, gs1_barcode_human_readable
