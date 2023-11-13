@@ -51,6 +51,10 @@
     </template>
     <template id="label_fishing_report_document">
         <t t-call="stock_production_lot_fishing_label.basic_layout_fishing_label">
+            <t
+                t-set="show_client_elaborations"
+                t-value="client_elaborations[doc['id']]"
+            />
             <t t-set="lot" t-value="doc['lot_id']" />
             <t t-set="product" t-value="doc['product_id']" />
             <t
@@ -66,8 +70,13 @@
                                 <td class="text-center">
                                     <strong
                                         style="font-size: 18pt;"
-                                        t-if="doc_model != 'stock.quant'"
+                                        t-if="doc_model not in ['stock.quant', 'stock.picking.line.print']"
                                         t-field="doc['picking_partner_id'].display_name"
+                                    />
+                                    <strong
+                                        style="font-size: 18pt;"
+                                        t-elif="doc_model == 'stock.picking.line.print'"
+                                        t-field="doc['move_line_id'].picking_partner_id.display_name"
                                     />
                                 </td>
                             </tr>
@@ -76,8 +85,14 @@
                                     <t t-foreach="langs" t-as="lang">
                                         <strong
                                             t-attf-style="font-size: {{'12pt' if lang_index &gt; 1 else '20pt'}}; display: block; line-height:100%"
-                                            t-field="product.with_context(lang=lang).name"
-                                        />
+                                        >
+                                            <span
+                                                t-field="product.with_context(lang=lang).name"
+                                            />
+                                            <t t-if="product.caliber_ids">(<span
+                                                    t-field="product.with_context(show_attribute=False).caliber_ids"
+                                                />)</t>
+                                        </strong>
                                     </t>
                                 </td>
                             </tr>
@@ -88,7 +103,7 @@
                                     id="extra_heading"
                                 >
                                     <div
-                                        t-if="show_client_elaborations and doc_model != 'stock.quant' and doc['move_id'].elaboration_ids"
+                                        t-if="show_client_elaborations and doc_model not in ['stock.quant', 'stock.picking.line.print'] and doc['move_id'].elaboration_ids"
                                     >
                                         <i
                                             t-out="', '.join(doc['move_id'].elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
@@ -96,6 +111,17 @@
                                         <br />
                                         <i
                                             t-out="', '.join(doc['move_id'].elaboration_ids.with_context(lang=doc['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
+                                        />
+                                    </div>
+                                    <div
+                                        t-elif="show_client_elaborations and doc_model == 'stock.picking.line.print' and doc['move_line_id'].elaboration_ids"
+                                    >
+                                        <i
+                                            t-out="', '.join(doc['move_line_id'].move_id.elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
+                                        />
+                                        <br />
+                                        <i
+                                            t-out="', '.join(doc['move_line_id'].move_id.elaboration_ids.with_context(lang=doc['move_line_id'].move_id.picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
                                         />
                                     </div>
                                 </td>
@@ -488,7 +514,7 @@
                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                         >
                                             <strong
-                                                t-out="', '.join(product.preservation_condition_ids.mapped('name'))"
+                                                t-out="'0-4ºC' if product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_c') else '-18ºC'"
                                             />
                                         </div>
                                     </div>
