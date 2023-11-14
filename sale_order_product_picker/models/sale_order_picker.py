@@ -21,7 +21,7 @@ class SaleOrderPicker(models.Model):
     qty_available = fields.Float(
         string="On Hand",
         digits="Product Unit of Measure",
-        related="product_id.qty_available",
+        compute="_compute_qty_available",
     )
     qty_delivered = fields.Float(string="Delivered", digits="Product Unit of Measure")
     times_delivered = fields.Integer()
@@ -85,6 +85,13 @@ class SaleOrderPicker(models.Model):
                 line.price_unit = line.product_id.with_context(
                     **line._get_picker_price_unit_context()
                 ).price
+
+    def _compute_qty_available(self):
+        available_field = self.env["ir.config_parameter"].get_param(
+            "sale_order_product_picker.product_available_field", "qty_available"
+        )
+        for line in self:
+            line.qty_available = line.product_id[available_field]
 
     @api.depends("product_id")
     def _compute_dummy_fields(self):
