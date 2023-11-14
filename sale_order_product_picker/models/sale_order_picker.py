@@ -87,8 +87,12 @@ class SaleOrderPicker(models.Model):
                 ).price
 
     def _compute_qty_available(self):
-        available_field = self.env["ir.config_parameter"].get_param(
-            "sale_order_product_picker.product_available_field", "qty_available"
+        available_field = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param(
+                "sale_order_product_picker.product_available_field", "qty_available"
+            )
         )
         for line in self:
             line.qty_available = line.product_id[available_field]

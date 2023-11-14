@@ -68,9 +68,9 @@ class SaleOrder(models.Model):
 
     def _get_product_picker_limit(self):
         return int(
-            self.env["ir.config_parameter"].get_param(
-                "sale_order_product_picker.product_picker_limit", "40"
-            )
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("sale_order_product_picker.product_picker_limit", "40")
         )
 
     def _get_picker_product_domain(self):
@@ -83,8 +83,12 @@ class SaleOrder(models.Model):
             ("company_id", "=", self.company_id.id),
         ]
         if self.picker_only_available:
-            available_field = self.env["ir.config_parameter"].get_param(
-                "sale_order_product_picker.product_available_field", "qty_available"
+            available_field = (
+                self.env["ir.config_parameter"]
+                .sudo()
+                .get_param(
+                    "sale_order_product_picker.product_available_field", "qty_available"
+                )
             )
             domain = expression.AND([domain, [(available_field, ">", 0.0)]])
         if product_filter.domain:
