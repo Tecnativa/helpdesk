@@ -14,7 +14,7 @@ class WizStockBarcodesReadPicking(models.TransientModel):
             "stock_production_lot_fishing_label.action_label_master_box_report"
         )
         last_sml = self.picking_id.move_line_ids.filtered(
-            lambda ln: ln.master_box_id == self.master_box_id
+            lambda ln: ln.result_package_id.master_box_id == self.master_box_id
         ).sorted(key="write_date", reverse=True)[:1]
         if not last_sml:
             raise UserError(_("Master box is empty"))

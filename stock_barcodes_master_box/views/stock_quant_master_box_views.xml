@@ -47,7 +47,7 @@
                             /></h1>
                     </div>
                     <separator string="Content" />
-                    <field name="package_ids" />
+                    <field name="package_ids" widget="many2many" />
                 </sheet>
             </form>
         </field>

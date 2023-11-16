@@ -577,7 +577,7 @@
                         <div class="col">
                             <t
                                 t-set="barcode"
-                                t-value="doc['result_package_id'].alias or doc['result_package_id'].display_name"
+                                t-value="doc['result_package_id'].alias or doc['result_package_id'].name"
                             />
                             <img
                                 t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
@@ -588,7 +588,7 @@
                     <div class="row">
                         <div class="col" style="text-align:center; font-size: 12pt;">
                             <span
-                                t-out="doc['result_package_id'].alias or doc['result_package_id'].display_name"
+                                t-out="doc['result_package_id'].alias or doc['result_package_id'].name"
                             />
                         </div>
                     </div>

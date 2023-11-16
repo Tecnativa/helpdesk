@@ -66,31 +66,6 @@
                     </div>
                 </group>
             </xpath>
-            <xpath
-                expr="//field[@name='move_line_ids']/tree/field[@name='result_package_id']"
-                position="after"
-            >
-                <field name="master_box_id" />
-            </xpath>
-            <xpath
-                expr="//field[@name='move_line_ids']/kanban//field[@name='result_package_id']/../../.."
-                position="after"
-            >
-                <div class="row">
-                    <div class="col-4" />
-                    <t t-if="record.master_box_id.raw_value">
-                        <div class="col-4">
-                            Master box: <field name="master_box_id" />
-                        </div>
-                    </t>
-                </div>
-            </xpath>
-<!--            <xpath expr="//field[@name='move_line_ids']/.." position="before">-->
-<!--                <button name="process_barcode_master_box_id" type="object"-->
-<!--                        string="Master box content"-->
-<!--                        context="{'force_master_box': True}"-->
-<!--                />-->
-<!--            </xpath>-->
         </field>
     </record>
 </odoo>

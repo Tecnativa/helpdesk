@@ -120,7 +120,7 @@
                         <strong
                             t-if="doc_model != 'stock.quant' and not summarized"
                             style="font-size: 25pt"
-                            t-out="o['result_package_id'].alias or o['result_package_id'].display_name"
+                            t-out="o['result_package_id'].alias or o['result_package_id'].name"
                         />
                     </div>
                 </div>

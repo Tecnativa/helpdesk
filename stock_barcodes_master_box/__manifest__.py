@@ -16,7 +16,6 @@
         "security/ir.model.access.csv",
         "data/stock_sequence_data.xml",
         "views/product_views.xml",
-        "views/stock_move_line_views.xml",
         "views/stock_quant_package_views.xml",
         "views/stock_quant_master_box_views.xml",
         "wizard/stock_barcodes_new_move_line_views.xml",
