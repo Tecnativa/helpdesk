@@ -6,6 +6,7 @@ from odoo import _, fields, models
 class StockQuantMasterBox(models.Model):
     _name = "stock.quant.master.box"
     _description = "Master box"
+    _order = "id DESC"
 
     name = fields.Char(
         "Master box ref.",

@@ -81,7 +81,7 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         if sml_vals_list:
             self.env["stock.move.line"].create(sml_vals_list)
         # Recalcular moves todo
-        # self.fill_todo_records()
+        self.fill_todo_records()
         # self._compute_todo_line_display_ids()
         return True
 

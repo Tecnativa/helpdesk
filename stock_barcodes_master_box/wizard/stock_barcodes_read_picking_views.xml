@@ -70,7 +70,8 @@
                 expr="//field[@name='move_line_ids']/tree/field[@name='result_package_id']"
                 position="after"
             >
-                <field name="master_box_id" />
+                <field name="master_box_id" optional="show" />
+                <field name="result_master_box_id" optional="show" />
             </xpath>
             <xpath
                 expr="//field[@name='move_line_ids']/kanban//field[@name='result_package_id']/../../.."
@@ -81,6 +82,13 @@
                     <t t-if="record.master_box_id.raw_value">
                         <div class="col-4">
                             Master box: <field name="master_box_id" />
+                        </div>
+                    </t>
+                    <t
+                        t-if="record.result_master_box_id.raw_value and record.result_master_box_id.raw_value != record.master_box_id.raw_value"
+                    >
+                        <div class="col-4">
+                            Master box: <field name="result_master_box_id" />
                         </div>
                     </t>
                 </div>

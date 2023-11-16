@@ -22,7 +22,8 @@ class StockMove(models.Model):
         self.ensure_one()
         if self.is_master_box:
             self = self.with_context(
-                force_minimal_qty_to_reserve=self.secondary_uom_id.factor
+                force_minimal_qty_to_reserve=self.secondary_uom_id.factor,
+                force_secondary_qty_to_reserve=self.secondary_uom_qty,
             )
         return super(StockMove, self)._get_available_quantity(
             location_id,
@@ -46,7 +47,8 @@ class StockMove(models.Model):
         self.ensure_one()
         if self.is_master_box:
             self = self.with_context(
-                force_minimal_qty_to_reserve=self.secondary_uom_id.factor
+                force_minimal_qty_to_reserve=self.secondary_uom_id.factor,
+                force_secondary_qty_to_reserve=self.secondary_uom_qty,
             )
         return super(StockMove, self)._update_reserved_quantity(
             need, available_quantity, location_id, lot_id, package_id, owner_id, strict
