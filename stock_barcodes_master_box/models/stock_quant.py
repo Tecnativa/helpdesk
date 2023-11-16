@@ -39,7 +39,7 @@ class StockQuant(models.Model):
                 quants_in_mb = quants.filtered(
                     lambda q: q.package_id.master_box_id == master_box
                 )
-                quantity_in_mb = sum(quants_in_mb.mapped("quantity"))
+                quantity_in_mb = sum(quants_in_mb.mapped("available_quantity"))
                 if quantity_in_mb > (
                     force_minimal_qty_to_reserve
                     - force_minimal_qty_to_reserve * tolerance_percent / 100
