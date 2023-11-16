@@ -8,7 +8,6 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='result_package_id']" position="after">
                 <field name="master_box_id" readonly="1" optional="hide" />
-                <field name="result_master_box_id" readonly="1" optional="hide" />
             </xpath>
         </field>
     </record>
