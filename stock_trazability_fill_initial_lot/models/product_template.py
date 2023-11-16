@@ -30,12 +30,13 @@ class ProductTemplate(models.Model):
                         )
                     )
                     quants.filtered(lambda q: q.company_id == company).lot_id = lot
-                    # Actualizar sml en estado por hacer
+                    # Actualizar sml en estado por hacer que no sean incoming
                     smls = self_sudo.env["stock.move.line"].search(
                         [
                             ("company_id", "=", company.id),
                             ("product_id", "=", product.id),
                             ("state", "not in", ["done", "cancel"]),
+                            ("picking_code", "!=", "incoming"),
                         ]
                     )
                     smls.with_context(bypass_reservation_update=True).lot_id = lot.id
