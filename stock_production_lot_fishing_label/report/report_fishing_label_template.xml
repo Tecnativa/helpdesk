@@ -90,7 +90,7 @@
                                                 t-field="product.with_context(lang=lang).name"
                                             />
                                             <t t-if="product.caliber_ids">(<span
-                                                    t-field="product.with_context(show_attribute=False).caliber_ids"
+                                                    t-field="product.product_template_variant_value_ids.filtered(lambda value: value.attribute_id == env.ref('product_attribute_value_range.attribute_caliber')).name"
                                                 />)</t>
                                         </strong>
                                     </t>
@@ -521,8 +521,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <t
+                                    t-set="show_product_filtered"
+                                    t-value="not product.filtered_domain(product_filter._get_eval_domain()) if product_filter.domain != '[]' else True"
+                                />
                                 <td
-                                    t-if="use_second_page or product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_f')"
+                                    t-if="use_second_page or (product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_f') and show_product_filtered and 'ar_001' not in langs)"
                                 >
                                     <t
                                         t-call="stock_production_lot_fishing_label.label_fishing_report_document_nutrition_facts"
