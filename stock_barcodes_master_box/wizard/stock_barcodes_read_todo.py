@@ -15,7 +15,12 @@ class WizStockBarcodesReadTodo(models.TransientModel):
             wiz.option_group_id.source_pending_moves == "move_line_ids"
             and line.secondary_uom_id.is_master_box
         ):
-            return (line.location_id, line.product_id, line.lot_id, line.master_box_id)
+            return (
+                line.location_id,
+                line.product_id,
+                line.lot_id,
+                line.package_id.master_box_id,
+            )
         return key
 
     def todo_values_after_hook(self, todo_vals):
