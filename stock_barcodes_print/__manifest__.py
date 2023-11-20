@@ -11,6 +11,7 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": [
+        "base_report_to_printer",
         "stock_barcodes",
         "stock_picking_product_barcode_report",
     ],
