@@ -43,7 +43,7 @@ msgstr "<span>No. Lote</span>"
 #. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_report_document_boat
 msgid "<span>Boat</span>"
-msgstr "<span>Carco</span>"
+msgstr "<span>Barco</span>"
 
 #. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_master_box_conservation
