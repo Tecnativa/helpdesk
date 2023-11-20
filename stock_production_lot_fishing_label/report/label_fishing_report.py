@@ -129,6 +129,9 @@ class LabelFishingReportMixin(models.AbstractModel):
             "client_elaborations": client_elaborations,
             "company_id": self.env.company,
             "get_gs1_barcode": self.env["barcode.gs1.label.mixin"].get_gs1_barcode,
+            "product_filter": self.env.ref(
+                "stock_production_lot_fishing_label.filter_product_one_label"
+            ),
         }
         return docargs
 

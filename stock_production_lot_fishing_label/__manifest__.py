@@ -24,6 +24,7 @@
     ],
     "data": [
         "data/paperformat_label.xml",
+        "data/ir_filters.xml",
         "report/report_templates.xml",
         "report/report_fishing_label_master_box_template.xml",
         "report/report_fishing_label_template.xml",

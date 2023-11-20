@@ -49,32 +49,6 @@
             <!-- Footer -->
             <div class="footer o_standard_footer">
                 <div class="row">
-                    <div class="col-3">
-                        <ul class="list-unstyled">
-                            <strong style="font-size: 15pt;"><li
-                                    t-if="company.name"
-                                ><span t-field="company.name" /></li></strong>
-                            <li>
-                                <small t-field="company.street" />
-                                <small t-field="company.zip" />
-                                <small t-field="company.city" />
-                                <small> - </small>
-                                <small t-field="company.country_id" />
-                            </li>
-                            <li t-if="company.phone">Tel. <span
-                                    class="o_force_ltr"
-                                    t-field="company.phone"
-                                /></li>
-                            <li t-if="company.website"><span
-                                    t-field="company.website"
-                                /></li>
-                        </ul>
-                    </div>
-                    <div class="col-2">
-                        <t
-                            t-call="company_sanitary_registry.sanitary_registry_template"
-                        />
-                    </div>
                     <div class="col-5">
                         <div class="row pl-3">
                             <t t-if="summarized">
@@ -116,10 +90,40 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-3">
+                        <ul class="list-unstyled">
+                            <strong style="font-size: 15pt;"><li
+                                    t-if="company.name"
+                                ><span t-field="company.name" /></li></strong>
+                            <li>
+                                <small t-field="company.street" />
+                                <small t-field="company.zip" />
+                                <small t-field="company.city" />
+                                <small> - </small>
+                                <small t-field="company.country_id" />
+                            </li>
+                            <li t-if="company.phone">Tel. <span
+                                    class="o_force_ltr"
+                                    t-field="company.phone"
+                                /></li>
+                            <li t-if="company.website"><span
+                                    t-field="company.website"
+                                /></li>
+                        </ul>
+                    </div>
+                    <div class="col-2">
+                        <t
+                            t-call="company_sanitary_registry.sanitary_registry_template"
+                        />
+                    </div>
                     <div class="col-2 text-center">
-                        <strong
+                        <div
+                            t-out="o['result_package_id'].alias or o['result_package_id'].name"
+                            t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:75px;', 'img_align': 'center'}"
+                        />
+                        <span
                             t-if="doc_model != 'stock.quant' and not summarized"
-                            style="font-size: 25pt"
+                            style="font-size: 12pt"
                             t-out="o['result_package_id'].alias or o['result_package_id'].name"
                         />
                     </div>
