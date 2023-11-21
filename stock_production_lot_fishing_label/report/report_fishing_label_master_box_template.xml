@@ -30,6 +30,57 @@
             <t t-foreach="count" t-as="i">
                 <div class="page" style="font-size: 16pt;">
                     <div class="row">
+                        <div class="col-12 text-center" t-if="show_client_elaborations">
+                            <strong
+                                style="font-size: 18pt;"
+                                t-if="doc_model != 'stock.quant'"
+                                t-field="o['picking_partner_id'].display_name"
+                            />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <strong style="font-size: 45pt;">
+                                CAJA MASTER BOX
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <t t-foreach="langs" t-as="lang">
+                                <strong
+                                    style="font-size: 20pt;"
+                                    t-field="o['product_id'].with_context(lang=lang).name"
+                                />
+                                <br t-if="lang != langs[-1]" />
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div
+                            class="col-12 text-right"
+                            style="font-size: 13pt;"
+                            id="extra_heading"
+                        >
+                            <div
+                                t-if="show_client_elaborations and doc_model != 'stock.quant' and o['move_id'].elaboration_ids"
+                            >
+                                <i
+                                    t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
+                                />
+                                <br />
+                                <i
+                                    t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang=o['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <t
+                        t-set="precision"
+                        t-value="env['decimal.precision'].precision_get('Product Unit of Measure')"
+                    />
+                    <div style="border-top: 1px solid black;" />
+                    <div class="row">
                         <div class="col-6">
                             <strong>LOTS:</strong>
                             <br />
