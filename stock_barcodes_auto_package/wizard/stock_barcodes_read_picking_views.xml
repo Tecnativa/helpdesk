@@ -7,17 +7,22 @@
             ref="stock_barcodes.view_stock_barcodes_read_picking_form"
         />
         <field name="arch" type="xml">
-            <label for="manual_entry" position="after">
-                <field
+            <div name="manual_entry" position="after">
+                <div class="d-flex" name="auto_put_in_pack_on_read">
+                    <field
+                        name="auto_put_in_pack_on_read"
+                        widget="FieldBarcodeBooleanToggle"
+                    />
+                    <label for="auto_put_in_pack_on_read" />
+                </div>
+            </div>
+            <i name="manual_entry" position="after">
+                <i
                     name="auto_put_in_pack_on_read"
-                    widget="FieldBarcodeBooleanToggle"
-                    attrs="{'invisible': [('display_menu', '=', True)]}"
+                    class="fa fa-cube text-info mr-1"
+                    attrs="{'invisible': [('auto_put_in_pack_on_read', '=', False)]}"
                 />
-                <label
-                    for="auto_put_in_pack_on_read"
-                    attrs="{'invisible': [('display_menu', '=', True)]}"
-                />
-            </label>
+            </i>
         </field>
     </record>
 </odoo>
