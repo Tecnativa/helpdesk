@@ -63,14 +63,23 @@
                             id="extra_heading"
                         >
                             <div
-                                t-if="show_client_elaborations and doc_model != 'stock.quant' and o['move_id'].elaboration_ids"
+                                t-if="show_client_elaborations and doc_model not in ['stock.quant', 'stock.picking.line.print'] and doc['move_id'].elaboration_ids"
                             >
                                 <i
-                                    t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
+                                    t-out="', '.join(doc['move_id'].elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
+                                />
+                                <br />
+                                <i t-out="doc['move_id'].elaboration_note" />
+                            </div>
+                            <div
+                                t-elif="show_client_elaborations and doc_model == 'stock.picking.line.print' and doc['move_line_id'].elaboration_ids"
+                            >
+                                <i
+                                    t-out="', '.join(doc['move_line_id'].move_id.elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
                                 />
                                 <br />
                                 <i
-                                    t-out="', '.join(o['move_id'].elaboration_ids.with_context(lang=o['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
+                                    t-out="doc['move_line_id'].move_id.elaboration_note"
                                 />
                             </div>
                         </div>
