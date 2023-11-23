@@ -108,13 +108,7 @@
                                         <i
                                             t-out="', '.join(doc['move_id'].elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
                                         />
-                                        <span>/</span>
-                                        <i t-out="doc['move_id'].elaboration_note" />
                                         <br />
-                                        <i
-                                            t-out="', '.join(doc['move_id'].elaboration_ids.with_context(lang=doc['move_id'].picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
-                                        />
-                                        <span>/</span>
                                         <i t-out="doc['move_id'].elaboration_note" />
                                     </div>
                                     <div
@@ -123,15 +117,7 @@
                                         <i
                                             t-out="', '.join(doc['move_line_id'].move_id.elaboration_ids.with_context(lang='ca_ES').mapped(lambda e: '*' + e.name))"
                                         />
-                                        <span>/</span>
-                                        <i
-                                            t-out="doc['move_line_id'].move_id.elaboration_note"
-                                        />
                                         <br />
-                                        <i
-                                            t-out="', '.join(doc['move_line_id'].move_id.elaboration_ids.with_context(lang=doc['move_line_id'].move_id.picking_id.partner_id.lang).mapped(lambda e: '*' + e.display_name))"
-                                        />
-                                        <span>/</span>
                                         <i
                                             t-out="doc['move_line_id'].move_id.elaboration_note"
                                         />
