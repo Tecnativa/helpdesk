@@ -39,17 +39,22 @@
                     />
                 </button>
             </xpath>
-            <label for="manual_entry" position="after">
-                <field
+            <div name="manual_entry" position="after">
+                <div class="d-flex" name="auto_print_on_confirm">
+                    <field
+                        name="auto_print_on_confirm"
+                        widget="FieldBarcodeBooleanToggle"
+                    />
+                    <label for="auto_print_on_confirm" />
+                </div>
+            </div>
+            <i name="manual_entry" position="after">
+                <i
                     name="auto_print_on_confirm"
-                    widget="FieldBarcodeBooleanToggle"
-                    attrs="{'invisible': [('display_menu', '=', True)]}"
+                    class="fa fa-print text-info mr-1"
+                    attrs="{'invisible': [('auto_print_on_confirm', '=', False)]}"
                 />
-                <label
-                    for="auto_print_on_confirm"
-                    attrs="{'invisible': [('display_menu', '=', True)]}"
-                />
-            </label>
+            </i>
         </field>
     </record>
 </odoo>
