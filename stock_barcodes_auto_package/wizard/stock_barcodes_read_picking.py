@@ -16,4 +16,11 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         # Auto put in pack for each barcode read
         if not self.result_package_id and self.auto_put_in_pack_on_read:
             self.action_create_package()
-        return super().action_confirm()
+        res = super().action_confirm()
+        if (
+            self.result_package_id
+            and self.auto_put_in_pack_on_read
+            and not self.keep_result_package
+        ):
+            self.result_package_id = False
+        return res
