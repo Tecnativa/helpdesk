@@ -49,7 +49,7 @@
             <!-- Footer -->
             <div class="footer o_standard_footer">
                 <div class="row">
-                    <div class="col-7" style="padding: 0px;">
+                    <div class="col-9" style="padding: 0px;">
                         <div class="row">
                             <t t-if="summarized">
                                 <t t-set="barcode" t-value="o['master_box_id'].name" />
@@ -91,27 +91,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2" style="padding: 0px;">
-                        <ul class="list-unstyled">
-                            <strong style="font-size: 15pt;"><li
-                                    t-if="company.name"
-                                ><span t-field="company.name" /></li></strong>
-                            <li>
-                                <small t-field="company.street" />
-                                <small t-field="company.zip" />
-                                <small t-field="company.city" />
-                                <small> - </small>
-                                <small t-field="company.country_id" />
-                            </li>
-                            <li t-if="company.phone">Tel. <span
-                                    class="o_force_ltr"
-                                    t-field="company.phone"
-                                /></li>
-                            <li t-if="company.website"><span
-                                    t-field="company.website"
-                                /></li>
-                        </ul>
-                    </div>
                     <div class="col-1" style="padding: 0px;">
                         <t
                             t-call="company_sanitary_registry.sanitary_registry_template"
@@ -136,6 +115,36 @@
                             />
                             <span style="font-size: 12pt" t-out="package_barcode" />
                         </t>
+                    </div>
+                </div>
+                <div class="row" style="border-top: 1px solid black">
+                    <div class="col text-center" style="padding: 0px;">
+                        <style>
+                            #inline_list li {
+                                display:inline;
+                                padding-left:3px;
+                                padding-right:3px;
+                            }
+                        </style>
+                        <ul id="inline_list" class="list-unstyled">
+                            <strong style="font-size: 15pt;"><li
+                                    t-if="company.name"
+                                ><span t-field="company.name" /></li></strong>
+                            <li>
+                                <small t-field="company.street" />
+                                <small t-field="company.zip" />
+                                <small t-field="company.city" />
+                                <small> - </small>
+                                <small t-field="company.country_id" />
+                            </li>
+                            <li t-if="company.phone">Tel. <span
+                                    class="o_force_ltr"
+                                    t-field="company.phone"
+                                /></li>
+                            <li t-if="company.website"><span
+                                    t-field="company.website"
+                                /></li>
+                        </ul>
                     </div>
                 </div>
             </div>
