@@ -49,8 +49,8 @@
             <!-- Footer -->
             <div class="footer o_standard_footer">
                 <div class="row">
-                    <div class="col-5">
-                        <div class="row pl-3">
+                    <div class="col-7" style="padding: 0px;">
+                        <div class="row">
                             <t t-if="summarized">
                                 <t t-set="barcode" t-value="o['master_box_id'].name" />
                                 <t
@@ -74,14 +74,15 @@
                                     t-value="barcode_gs1_complete[1]"
                                 />
                             </t>
-                            <div
-                                class="col"
-                                t-out="barcode"
-                                t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:75px;', 'img_align': 'center'}"
-                            >
+                            <div class="col">
+                                <img
+                                    t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('gs1_128', barcode, 600, 100)"
+                                    style="width:100%;height:75px;"
+                                    alt="Barcode"
+                                />
                             </div>
                         </div>
-                        <div class="row pl-3">
+                        <div class="row">
                             <div
                                 class="col"
                                 style="text-align:center; font-size: 12pt;"
@@ -90,7 +91,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2" style="padding: 0px;">
                         <ul class="list-unstyled">
                             <strong style="font-size: 15pt;"><li
                                     t-if="company.name"
@@ -111,32 +112,30 @@
                                 /></li>
                         </ul>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1" style="padding: 0px;">
                         <t
                             t-call="company_sanitary_registry.sanitary_registry_template"
                         />
                     </div>
-                    <div class="col-2 text-center">
-                        <div
+                    <div class="col-2 text-center" style="padding: 0px;">
+                        <t
                             t-if="doc_model != 'stock.quant' and not summarized"
-                            t-out="o['result_package_id'].alias or o['result_package_id'].name"
-                            t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:75px;', 'img_align': 'center'}"
+                            t-set="package_barcode"
+                            t-value="o['result_package_id'].alias or o['result_package_id'].name"
                         />
-                        <div
+                        <t
                             t-elif="doc_model == 'stock.quant' and not summarized"
-                            t-out="o['package_id'].alias or o['package_id'].name"
-                            t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:100%;height:75px;', 'img_align': 'center'}"
+                            t-set="package_barcode"
+                            t-value="o['package_id'].alias or o['package_id'].name"
                         />
-                        <span
-                            t-if="doc_model != 'stock.quant' and not summarized"
-                            style="font-size: 12pt"
-                            t-out="o['result_package_id'].alias or o['result_package_id'].name"
-                        />
-                        <span
-                            t-elif="doc_model == 'stock.quant' and not summarized"
-                            style="font-size: 12pt"
-                            t-out="o['package_id'].alias or o['package_id'].name"
-                        />
+                        <t t-if="package_barcode">
+                            <img
+                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('gs1_128', package_barcode, 600, 100)"
+                                style="width:100%;height:75px;"
+                                alt="Barcode"
+                            />
+                            <span style="font-size: 12pt" t-out="package_barcode" />
+                        </t>
                     </div>
                 </div>
             </div>
