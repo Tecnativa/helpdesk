@@ -89,9 +89,12 @@
                                             <span
                                                 t-field="product.with_context(lang=lang).name"
                                             />
-                                            <t t-if="product.caliber_ids">(<span
-                                                    t-field="product.product_template_variant_value_ids.filtered(lambda value: value.attribute_id == env.ref('product_attribute_value_range.attribute_caliber')).name"
-                                                />)</t>
+                                            <t t-if="product.caliber_ids">
+                                                <t t-if="lang != 'ar_001'">(</t>
+                                                <span
+                                                    t-field="product.product_template_variant_value_ids.filtered(lambda value: value.attribute_id == env.ref('product_attribute_value_range.attribute_caliber')).with_context(lang=lang).name"
+                                                /><t t-if="lang != 'ar_001'">)</t>
+                                            </t>
                                         </strong>
                                     </t>
                                 </td>
