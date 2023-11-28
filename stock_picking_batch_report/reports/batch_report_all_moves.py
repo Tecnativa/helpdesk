@@ -48,15 +48,18 @@ class ReportPrintBatchPickingAllMoves(models.AbstractModel):
             or operation.location_id._get_putaway_strategy(operation.product_id)
             or operation.location_id
         )
-        return {
+        vals = {
             "product": operation.product_id,
             "product_qty": (operation.quantity_done or operation.reserved_availability),
             "initial_demand": operation.product_uom_qty,
             "operations": operation,
             "secondary_uom": operation.secondary_uom_id,
-            "secondary_uom_qty": operation.secondary_uom_qty,
             "locations": locations,
         }
+        vals["secondary_uom_qty"] = vals["secondary_uom"]._get_secondary_qty(
+            vals["product_qty"], operation.product_uom
+        )
+        return vals
 
     def update_level_1(self, group_dict, operation):
         group_dict["product_qty"] += (

@@ -184,20 +184,12 @@
                                                             style="font-size: 0.85em"
                                                         >
                                                         <strong
-                                                                t-esc="operation.quantity_done / operation.secondary_uom_id.factor if operation.secondary_uom_id.factor else 1.0"
-                                                                t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
-                                                            /> <span
-                                                                t-field="operation.secondary_uom_id"
+                                                                t-esc="secondary_uom_qty"
+                                                                t-options="{'widget': 'float', 'precision': currency_precision}"
+                                                            /> <strong
+                                                                t-esc="secondary_uom.name"
                                                             />
                                                     </div>
-                                                </t>
-                                                <t t-else="">
-                                                    <strong
-                                                            t-esc="secondary_uom_qty"
-                                                            t-options="{'widget': 'float', 'precision': currency_precision}"
-                                                        /> <strong
-                                                            t-esc="secondary_uom.name"
-                                                        />
                                                 </t>
                                             </t>
                                         </td>
