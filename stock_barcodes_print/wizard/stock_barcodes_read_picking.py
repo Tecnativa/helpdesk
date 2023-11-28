@@ -1,8 +1,11 @@
 # Copyright 2019 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import logging
 import threading
 
 from odoo import fields, models, registry
+
+_logger = logging.getLogger(__name__)
 
 
 class WizStockBarcodesReadPicking(models.TransientModel):
@@ -55,6 +58,7 @@ class WizStockBarcodesReadPicking(models.TransientModel):
     def action_print_label_report_threaded(self, picking_id):
         with registry(self._cr.dbname).cursor() as cr:
             self = self.with_env(self.env(cr=cr))
+            _logger.info(f"Print in new thread with user: {self.env.user}")
             picking = self.env["stock.picking"].browse(picking_id)
             report = picking.picking_type_id.default_label_report
             last_sml = picking.move_line_ids.sorted(key="write_date", reverse=True)[:1]
