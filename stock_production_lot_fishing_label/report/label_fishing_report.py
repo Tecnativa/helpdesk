@@ -11,7 +11,7 @@ class LabelFishingReportMixin(models.AbstractModel):
     based_model = ""
 
     def _compute_langs_print_partner(self, model_name, line):
-        report_langs = ["ca_ES", "es_ES", "en_UK", "fr_FR"]
+        report_langs = ["ca_ES", "es_ES", "en_GB", "fr_FR"]
         print_partner = False
         if model_name not in ["stock.quant", "stock.quant.master.box"]:
             move_line = (
@@ -29,8 +29,8 @@ class LabelFishingReportMixin(models.AbstractModel):
                     if lang != "es_ES":
                         report_langs.append(lang)
                 else:
-                    report_langs = ["en_UK"]
-                    if lang not in ["en_US", "en_UK"]:
+                    report_langs = ["en_GB"]
+                    if lang not in ["en_US", "en_GB"]:
                         report_langs.append(lang)
         return report_langs, print_partner
 
