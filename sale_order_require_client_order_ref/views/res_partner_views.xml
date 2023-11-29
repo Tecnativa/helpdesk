@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="res_partner_view" model="ir.ui.view">
+        <field name="name">res.partner.view.client.order.ref</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="after">
+                <field name="require_client_order_ref" attrs="{'invisible': [('is_company','=',False)]}" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
