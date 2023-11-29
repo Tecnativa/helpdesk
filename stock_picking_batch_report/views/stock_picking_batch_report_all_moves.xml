@@ -178,11 +178,7 @@
                                             <!-- Compute secondary uoms on fly based on stock move lines TT26190-->
                                             <t t-if="secondary_uom">
                                                 <t t-if="l1_item['operations']">
-                                                    <div
-                                                            t-foreach="l1_item['operations']"
-                                                            t-as="operation"
-                                                            style="font-size: 0.85em"
-                                                        >
+                                                    <div style="font-size: 0.85em">
                                                         <strong
                                                                 t-esc="secondary_uom_qty"
                                                                 t-options="{'widget': 'float', 'precision': currency_precision}"

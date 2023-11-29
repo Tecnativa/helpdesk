@@ -70,7 +70,10 @@ class ReportPrintBatchPickingAllMoves(models.AbstractModel):
         )
         group_dict["initial_demand"] += operation.product_uom_qty
         group_dict["operations"] += operation
-        # group_dict["secondary_uom_qty"] += operation.secondary_uom_qty
+        if operation.secondary_uom_id:
+            group_dict["secondary_uom_qty"] = group_dict[
+                "secondary_uom"
+            ]._get_secondary_qty(group_dict["product_qty"], operation.product_uom)
         return group_dict
 
     def sort_level_0(self, rec_list):
