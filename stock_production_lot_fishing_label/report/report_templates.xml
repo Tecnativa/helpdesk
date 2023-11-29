@@ -58,7 +58,7 @@
                                     t-value="o['master_box_id'].name"
                                 />
                             </t>
-                            <t t-else="">
+                            <t t-elif="o.product_id.barcode">
                                 <t
                                     t-set="barcode_gs1_complete"
                                     t-value="get_gs1_barcode(o, [
@@ -74,18 +74,22 @@
                                     t-value="barcode_gs1_complete[1]"
                                 />
                             </t>
-                            <div class="col">
+                            <div class="col" t-if="barcode">
                                 <img
                                     t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('gs1_128', barcode, 600, 100)"
                                     style="width:100%;height:75px;"
                                     alt="Barcode"
                                 />
                             </div>
+                            <div class="col text-center" t-else="">
+                                <h2>Product without barcode</h2>
+                            </div>
                         </div>
                         <div class="row">
                             <div
                                 class="col"
                                 style="text-align:center; font-size: 12pt;"
+                                t-if="barcode_human_readable"
                             >
                                 <span t-out="barcode_human_readable" />
                             </div>
