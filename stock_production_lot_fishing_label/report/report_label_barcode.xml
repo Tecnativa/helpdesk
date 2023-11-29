@@ -62,6 +62,17 @@ action = env.ref('stock_production_lot_fishing_label.action_label_fishing_move_r
         />
         <field name="single_rendering">True</field>
     </record>
+    <record id="action_label_fishing_lot_report" model="ir.actions.server">
+        <field name="name">Fishing Label Impresion</field>
+        <field name="model_id" ref="stock.model_stock_production_lot" />
+        <field name="binding_model_id" ref="stock.model_stock_production_lot" />
+        <field name="binding_type">report</field>
+        <field name="state">code</field>
+        <field name="code">
+quants = env['stock.quant'].search([('lot_id', 'in', records.ids), ('quantity', '>=', 0)])
+action = env.ref('stock_production_lot_fishing_label.action_label_fishing_quant_report').report_action(quants)
+        </field>
+    </record>
     <!--  Mini fishing labels  -->
     <record id="action_label_fishing_report_mini" model="ir.actions.report">
         <field name="name">Fishing Label Mini Impresion</field>
