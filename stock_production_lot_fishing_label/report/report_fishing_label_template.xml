@@ -580,21 +580,35 @@
                 <div class="page">
                     <div class="row" style="padding-top: 25px">
                         <div class="col">
-                            <t
-                                t-set="barcode"
-                                t-value="doc['result_package_id'].alias or doc['result_package_id'].name"
-                            />
+                            <t t-if="doc_model != 'stock.quant' and not summarized">
+                                <t
+                                    t-set="package_barcode"
+                                    t-value="doc['result_package_id'].name"
+                                />
+                                <t
+                                    t-set="package_barcode_name"
+                                    t-value="doc['result_package_id'].alias or doc['result_package_id'].name"
+                                />
+                            </t>
+                            <t t-elif="doc_model == 'stock.quant' and not summarized">
+                                <t
+                                    t-set="package_barcode"
+                                    t-value="doc['package_id'].name"
+                                />
+                                <t
+                                    t-set="package_barcode_name"
+                                    t-value="doc['package_id'].alias or doc['package_id'].name"
+                                />
+                            </t>
                             <img
-                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', barcode, 60, 30)"
+                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;quiet=0&amp;height=%s&amp;width=%s&amp;' % ('gs1_128', package_barcode, 60, 30)"
                                 style="width:100%;height:100px"
                             />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col" style="text-align:center; font-size: 12pt;">
-                            <span
-                                t-out="doc['result_package_id'].alias or doc['result_package_id'].name"
-                            />
+                            <span t-out="package_barcode_name" />
                         </div>
                     </div>
                     <div class="row">

@@ -97,23 +97,33 @@
                         />
                     </div>
                     <div class="col-2 text-center" style="padding: 0px;">
-                        <t
-                            t-if="doc_model != 'stock.quant' and not summarized"
-                            t-set="package_barcode"
-                            t-value="o['result_package_id'].alias or o['result_package_id'].name"
-                        />
-                        <t
-                            t-elif="doc_model == 'stock.quant' and not summarized"
-                            t-set="package_barcode"
-                            t-value="o['package_id'].alias or o['package_id'].name"
-                        />
+                        <t t-if="doc_model != 'stock.quant' and not summarized">
+                            <t
+                                t-set="package_barcode"
+                                t-value="o['result_package_id'].name"
+                            />
+                            <t
+                                t-set="package_barcode_name"
+                                t-value="o['result_package_id'].alias or o['result_package_id'].name"
+                            />
+                        </t>
+                        <t t-elif="doc_model == 'stock.quant' and not summarized">
+                            <t t-set="package_barcode" t-value="o['package_id'].name" />
+                            <t
+                                t-set="package_barcode_name"
+                                t-value="o['package_id'].alias or o['package_id'].name"
+                            />
+                        </t>
                         <t t-if="package_barcode">
                             <img
                                 t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('gs1_128', package_barcode, 600, 100)"
                                 style="width:100%;height:75px;"
                                 alt="Barcode"
                             />
-                            <span style="font-size: 12pt" t-out="package_barcode" />
+                            <span
+                                style="font-size: 12pt"
+                                t-out="package_barcode_name"
+                            />
                         </t>
                     </div>
                 </div>
