@@ -70,7 +70,10 @@ action = env.ref('stock_production_lot_fishing_label.action_label_fishing_move_r
         <field name="state">code</field>
         <field name="code">
 quants = env['stock.quant'].search([('lot_id', 'in', records.ids), ('quantity', '>=', 0)])
-action = env.ref('stock_production_lot_fishing_label.action_label_fishing_quant_report').report_action(quants)
+if quants:
+  action = env.ref('stock_production_lot_fishing_label.action_label_fishing_quant_report').report_action(quants)
+else:
+  raise UserError("This lot is not available in stock")
         </field>
     </record>
     <!--  Mini fishing labels  -->
