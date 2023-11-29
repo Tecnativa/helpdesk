@@ -56,9 +56,12 @@ class ReportPrintBatchPickingAllMoves(models.AbstractModel):
             "secondary_uom": operation.secondary_uom_id,
             "locations": locations,
         }
-        vals["secondary_uom_qty"] = vals["secondary_uom"]._get_secondary_qty(
-            vals["product_qty"], operation.product_uom
-        )
+        if operation.secondary_uom_id:
+            vals["secondary_uom_qty"] = vals["secondary_uom"]._get_secondary_qty(
+                vals["product_qty"], operation.product_uom
+            )
+        else:
+            vals["secondary_uom_qty"] = 0.0
         return vals
 
     def update_level_1(self, group_dict, operation):
