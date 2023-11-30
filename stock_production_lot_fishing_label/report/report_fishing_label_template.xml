@@ -62,21 +62,21 @@
                 t-value="doc['label_qty'] if doc_model == 'stock.picking.line.print' else 1"
             />
             <t t-foreach="count" t-as="i">
-                <div class="page" style="font-size: 16pt;">
+                <div class="page" style="font-size: 18pt;">
                     <t t-set="langs" t-value="report_langs[doc['id']]" />
                     <table style="width: 100%">
                         <thead>
                             <tr t-if="show_client_elaborations">
                                 <td class="text-center">
                                     <strong
-                                        style="font-size: 18pt;"
+                                        style="font-size: 20pt;"
                                         t-if="doc_model not in ['stock.quant', 'stock.picking.line.print']"
-                                        t-field="doc['picking_partner_id'].display_name"
+                                        t-field="doc['picking_partner_id'].comercial"
                                     />
                                     <strong
-                                        style="font-size: 18pt;"
+                                        style="font-size: 20pt;"
                                         t-elif="doc_model == 'stock.picking.line.print'"
-                                        t-field="doc['move_line_id'].picking_partner_id.display_name"
+                                        t-field="doc['move_line_id'].picking_partner_id.comercial"
                                     />
                                 </td>
                             </tr>
@@ -84,7 +84,7 @@
                                 <td>
                                     <t t-foreach="langs" t-as="lang">
                                         <strong
-                                            t-attf-style="font-size: {{'12pt' if lang_index &gt; 1 else '20pt'}}; display: block; line-height:100%"
+                                            t-attf-style="font-size: {{'15pt' if lang_index &gt; 1 else '23pt'}}; display: block; line-height:100%"
                                         >
                                             <span
                                                 t-field="product.with_context(lang=lang).name"
@@ -102,7 +102,7 @@
                             <tr>
                                 <td
                                     class="text-right"
-                                    style="font-size: 13pt;"
+                                    style="font-size: 15pt;"
                                     id="extra_heading"
                                 >
                                     <div
@@ -135,7 +135,7 @@
                                     />
                                     <table
                                         class="text-center"
-                                        style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 16pt;width:100%"
+                                        style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 18pt;width:100%"
                                     >
                                         <tbody>
                                             <tr>
@@ -210,7 +210,7 @@
                                                         t-options='{"widget": "date"}'
                                                     />
                                                 </td>
-                                                <td><strong
+                                                <td style="font-size: 22pt"><strong
                                                         t-field="lot.display_name"
                                                     /></td>
                                                 <t
