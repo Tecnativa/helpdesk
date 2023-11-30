@@ -32,6 +32,9 @@ class SaleOrderPicker(models.Model):
     currency_id = fields.Many2one(related="order_id.currency_id", depends=["order_id"])
     list_price = fields.Float(related="product_id.list_price")
     is_different_price = fields.Boolean(compute="_compute_is_different_price")
+    discount = fields.Float(string="Discount (%)", digits="Discount")
+    multiple_discounts = fields.Boolean()
+    price_order_line = fields.Float()
 
     # TODO: Dummy fields to remove
     state = fields.Selection(
@@ -151,13 +154,22 @@ class SaleOrderPicker(models.Model):
         so_line.product_id_change()
         self.order_id.order_line += so_line
 
-    @api.depends("list_price", "price_unit")
+    @api.depends("list_price", "price_unit", "price_order_line")
     def _compute_is_different_price(self):
         digits = self.env["decimal.precision"].precision_get("Product Price")
         for line in self:
-            line.is_different_price = bool(
-                float_compare(line.price_unit, line.list_price, precision_digits=digits)
-            )
+            if line.price_order_line:
+                line.is_different_price = bool(
+                    float_compare(
+                        line.price_order_line, line.list_price, precision_digits=digits
+                    )
+                )
+            else:
+                line.is_different_price = bool(
+                    float_compare(
+                        line.price_unit, line.list_price, precision_digits=digits
+                    )
+                )
 
     @api.depends("product_id")
     def _compute_unit_name(self):

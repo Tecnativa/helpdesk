@@ -164,7 +164,76 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
             }
             return picker_changes;
         },
+        _get_discount_price_from_record: function (solRecordId, type, discount) {
+            const order_lines = Object.keys(this.localData).filter((key) => {
+                if (type === "DELETE") {
+                    return (
+                        this.localData[key].parentID ===
+                            this.localData[solRecordId].parentID &&
+                        !this.localData[key].deleted &&
+                        key != solRecordId
+                    );
+                }
+                return (
+                    this.localData[key].parentID ===
+                        this.localData[solRecordId].parentID &&
+                    !this.localData[key].deleted
+                );
+            });
+            const lines_same_product = order_lines.filter((key) => {
+                var product =
+                    this.localData[
+                        this.localData[key].data.product_id ||
+                            this.localData[key]._changes.product_id
+                    ].res_id;
+                return (
+                    (this.localData[solRecordId].data.product_id &&
+                        product ==
+                            this.localData[this.localData[solRecordId].data.product_id]
+                                .res_id) ||
+                    (this.localData[solRecordId]._changes.product_id &&
+                        product ==
+                            this.localData[
+                                this.localData[solRecordId]._changes.product_id
+                            ].res_id)
+                );
+            });
+            if (lines_same_product.length < 1) {
+                return [0, 0, 0];
+            }
+            const discounts = new Set();
+            const prices = new Set();
+            for (var line_id of lines_same_product) {
+                const discount =
+                    this.localData[line_id]._changes.discount ||
+                    this.localData[line_id].data.discount;
+                discounts.add(discount);
+                var price_unit =
+                    this.localData[line_id]._changes.price_unit ||
+                    this.localData[line_id].data.price_unit;
+                price_unit -= (price_unit * discount) / 100;
+                prices.add(price_unit);
+            }
+            const disc_size = discounts.size;
+            var disc = 0;
+            var price = 0;
+            if (disc_size === 1) {
+                if (discount) {
+                    disc = discount;
+                } else {
+                    [disc] = discounts;
+                }
+            }
+            if (prices.size === 1) {
+                [price] = prices;
+            }
+            return [disc, price, disc_size];
+        },
         _computeAddedRecord: function (command, picker_id, pickerRecords) {
+            const discount_price = this._get_discount_price_from_record(
+                command.id,
+                "ADD"
+            );
             var solRecord = this.localData[command.id];
             solRecord.last_qty = solRecord._changes.product_uom_qty;
             var pickerRecord = undefined;
@@ -195,6 +264,9 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                     product_uom_qty:
                         pickerRecord._changes.product_uom_qty +
                         solRecord._changes.product_uom_qty,
+                    discount: discount_price[0],
+                    multiple_discounts: discount_price[2] > 1,
+                    price_order_line: discount_price[1],
                 },
             };
         },
@@ -233,6 +305,13 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
             }
         },
         _computeDeletedRecord: function (command, picker_id, pickerRecords) {
+            // TODO: Calculate discount for each product, but
+            // I think it's impossible to delete more than one
+            // line at same time
+            const discount_price = this._get_discount_price_from_record(
+                command.ids[0],
+                "DELETE"
+            );
             if (picker_id) {
                 var pickerRecord = this.localData[picker_id];
                 var deleted_qty =
@@ -245,6 +324,9 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                     data: {
                         is_in_order: Boolean(qty),
                         product_uom_qty: qty,
+                        discount: discount_price[0],
+                        multiple_discounts: discount_price[2] > 1,
+                        price_order_line: discount_price[1],
                     },
                 };
             }
@@ -277,6 +359,9 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                     data: {
                         is_in_order: Boolean(value),
                         product_uom_qty: value,
+                        discount: discount_price[0],
+                        multiple_discounts: discount_price[2] > 1,
+                        price_order_line: discount_price[1],
                     },
                 });
             }
@@ -286,6 +371,11 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
             var diff_qty = 0;
             var solRecord = this.localData[command.id];
             var changes = Object.assign({}, solRecord._changes, command.data);
+            const discount_price = this._get_discount_price_from_record(
+                command.id,
+                "UPDATE",
+                changes.discount
+            );
             if (command.data && command.data.product_id) {
                 solRecord.last_qty = changes.product_uom_qty;
                 for (var record_id of pickerRecords) {
@@ -310,12 +400,15 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                                 product_uom_qty:
                                     pickerRecord._changes.product_uom_qty +
                                     changes.product_uom_qty,
+                                discount: discount_price[0],
+                                multiple_discounts: discount_price[2] > 1,
+                                price_order_line: discount_price[1],
                             },
                         };
                     }
                 }
             }
-            diff_qty = command.diff_qty;
+            diff_qty = command.diff_qty || 0;
             if (picker_id) {
                 var pickerRecord = this.localData[picker_id];
                 return {
@@ -327,6 +420,9 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                         ),
                         product_uom_qty:
                             pickerRecord._changes.product_uom_qty + diff_qty,
+                        discount: discount_price[0],
+                        multiple_discounts: discount_price[2] > 1,
+                        price_order_line: discount_price[1],
                     },
                 };
             }
@@ -343,6 +439,9 @@ odoo.define("sale_order_product_picker.basic_model", function (require) {
                             ),
                             product_uom_qty:
                                 pickerRecord._changes.product_uom_qty + diff_qty,
+                            discount: discount_price[0],
+                            multiple_discounts: discount_price[2] > 1,
+                            price_order_line: discount_price[1],
                         },
                     };
                 }

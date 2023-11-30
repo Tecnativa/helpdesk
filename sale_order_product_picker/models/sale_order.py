@@ -201,6 +201,12 @@ class SaleOrder(models.Model):
         @param group_line: Dictionary returned by the read_group operation.
         @param so_lines: Optional sales order line
         """
+        discounts = set(so_lines.filtered("discount").mapped("discount"))
+        prices = set(
+            so_lines.mapped(
+                lambda sol: sol.price_unit - sol.price_unit * sol.discount / 100
+            )
+        )
         vals = {
             "order_id": self.id,
             "product_id": group_line["product_id"][0],
@@ -208,6 +214,9 @@ class SaleOrder(models.Model):
             "product_uom_qty": sum(so_lines.mapped("product_uom_qty")),
             "qty_delivered": group_line.get("qty_delivered", 0),
             "times_delivered": group_line.get("__count", 0),
+            "discount": discounts.pop() if len(discounts) == 1 else 0,
+            "multiple_discounts": not len(discounts) <= 1,
+            "price_order_line": prices.pop() if len(prices) == 1 else 0,
         }
         return vals
 
