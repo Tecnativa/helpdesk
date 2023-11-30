@@ -28,8 +28,10 @@ class PurchaseOrderLine(models.Model):
         for line in self:
             all_moves_ids = False
             if line.state in ["draft", "sent", "to approve"]:
-                move = StockMove.search([("created_purchase_line_id", "=", line.id)])
-                all_moves_ids = move._rollup_move_dests({move.id})
+                moves = StockMove.search([("created_purchase_line_id", "=", line.id)])
+                all_moves_ids = []
+                for move in moves:
+                    all_moves_ids += move._rollup_move_dests({move.id})
             if line.state in ["purchase", "done"]:
                 all_moves_ids = line.move_dest_ids._rollup_move_dests(
                     set(line.move_dest_ids.ids)
