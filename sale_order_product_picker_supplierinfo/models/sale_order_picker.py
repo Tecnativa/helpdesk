@@ -15,4 +15,5 @@ class SaleOrderPicker(models.Model):
         ctx = super()._get_picker_price_unit_context()
         if self.vendor_id:
             ctx["force_filter_supplier_id"] = self.vendor_id
+            ctx["force_supplierinfo_item_id"] = self.supplierinfo_id.id
         return ctx
