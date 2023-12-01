@@ -71,12 +71,12 @@
                                     <strong
                                         style="font-size: 20pt;"
                                         t-if="doc_model not in ['stock.quant', 'stock.picking.line.print']"
-                                        t-field="doc['picking_partner_id'].comercial"
+                                        t-field="doc['picking_partner_id'].name"
                                     />
                                     <strong
                                         style="font-size: 20pt;"
                                         t-elif="doc_model == 'stock.picking.line.print'"
-                                        t-field="doc['move_line_id'].picking_partner_id.comercial"
+                                        t-field="doc['move_line_id'].picking_partner_id.name"
                                     />
                                 </td>
                             </tr>
