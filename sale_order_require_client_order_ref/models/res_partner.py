@@ -7,6 +7,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     require_client_order_ref = fields.Boolean(
-        string='Require Client Order Reference',
-        help='If checked, the client order reference is required for this partner and its contacts.'
+        string="Require Client Order Reference",
+        help="If checked, the client order reference is required for this partner and "
+        "its contacts.",
     )

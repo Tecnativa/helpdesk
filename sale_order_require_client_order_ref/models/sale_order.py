@@ -6,4 +6,6 @@ from odoo import fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    so_require_client_order_ref = fields.Boolean(related="partner_id.commercial_partner_id.require_client_order_ref")
+    so_require_client_order_ref = fields.Boolean(
+        related="partner_id.commercial_partner_id.require_client_order_ref"
+    )

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <record id="view_order_form" model="ir.ui.view">
         <field name="name">sale.order.form.require.client.ref</field>
@@ -9,7 +9,9 @@
                 <field name="so_require_client_order_ref" invisible="1" />
             </field>
             <field name="client_order_ref" position="attributes">
-                <attribute name="attrs">{'required': [('so_require_client_order_ref', '=', True)]}</attribute>
+                <attribute
+                    name="attrs"
+                >{'required': [('so_require_client_order_ref', '=', True)]}</attribute>
             </field>
         </field>
     </record>
