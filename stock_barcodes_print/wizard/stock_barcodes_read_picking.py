@@ -27,8 +27,11 @@ class WizStockBarcodesReadPicking(models.TransientModel):
                 # Get last sml from operations linked to this picking read wizard
                 # Pass the id instead of recordset to load in a new thread to avoid
                 # access to record with a closed record
-                last_sml = self.move_line_ids.sorted(key="write_date", reverse=True)[:1]
-                self._cr.postcommit.add(partial(self._launch_print_thread, last_sml.id))
+                sml_ids = list(res.keys())
+                self._cr.postcommit.add(
+                    partial(self._launch_print_thread, self.picking_id.id, sml_ids)
+                )
+                return res
             else:
                 return self.action_print_label_report()
         return res
@@ -54,26 +57,25 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         wiz._onchange_picking_ids()
         return wiz.print_labels()
 
-    def _launch_print_thread(self, last_sml_id):
+    def _launch_print_thread(self, picking_id, last_sml_ids):
         threaded_calculation = threading.Thread(
             target=self.action_print_label_report_threaded,
-            args=(self.picking_id.ids, last_sml_id),
+            args=(picking_id, last_sml_ids),
         )
         threaded_calculation.start()
 
-    def action_print_label_report_threaded(self, picking_id, last_sml_id):
+    def action_print_label_report_threaded(self, picking_id, move_line_ids):
         with registry(self._cr.dbname).cursor() as cr:
             self = self.with_env(self.env(cr=cr))
             picking = self.env["stock.picking"].browse(picking_id)
             report = picking.picking_type_id.default_label_report
-            last_sml = self.env["stock.move.line"].browse(last_sml_id)
             wiz = (
                 self.env["stock.picking.print"]
                 .sudo()
                 .with_context(
-                    stock_move_line_to_print=last_sml.id,
+                    stock_move_line_to_print=move_line_ids,
                     active_model="stock.picking",
-                    active_ids=picking.ids,
+                    active_ids=[picking_id],
                 )
                 .create(
                     {

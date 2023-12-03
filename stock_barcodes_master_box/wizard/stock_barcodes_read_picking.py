@@ -29,7 +29,7 @@ class WizStockBarcodesReadPicking(models.TransientModel):
         self._assig_master_box_to_package(sml)
         return sml
 
-    def action_print_master_box(self):
+    def action_print_master_box(self, master_box_ids=None):
         # TODO: Mover desde donde se imprime ahora la etiqueta de master box
         pass
 

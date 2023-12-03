@@ -11,6 +11,7 @@
     "depends": [
         "stock_barcodes_gs1_secondary_unit",
         "stock_barcodes_auto_package",
+        "stock_barcodes_print",
     ],
     "data": [
         "security/ir.model.access.csv",
