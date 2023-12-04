@@ -254,12 +254,16 @@
                                                         t-if="uom.category_id == env.ref('uom.product_uom_categ_kgm')"
                                                     >
                                                         <strong
-                                                            t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
+                                                            t-if="doc_model in ['stock.quant', 'stock.picking.line.print'] and not float_is_zero(product.net_weight, precision_digits=precision)"
                                                             t-out="doc['quantity'] * (product.drained_weight / product.net_weight)"
                                                         />
                                                         <strong
-                                                            t-else=""
+                                                            t-elif="not float_is_zero(product.net_weight, precision_digits=precision)"
                                                             t-out="doc['qty_done'] * (product.drained_weight / product.net_weight)"
+                                                        />
+                                                        <strong
+                                                            t-else=""
+                                                            t-out="product.net_weight"
                                                         />
                                                         <strong
                                                             t-field="uom.display_name"
