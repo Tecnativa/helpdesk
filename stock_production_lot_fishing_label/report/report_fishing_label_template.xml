@@ -32,14 +32,14 @@
                 t-value="show_nutritional_table or product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_f')"
             />
             <div
-                t-att-class="'col-9' if show_nutritional_table else 'col-12'"
+                t-att-class="'col-9' if show_nutritional_table and (lot.nutritional_value_ids or product.nutritional_value_ids) else 'col-12'"
                 id="conservation"
             />
             <div
                 style="font-size: 10pt"
                 class="col-3 pt-1"
                 id="nutritional_table"
-                t-if="show_nutritional_table"
+                t-if="show_nutritional_table and (lot.nutritional_value_ids or product.nutritional_value_ids)"
             >
                 <t t-call="nutritional_info.nutritional_info_table">
                     <t t-set="main_object" t-value="lot" />
@@ -540,7 +540,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <p style="page-break-before:always;" />
+                    <div style="page-break-before:always;" />
                 </div>
             </t>
         </t>
