@@ -217,6 +217,10 @@
                                                     t-set="uom"
                                                     t-value="doc['product_uom_id'] if doc_model != 'stock.picking.line.print' else doc['uom_id']"
                                                 />
+                                                <t
+                                                    t-set="net_weight"
+                                                    t-vlaue="product.net_weight if not product.qty_per_packaging else product.net_weight/product.qty_per_packaging"
+                                                />
                                                 <td>
                                                     <t
                                                         t-if="uom.category_id == env.ref('uom.product_uom_categ_kgm')"
@@ -236,11 +240,11 @@
                                                     <t t-else="">
                                                         <strong
                                                             t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
-                                                            t-out="doc['quantity'] * product.net_weight"
+                                                            t-out="doc['quantity'] * net_weight"
                                                         />
                                                         <strong
                                                             t-else=""
-                                                            t-out="doc['qty_done'] * product.net_weight"
+                                                            t-out="doc['qty_done'] * net_weight"
                                                         />
                                                         <strong
                                                             t-field="product.weight_uom_name"
@@ -254,16 +258,16 @@
                                                         t-if="uom.category_id == env.ref('uom.product_uom_categ_kgm')"
                                                     >
                                                         <strong
-                                                            t-if="doc_model in ['stock.quant', 'stock.picking.line.print'] and not float_is_zero(product.net_weight, precision_digits=precision)"
-                                                            t-out="doc['quantity'] * (product.drained_weight / product.net_weight)"
+                                                            t-if="doc_model in ['stock.quant', 'stock.picking.line.print'] and not float_is_zero(net_weight, precision_digits=precision)"
+                                                            t-out="doc['quantity'] * (product.drained_weight / net_weight)"
                                                         />
                                                         <strong
-                                                            t-elif="not float_is_zero(product.net_weight, precision_digits=precision)"
-                                                            t-out="doc['qty_done'] * (product.drained_weight / product.net_weight)"
+                                                            t-elif="not float_is_zero(net_weight, precision_digits=precision)"
+                                                            t-out="doc['qty_done'] * (product.drained_weight / net_weight)"
                                                         />
                                                         <strong
                                                             t-else=""
-                                                            t-out="product.net_weight"
+                                                            t-out="net_weight"
                                                         />
                                                         <strong
                                                             t-field="uom.display_name"
@@ -289,7 +293,7 @@
                                 </td>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="line-height:100%">
                             <tr>
                                 <td>
                                     <div class="row" id="scientific_name">
