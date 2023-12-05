@@ -219,7 +219,7 @@
                                                 />
                                                 <t
                                                     t-set="net_weight"
-                                                    t-vlaue="product.net_weight if not product.qty_per_packaging else product.net_weight/product.qty_per_packaging"
+                                                    t-value="product.net_weight if not product.qty_per_packaging else round(product.net_weight/product.qty_per_packaging, 2)"
                                                 />
                                                 <td>
                                                     <t
