@@ -219,7 +219,7 @@
                                                 />
                                                 <t
                                                     t-set="net_weight"
-                                                    t-value="product.net_weight if not product.qty_per_packaging else round(product.net_weight/product.qty_per_packaging, 2)"
+                                                    t-value="product.net_weight if not product.qty_per_packaging or product.weight_type == 'fixed' else round(product.net_weight/product.qty_per_packaging, 2)"
                                                 />
                                                 <td>
                                                     <t
