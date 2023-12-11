@@ -82,21 +82,63 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <t t-foreach="langs" t-as="lang">
-                                        <strong
-                                            t-attf-style="font-size: {{'15pt' if lang_index &gt; 1 else '23pt'}}; display: block; line-height:100%"
-                                        >
-                                            <span
-                                                t-field="product.with_context(lang=lang).name"
-                                            />
-                                            <t t-if="product.caliber_ids">
-                                                <t t-if="lang != 'ar_001'">(</t>
+                                    <div class="float-left" style="max-width: 900px">
+                                        <t t-foreach="langs" t-as="lang">
+                                            <strong
+                                                t-attf-style="font-size: {{'15pt' if lang_index &gt; 1 else '23pt'}}; display: block; line-height:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                            >
                                                 <span
-                                                    t-field="product.product_template_variant_value_ids.filtered(lambda value: value.attribute_id == env.ref('product_attribute_value_range.attribute_caliber')).with_context(lang=lang).name"
-                                                /><t t-if="lang != 'ar_001'">)</t>
-                                            </t>
-                                        </strong>
-                                    </t>
+                                                    t-field="product.with_context(lang=lang).name"
+                                                />
+                                                <t t-if="product.caliber_ids">
+                                                    <t t-if="lang != 'ar_001'">(</t>
+                                                    <span
+                                                        t-field="product.product_template_variant_value_ids.filtered(lambda value: value.attribute_id == env.ref('product_attribute_value_range.attribute_caliber')).with_context(lang=lang).name"
+                                                    /><t t-if="lang != 'ar_001'">)</t>
+                                                </t>
+                                            </strong>
+                                        </t>
+                                    </div>
+                                    <div
+                                        class="float-right text-center pl-2 pr-2"
+                                        style="width: 400px"
+                                    >
+                                        <t
+                                            t-if="doc_model != 'stock.quant' and not summarized"
+                                        >
+                                            <t
+                                                t-set="package_barcode"
+                                                t-value="doc['result_package_id'].name"
+                                            />
+                                            <t
+                                                t-set="package_barcode_name"
+                                                t-value="doc['result_package_id'].alias or doc['result_package_id'].name"
+                                            />
+                                        </t>
+                                        <t
+                                            t-elif="doc_model == 'stock.quant' and not summarized"
+                                        >
+                                            <t
+                                                t-set="package_barcode"
+                                                t-value="doc['package_id'].name"
+                                            />
+                                            <t
+                                                t-set="package_barcode_name"
+                                                t-value="doc['package_id'].alias or doc['package_id'].name"
+                                            />
+                                        </t>
+                                        <t t-if="package_barcode">
+                                            <img
+                                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('gs1_128', package_barcode, 600, 100)"
+                                                style="width:100%;height:75px;"
+                                                alt="Barcode"
+                                            />
+                                            <span
+                                                style="font-size: 12pt"
+                                                t-out="package_barcode_name"
+                                            />
+                                        </t>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>

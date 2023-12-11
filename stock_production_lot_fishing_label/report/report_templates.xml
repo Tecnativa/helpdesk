@@ -49,7 +49,7 @@
             <!-- Footer -->
             <div class="footer o_standard_footer">
                 <div class="row">
-                    <div class="col-9" style="padding: 0px;">
+                    <div class="col-10">
                         <div class="row">
                             <t t-if="summarized">
                                 <t t-set="barcode" t-value="o['master_box_id'].name" />
@@ -95,40 +95,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-1" style="padding: 0px;">
+                    <div class="col-2">
                         <t
                             t-call="company_sanitary_registry.sanitary_registry_template"
                         />
-                    </div>
-                    <div class="col-2 text-center" style="padding: 0px;">
-                        <t t-if="doc_model != 'stock.quant' and not summarized">
-                            <t
-                                t-set="package_barcode"
-                                t-value="o['result_package_id'].name"
-                            />
-                            <t
-                                t-set="package_barcode_name"
-                                t-value="o['result_package_id'].alias or o['result_package_id'].name"
-                            />
-                        </t>
-                        <t t-elif="doc_model == 'stock.quant' and not summarized">
-                            <t t-set="package_barcode" t-value="o['package_id'].name" />
-                            <t
-                                t-set="package_barcode_name"
-                                t-value="o['package_id'].alias or o['package_id'].name"
-                            />
-                        </t>
-                        <t t-if="package_barcode">
-                            <img
-                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('gs1_128', package_barcode, 600, 100)"
-                                style="width:100%;height:75px;"
-                                alt="Barcode"
-                            />
-                            <span
-                                style="font-size: 12pt"
-                                t-out="package_barcode_name"
-                            />
-                        </t>
                     </div>
                 </div>
                 <div class="row" style="border-top: 1px solid black">
