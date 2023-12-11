@@ -60,7 +60,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
             if lot:
                 if lot.expiration_date:
                     pattern += "15{}".format(
-                        format_date(lot.expiration_date, format="YYMdd")
+                        format_date(lot.expiration_date, format="YYMMdd")
                     )
                 pattern += f"10{lot.name}"
             record.barcode = pattern
@@ -96,7 +96,7 @@ class BarcodeGs1LabelMixin(models.AbstractModel):
             if ai in ("3103",):
                 value = str(int(value * 1000)).zfill(6)
             if isinstance(value, (date, datetime)):
-                value = format_date(value, format="YYMdd")
+                value = format_date(value, format="YYMMdd")
             gs1_barcode += f"{ai}{value}"
             gs1_barcode_human_readable += f"({ai}){value}"
         return gs1_barcode, gs1_barcode_human_readable
