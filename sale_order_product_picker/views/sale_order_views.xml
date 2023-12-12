@@ -283,11 +283,12 @@
                                                             </span>
                                                         </div>
                                                         <!-- TODO: Use stock widget -->
-                                                        <div
-                                                            class="col-6 text-muted"
-                                                            t-if="record.qty_available.raw_value"
-                                                        >
-                                                            Available: <field
+                                                        <div class="col-6 text-muted">
+                                                            <i
+                                                                t-attf-class="#{record.qty_available.raw_value ? 'text-success' : 'text-danger'} fa fa-area-chart"
+                                                            />
+                                                            <field
+                                                                t-if="record.qty_available.raw_value"
                                                                 name="qty_available"
                                                             />
                                                         </div>
