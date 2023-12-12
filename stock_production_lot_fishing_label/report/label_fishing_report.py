@@ -2,7 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import time
 
-from odoo import api, models
+from odoo import _, api, models
+from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
 
 
@@ -109,6 +110,8 @@ class LabelFishingReportMixin(models.AbstractModel):
                 ):
                     summarized = True
                     lines_to_print = self._get_summarized_lines(lines_to_print)
+            if not lines_to_print:
+                raise UserError(_("Master box is empty"))
         for line in lines_to_print:
             langs, client_el = self._compute_langs_print_partner(model_name, line)
             report_langs[line["id"]] = langs
