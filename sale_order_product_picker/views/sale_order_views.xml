@@ -354,11 +354,11 @@
                                                     </div>
                                                     <div
                                                         class="row"
-                                                        t-if="record.qty_delivered.raw_value"
+                                                        t-if="record.times_delivered.raw_value"
                                                     >
                                                         <div class="col-12 text-muted">
                                                             Previous delivered: <field
-                                                                name="qty_delivered"
+                                                                name="times_delivered"
                                                             />
                                                         </div>
                                                     </div>
