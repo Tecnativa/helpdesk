@@ -261,7 +261,7 @@
                                                 />
                                                 <t
                                                     t-set="net_weight"
-                                                    t-value="product.net_weight if not product.qty_per_packaging or product.weight_type == 'fixed' else round(product.net_weight/product.qty_per_packaging, 2)"
+                                                    t-value="product.net_weight if not product.qty_per_packaging or product.weight_type == 'fixed' else product.net_weight/product.qty_per_packaging"
                                                 />
                                                 <td>
                                                     <t
@@ -269,11 +269,11 @@
                                                     >
                                                         <strong
                                                             t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
-                                                            t-out="doc['quantity']"
+                                                            t-out="round(doc['quantity'], 2)"
                                                         />
                                                         <strong
                                                             t-else=""
-                                                            t-out="doc['qty_done']"
+                                                            t-out="round(doc['qty_done'], 2)"
                                                         />
                                                         <strong
                                                             t-field="uom.display_name"
@@ -282,11 +282,11 @@
                                                     <t t-else="">
                                                         <strong
                                                             t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
-                                                            t-out="doc['quantity'] * net_weight"
+                                                            t-out="round(doc['quantity'] * net_weight, 2)"
                                                         />
                                                         <strong
                                                             t-else=""
-                                                            t-out="doc['qty_done'] * net_weight"
+                                                            t-out="round(doc['qty_done'] * net_weight, 2)"
                                                         />
                                                         <strong
                                                             t-field="product.weight_uom_name"
@@ -301,15 +301,15 @@
                                                     >
                                                         <strong
                                                             t-if="doc_model in ['stock.quant', 'stock.picking.line.print'] and not float_is_zero(net_weight, precision_digits=precision)"
-                                                            t-out="doc['quantity'] * (product.drained_weight / net_weight)"
+                                                            t-out="round(doc['quantity'] * (product.drained_weight / net_weight), 2)"
                                                         />
                                                         <strong
                                                             t-elif="not float_is_zero(net_weight, precision_digits=precision)"
-                                                            t-out="doc['qty_done'] * (product.drained_weight / net_weight)"
+                                                            t-out="round(doc['qty_done'] * (product.drained_weight / net_weight), 2)"
                                                         />
                                                         <strong
                                                             t-else=""
-                                                            t-out="net_weight"
+                                                            t-out="round(net_weight, 2)"
                                                         />
                                                         <strong
                                                             t-field="uom.display_name"
@@ -318,11 +318,11 @@
                                                     <t t-else="">
                                                         <strong
                                                             t-if="doc_model in ['stock.quant', 'stock.picking.line.print']"
-                                                            t-out="doc['quantity'] * product.drained_weight"
+                                                            t-out="round(doc['quantity'] * product.drained_weight, 2)"
                                                         />
                                                         <strong
                                                             t-else=""
-                                                            t-out="doc['qty_done'] * product.drained_weight"
+                                                            t-out="round(doc['qty_done'] * product.drained_weight, 2)"
                                                         />
                                                         <strong
                                                             t-field="product.weight_uom_name"
