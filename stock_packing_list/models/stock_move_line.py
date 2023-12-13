@@ -13,11 +13,19 @@ class StockMoveLine(models.Model):
         )
         vals_list = []
         for sml in self:
+            net_weight = (
+                sml.product_id.net_weight
+                if not sml.product_id.qty_per_packaging
+                or sml.product_id.weight_type == "fixed"
+                else round(
+                    sml.product_id.net_weight / sml.product_id.qty_per_packaging, 2
+                )
+            )
             vals_list.append(
                 {
                     "packing_list_item_id": packing_packing_list_item_id,
                     "stock_move_line_id": sml.id,
-                    "qty": sml.qty_done * (sml.product_id.weight or 1.0),
+                    "qty": sml.qty_done * (net_weight or 1.0),
                 }
             )
         self.env["stock.packing.list.detail"].create(vals_list)
