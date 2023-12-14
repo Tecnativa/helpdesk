@@ -22,7 +22,7 @@ class WizStockBarcodeSelectionPrinting(models.TransientModel):
             ),
         ]:
             return stock_move_lines.filtered(
-                lambda ml: ml.product_id.default_code and ml.lot_id
+                lambda ml: ml.product_id.barcode and ml.lot_id
             )
         elif self.barcode_report == self.env.ref(
             "stock_production_lot_fishing_label.action_label_fishing_report_mini"
