@@ -53,6 +53,9 @@ class StockProductionLot(models.Model):
 
     fao_fishing_area_id = fields.Many2one(
         comodel_name="product.attribute.value",
+        context=lambda env: {
+            "default_attribute_id": env.ref("product_fao_fishing.fao_fishing_area").id
+        },
         domain=lambda self: self._get_fao_fishing_area_domain(),
         compute="_compute_fao_fishing",
         readonly=False,
@@ -61,6 +64,11 @@ class StockProductionLot(models.Model):
     )
     fao_fishing_technique_id = fields.Many2one(
         comodel_name="product.attribute.value",
+        context=lambda env: {
+            "default_attribute_id": env.ref(
+                "product_fao_fishing.fao_fishing_technique"
+            ).id
+        },
         domain=lambda self: self._get_fao_fishing_technique_domain(),
         compute="_compute_fao_fishing",
         readonly=False,
@@ -74,6 +82,9 @@ class StockProductionLot(models.Model):
     packaging_date = fields.Datetime()
     presentation_id = fields.Many2one(
         comodel_name="product.attribute.value",
+        context=lambda env: {
+            "default_attribute_id": env.ref("product_fishing.presentation_attribute").id
+        },
         domain=lambda self: self._get_product_presentation_domain(),
         compute="_compute_fao_fishing",
         readonly=False,
@@ -82,6 +93,11 @@ class StockProductionLot(models.Model):
     )
     harvesting_id = fields.Many2one(
         comodel_name="product.attribute.value",
+        context=lambda env: {
+            "default_attribute_id": env.ref(
+                "product_fishing.harvesting_method_attribute"
+            ).id
+        },
         domain=lambda self: self._get_harvesting_method_domain(),
         compute="_compute_fao_fishing",
         readonly=False,
@@ -90,6 +106,11 @@ class StockProductionLot(models.Model):
     )
     country_id = fields.Many2one(
         comodel_name="product.attribute.value",
+        context=lambda env: {
+            "default_attribute_id": env.ref(
+                "product_fishing.product_origin_country_attribute"
+            ).id
+        },
         domain=lambda self: self._get_country_id_domain(),
         compute="_compute_fao_fishing",
         readonly=False,
