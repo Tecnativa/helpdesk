@@ -98,7 +98,7 @@
                                 <t t-set="detail_qty" t-value="0.0" />
                                 <t
                                     t-set="detail_items"
-                                    t-value="item.list_item_detail_ids.sorted(key=lambda ln: (ln.product_id, ln.lot_id))"
+                                    t-value="item.list_item_detail_ids.sorted(key=lambda ln: (ln.product_id.id, ln.lot_id.id))"
                                 />
                                 <t t-foreach="detail_items" t-as="detail">
                                     <t
