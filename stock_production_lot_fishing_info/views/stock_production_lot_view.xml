@@ -10,11 +10,11 @@
                     <group name="first_column">
                         <field
                             name="fao_fishing_area_id"
-                            options="{'no_create': True, 'no_open': True}"
+                            options="{'no_create': True}"
                         />
                         <field
                             name="fao_fishing_technique_id"
-                            options="{'no_create': True, 'no_open': True}"
+                            options="{'no_create': True}"
                         />
                         <field name="harvesting_id" />
                         <field name="fishing_ship_id" />
