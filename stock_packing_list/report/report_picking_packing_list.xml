@@ -100,6 +100,7 @@
                                     t-set="detail_items"
                                     t-value="item.list_item_detail_ids.sorted(key=lambda ln: (ln.product_id.id, ln.lot_id.id))"
                                 />
+                                <t t-set="package_qty_set" t-value="False" />
                                 <t t-foreach="detail_items" t-as="detail">
                                     <t
                                         t-set="detail_qty"
@@ -110,7 +111,11 @@
                                         t-if="detail_last or (detail.product_id, detail.lot_id) != (detail_items[detail_index + 1].product_id, detail_items[detail_index + 1].lot_id)"
                                     >
                                         <td>
-                                            <span t-field="item.package_quantity" />
+                                            <span
+                                                t-if="not package_qty_set"
+                                                t-field="item.package_quantity"
+                                            />
+                                            <t t-set="package_qty_set" t-value="True" />
                                         </td>
                                         <td>
                                             <span t-field="item.pallet_number" />
