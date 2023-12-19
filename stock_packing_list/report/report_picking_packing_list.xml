@@ -189,7 +189,7 @@
                                 <th name="th_sm_pallet_number"><strong
                                     >Pallet Number</strong></th>
                                 <th name="th_sm_weight" class="text-right"><strong
-                                    >Weight (kg)</strong></th>
+                                    >Total Gross Weight (kg)</strong></th>
                                 <th name="th_sm_size"><strong>Size (cm)</strong></th>
                                 <th name="th_sm_volume" class="text-right"><strong
                                     >Volume (m3)</strong></th>
