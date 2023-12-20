@@ -114,6 +114,7 @@
                 <field name="state" />
                 <field name="is_different_price" />
                 <field name="list_price" />
+                <field name="discount" />
             </xpath>
             <xpath
                 expr="//field[@name='order_line']/kanban//t[@t-esc='record.price_unit.value']/.."
@@ -127,6 +128,24 @@
             >
                 <div t-if="record.is_different_price.raw_value" class="text-muted">
                     <field name="list_price" widget="monetary" />
+                </div>
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/kanban//t[@t-esc='record.price_unit.value']/../.."
+                position="after"
+            >
+                <div
+                    class="row"
+                    groups="product.group_discount_per_so_line"
+                    t-if="record.discount.raw_value"
+                >
+                    <div class="col-12 text-muted">
+                        <span>
+                            Discount:
+                        </span>
+                        <field name="discount" widget="product_discount" />
+                        <span>%</span>
+                    </div>
                 </div>
             </xpath>
             <xpath
@@ -210,6 +229,7 @@
                             <field name="product_uom_qty" />
                             <field name="qty_available" />
                             <field name="price_unit" />
+                            <field name="price_order_line" />
                             <field name="move_ids" />
                             <field name="virtual_available_at_date" />
                             <field name="scheduled_date" />
@@ -224,6 +244,7 @@
                             <field name="currency_id" />
                             <field name="is_different_price" />
                             <field name="list_price" />
+                            <field name="multiple_discounts" />
                             <templates>
                                 <t t-name="kanban-box">
                                     <div class="oe_kanban_card oe_kanban_global_click">
@@ -262,11 +283,12 @@
                                                             </span>
                                                         </div>
                                                         <!-- TODO: Use stock widget -->
-                                                        <div
-                                                            class="col-6 text-muted"
-                                                            t-if="record.qty_available.raw_value"
-                                                        >
-                                                            Available: <field
+                                                        <div class="col-6 text-muted">
+                                                            <i
+                                                                t-attf-class="#{record.qty_available.raw_value ? 'text-success' : 'text-danger'} fa fa-area-chart"
+                                                            />
+                                                            <field
+                                                                t-if="record.qty_available.raw_value"
                                                                 name="qty_available"
                                                             />
                                                         </div>
@@ -276,10 +298,20 @@
                                                         <div
                                                             class="col-12 font-weight-bold price_picker"
                                                         >
-                                                            <field
-                                                                name="price_unit"
-                                                                widget="monetary"
-                                                            />
+                                                            <t
+                                                                t-if="record.price_order_line.raw_value"
+                                                            >
+                                                                <field
+                                                                    name="price_order_line"
+                                                                    widget="monetary"
+                                                                />
+                                                            </t>
+                                                            <t t-else="">
+                                                                <field
+                                                                    name="price_unit"
+                                                                    widget="monetary"
+                                                                />
+                                                            </t>
                                                             <div
                                                                 t-if="record.is_different_price.raw_value"
                                                                 class="text-muted"
@@ -293,11 +325,40 @@
                                                     </div>
                                                     <div
                                                         class="row"
-                                                        t-if="record.qty_delivered.raw_value"
+                                                        groups="product.group_discount_per_so_line"
+                                                        t-if="record.discount.raw_value &amp;&amp; !record.multiple_discounts.raw_value"
+                                                    >
+                                                        <div class="col-12 text-muted">
+                                                            <span>
+                                                                Discount:
+                                                            </span>
+                                                            <field
+                                                                name="discount"
+                                                                widget="product_discount"
+                                                            />
+                                                            <span>%</span>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="row"
+                                                        groups="product.group_discount_per_so_line"
+                                                        t-elif="record.multiple_discounts.raw_value"
+                                                    >
+                                                        <div
+                                                            class="col-12 text-warning"
+                                                        >
+                                                            <span><i
+                                                                    class="fa fa-exclamation-triangle"
+                                                                /> Multiple discounts selected</span>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="row"
+                                                        t-if="record.times_delivered.raw_value"
                                                     >
                                                         <div class="col-12 text-muted">
                                                             Previous delivered: <field
-                                                                name="qty_delivered"
+                                                                name="times_delivered"
                                                             />
                                                         </div>
                                                     </div>
