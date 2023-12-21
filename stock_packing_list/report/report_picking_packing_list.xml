@@ -51,7 +51,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-auto">
-                                    <h2>Summary boxes:</h2>
+                                    <h2>Packing List boxes:</h2>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                         t-set="packing_list_item_ids_is_pallet"
                         t-value="o.packing_list_item_ids.filtered(lambda x: x.is_pallet)"
                     />
-                    <h2>Summary pallet:</h2>
+                    <h2>Packing List pallet:</h2>
                     <table
                         class="table table-sm"
                         style="margin: 0"
