@@ -216,7 +216,7 @@
                                 </t>
                             </tbody>
                         </table>
-                        <div id="type_goods_break" style="page-break-before:always;" />
+                        <div id="type_goods_break" style="page-break-before: auto;" />
                     </t>
                     <div
                             t-foreach="doc.picking_ids.filtered('note')"
