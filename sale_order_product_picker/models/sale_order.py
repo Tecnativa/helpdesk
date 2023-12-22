@@ -151,7 +151,10 @@ class SaleOrder(models.Model):
             if product_ids is None:
                 continue
             picker_data_list = getattr(
-                order,
+                # Force no display archived records due we are in a computed method.
+                # See: https://github.com/odoo/odoo/blob/
+                # b1f9b7167979aa3a1910fd2ab09507eb26bd1f79/odoo/models.py#L6028
+                order.with_context(active_test=True),
                 "_get_product_picker_data_{}".format(
                     order.picker_origin_data or "products"
                 ),
