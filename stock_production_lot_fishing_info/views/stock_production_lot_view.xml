@@ -25,17 +25,10 @@
                         <field name="quality" />
                         <field name="presentation_id" />
                     </group>
+                    <group name="other_info" string="Other info">
+                        <field name="packaging_date" />
+                    </group>
                 </group>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="view_move_form_expiry" model="ir.ui.view">
-        <field name="inherit_id" ref="product_expiry.view_move_form_expiry" />
-        <field name="model">stock.production.lot</field>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='expiration_date']" position="before">
-                <field name="packaging_date" />
             </xpath>
         </field>
     </record>
