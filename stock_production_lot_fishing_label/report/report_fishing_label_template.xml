@@ -85,7 +85,7 @@
                                     <div class="float-left" style="max-width: 900px">
                                         <t t-foreach="langs" t-as="lang">
                                             <strong
-                                                t-attf-style="font-size: {{'15pt' if lang_index &gt; 1 else '23pt'}}; display: block; line-height:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                                t-attf-style="font-size: {{'17pt' if lang_index &gt; 1 else '23pt'}}; display: block; line-height:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                             >
                                                 <span
                                                     t-field="product.with_context(lang=lang).name"
