@@ -216,13 +216,13 @@
                                 </t>
                             </tbody>
                         </table>
-                        <div id="type_goods_break" style="page-break-before: auto;" />
+                        <div id="type_goods_break" style="page-break-before: always;" />
                     </t>
                     <div
                             t-foreach="doc.picking_ids.filtered('note')"
                             t-as="pick_with_note"
                         >
-                        <span t-field="pick_with_note.note" />
+                        <span t-if="not is_html_empty(pick_with_note.note)" t-field="pick_with_note.note"/>
                     </div>
                 </t>
             </div>
