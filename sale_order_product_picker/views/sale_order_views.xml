@@ -326,9 +326,11 @@
                                                     <div
                                                         class="row"
                                                         groups="product.group_discount_per_so_line"
-                                                        t-if="record.discount.raw_value &amp;&amp; !record.multiple_discounts.raw_value"
                                                     >
-                                                        <div class="col-12 text-muted">
+                                                        <div
+                                                            class="col-12 text-muted"
+                                                            t-if="record.discount.raw_value &amp;&amp; !record.multiple_discounts.raw_value"
+                                                        >
                                                             <span>
                                                                 Discount:
                                                             </span>
@@ -338,14 +340,9 @@
                                                             />
                                                             <span>%</span>
                                                         </div>
-                                                    </div>
-                                                    <div
-                                                        class="row"
-                                                        groups="product.group_discount_per_so_line"
-                                                        t-elif="record.multiple_discounts.raw_value"
-                                                    >
                                                         <div
                                                             class="col-12 text-warning"
+                                                            t-elif="record.multiple_discounts.raw_value"
                                                         >
                                                             <span><i
                                                                     class="fa fa-exclamation-triangle"
