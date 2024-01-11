@@ -20,4 +20,12 @@
         "views/res_partner.xml",
         "views/sale_order_views.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "sale_product_security_price/static/src/js/*",
+        ],
+        "web.assets_qweb": [
+            "sale_product_security_price/static/src/xml/*",
+        ],
+    },
 }

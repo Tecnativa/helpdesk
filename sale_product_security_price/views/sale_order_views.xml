@@ -56,6 +56,26 @@
                 </t>
             </xpath>
             <!-- End TT31786 -->
+            <!-- TT47020 -->
+            <xpath
+                expr="//field[@name='order_line']//form//field[@name='display_type']"
+                position="after"
+            >
+                <field name="security_price_warning" invisible="1" />
+                <field
+                    name="sale_product_security_price_display_raise_button"
+                    invisible="1"
+                />
+                <!-- Fields needed to show the button -->
+                <field name="currency_id" widget="monetary" invisible="1" />
+                <field name="price_reduce" widget="monetary" invisible="1" />
+                <field name="security_price" widget="monetary" invisible="1" />
+                <widget
+                    name="security_price_button"
+                    attrs="{'invisible': ['|', ('state', 'not in', ('draft', 'sent')), ('security_price_warning', '!=', True)]}"
+                />
+            </xpath>
+            <!-- End TT47020 -->
             <xpath expr="//field[@name='order_line']" position="before">
                 <field name="security_price_warning" invisible="1" />
                 <field
