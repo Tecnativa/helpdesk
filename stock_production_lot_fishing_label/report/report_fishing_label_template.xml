@@ -379,16 +379,9 @@
                                             class="col-6"
                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                         >
-                                            <t t-foreach="langs" t-as="lang">
-                                                <strong>
-                                                    <span
-                                                        t-field="lot.fao_fishing_area_id.with_context(lang=lang).name"
-                                                    />
-                                                    <span
-                                                        t-if="lang != langs[-1]"
-                                                    > / </span>
-                                                </strong>
-                                            </t>
+                                            <strong
+                                                t-out="get_multilang_limited_value(langs, lot.fao_fishing_area_id, 'name', ' / ', limit=57)"
+                                            />
                                         </div>
                                     </div>
                                 </td>
@@ -411,16 +404,9 @@
                                             class="col-6"
                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                         >
-                                            <t t-foreach="langs" t-as="lang">
-                                                <strong>
-                                                    <span
-                                                        t-field="lot.harvesting_id.with_context(lang=lang).name"
-                                                    />
-                                                    <span
-                                                        t-if="lang != langs[-1]"
-                                                    > / </span>
-                                                </strong>
-                                            </t>
+                                            <strong
+                                                t-out="get_multilang_limited_value(langs, lot.harvesting_id, 'name', ' / ', limit=57)"
+                                            />
                                         </div>
                                     </div>
                                 </td>
@@ -443,16 +429,9 @@
                                             class="col-6"
                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                         >
-                                            <t t-foreach="langs" t-as="lang">
-                                                <strong>
-                                                    <span
-                                                        t-field="lot.fao_fishing_technique_id.with_context(lang=lang).name"
-                                                    />
-                                                    <span
-                                                        t-if="lang != langs[-1]"
-                                                    > / </span>
-                                                </strong>
-                                            </t>
+                                            <strong
+                                                t-out="get_multilang_limited_value(langs, lot.fao_fishing_technique_id, 'name', ' / ', limit=57)"
+                                            />
                                         </div>
                                     </div>
                                 </td>
@@ -500,16 +479,9 @@
                                             class="col-6"
                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                         >
-                                            <t t-foreach="langs" t-as="lang">
-                                                <strong>
-                                                    <span
-                                                        t-field="lot.country_id.with_context(lang=lang).name"
-                                                    />
-                                                    <span
-                                                        t-if="lang != langs[-1]"
-                                                    > / </span>
-                                                </strong>
-                                            </t>
+                                            <strong
+                                                t-out="get_multilang_limited_value(langs, lot.country_id, 'name', ' / ', limit=57)"
+                                            />
                                         </div>
                                     </div>
                                 </td>
@@ -532,16 +504,9 @@
                                             class="col-6"
                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                         >
-                                            <t t-foreach="langs" t-as="lang">
-                                                <strong>
-                                                    <span
-                                                        t-field="lot.presentation_id.with_context(lang=lang).name"
-                                                    />
-                                                    <span
-                                                        t-if="lang != langs[-1]"
-                                                    > / </span>
-                                                </strong>
-                                            </t>
+                                            <strong
+                                                t-out="get_multilang_limited_value(langs, lot.presentation_id, 'name', ' / ', limit=57)"
+                                            />
                                         </div>
                                     </div>
                                 </td>
