@@ -91,6 +91,16 @@ class LabelFishingReportMixin(models.AbstractModel):
         return summarized_lines
 
     @api.model
+    def get_multilang_limited_value(self, langs, record, field, separator, limit=None):
+        values = []
+        for lang in langs:
+            values.append(record.with_context(lang=lang)[field])
+        res = separator.join(values)
+        if limit and len(res) > limit:
+            res = res[:limit] + "..."
+        return res
+
+    @api.model
     def _get_report_values(self, docids, data=None):
         model_name = self.based_model
         summarized = False
@@ -135,6 +145,7 @@ class LabelFishingReportMixin(models.AbstractModel):
             "product_filter": self.env.ref(
                 "stock_production_lot_fishing_label.filter_product_one_label"
             ),
+            "get_multilang_limited_value": self.get_multilang_limited_value,
         }
         return docargs
 
