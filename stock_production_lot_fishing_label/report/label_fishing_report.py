@@ -39,25 +39,32 @@ class LabelFishingReportMixin(models.AbstractModel):
         summarized_lines = []
         while lines:
             reference_line = lines[0]
+            net_weight = (
+                reference_line.product_id.weight_type != "variable"
+                and reference_line.product_id.net_weight
+                or 1.0
+            )
             if reference_line._name == "stock.quant":
                 filtered_quants = lines.filtered(
                     lambda line: line.product_id == reference_line.product_id
                     and line.package_id.master_box_id
                     == reference_line.package_id.master_box_id
+                    and line.lot_id == reference_line.lot_id
                 )
                 lines -= filtered_quants
+                qty_done = sum(filtered_quants.mapped("quantity"))
                 summarized_lines.append(
                     {
                         "id": str(reference_line.product_id.id)
                         + str(reference_line.package_id.master_box_id.id),
                         "lot_id": reference_line.lot_id,
-                        "lot_ids": filtered_quants.lot_id,
                         "product_id": reference_line.product_id,
                         "product_uom_id": reference_line.product_uom_id,
-                        "qty_done": sum(filtered_quants.mapped("quantity")),
+                        "qty_done": qty_done,
                         "result_package_id": reference_line.package_id,
                         "result_package_ids": filtered_quants.package_id,
                         "master_box_id": reference_line.package_id.master_box_id,
+                        "net_weight": round(qty_done * net_weight, 2),
                     }
                 )
             else:
@@ -66,26 +73,28 @@ class LabelFishingReportMixin(models.AbstractModel):
                     lambda line: line.product_id == reference_line.product_id
                     and line.result_package_id.master_box_id
                     == reference_line.result_package_id.master_box_id
+                    and line.lot_id == reference_line.lot_id
                 )
                 lines = lines.filtered(
                     lambda line: line.move_line_id not in filtered_smls
                 )
+                qty_done = sum(filtered_smls.mapped("qty_done"))
                 summarized_lines.append(
                     {
                         "id": str(reference_line.product_id.id)
                         + str(reference_line.result_package_id.master_box_id.id),
                         "lot_id": reference_line.lot_id,
-                        "lot_ids": filtered_smls.lot_id,
                         "product_id": reference_line.product_id,
                         "label_qty": reference_line.label_qty,
                         "picking_partner_id": reference_line.move_line_id.picking_partner_id,
                         "move_id": reference_line.move_line_id.move_id,
                         "product_uom_id": reference_line.move_line_id.product_uom_id,
-                        "qty_done": sum(filtered_smls.mapped("qty_done")),
+                        "qty_done": qty_done,
                         "result_package_id": reference_line.result_package_id,
                         "result_package_ids": filtered_smls.result_package_id,
                         "move_line_id": reference_line.move_line_id,
                         "master_box_id": reference_line.result_package_id.master_box_id,
+                        "net_weight": round(qty_done * net_weight, 2),
                     }
                 )
         return summarized_lines
