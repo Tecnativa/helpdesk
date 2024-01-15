@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_attendance_time_record_report_wizard" model="ir.ui.view">
+        <field name="name">Time record report</field>
+        <field name="model">hr.attendance.time.record.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="main_info">
+                    <field
+                        name="company_id"
+                        options="{'no_create': True}"
+                        groups="base.group_multi_company"
+                    />
+                </group>
+                <group name="filters">
+                    <group name="date_range">
+                        <field name="date_from" />
+                        <field name="date_to" />
+                    </group>
+                    <group name="other_filters">
+                        <field
+                            name="department_ids"
+                            widget="many2many_tags"
+                            options="{'no_create': True}"
+                        />
+                        <field
+                            name="employee_ids"
+                            widget="many2many_tags"
+                            options="{'no_create': True}"
+                        />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="button_export_xlsx"
+                        string="Export XLSX"
+                        type="object"
+                    />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record
+        id="action_hr_attendance_time_record_report_wizard"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Time record report</field>
+        <field name="res_model">hr.attendance.time.record.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_attendance_time_record_report_wizard" />
+        <field name="target">new</field>
+    </record>
+    <menuitem
+        parent="hr_attendance.menu_hr_attendance_root"
+        id="menu_time_record_report"
+        name="Time record"
+        action="action_hr_attendance_time_record_report_wizard"
+        groups="hr_attendance.group_hr_attendance_user"
+    />
+</odoo>
