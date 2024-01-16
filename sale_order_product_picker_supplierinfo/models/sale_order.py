@@ -94,12 +94,14 @@ class SaleOrderLine(models.Model):
         for line in self:
             if not line.supplierinfo_id and not line.vendor_id:
                 continue
-            if line.state in ("sale", "done"):
+            if (line.state in ("sale", "done")) and line.move_ids:
+                # See _get_moves_orig to use
+                moves = line.move_ids[0]._get_moves_orig(line.move_ids[1:])
                 purchase_line_id = (
-                    line.move_ids._get_moves_orig()
-                    .filtered(lambda sm: sm.state != "cancel")
-                    .move_orig_ids.purchase_line_id
-                )
+                    moves.filtered(
+                        lambda sm: sm.state != "cancel"
+                    ).move_orig_ids.purchase_line_id
+                )[-1:]
                 if purchase_line_id:
                     if line.purchase_price != purchase_line_id.price_unit:
                         line.purchase_price = purchase_line_id.price_unit
