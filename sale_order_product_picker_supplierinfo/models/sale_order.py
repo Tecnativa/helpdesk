@@ -24,7 +24,13 @@ class SaleOrder(models.Model):
             "&",
             "|",
             ("product_id", "in", products.ids),
-            ("product_tmpl_id", "in", products.product_tmpl_id.ids),
+            (
+                "product_tmpl_id",
+                "in",
+                products.product_tmpl_id.filtered(
+                    lambda pt: pt.product_variant_count == 1
+                ).ids,
+            ),
             "&",
             "|",
             ("date_start", "=", False),
