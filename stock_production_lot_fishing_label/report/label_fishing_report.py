@@ -101,6 +101,8 @@ class LabelFishingReportMixin(models.AbstractModel):
 
     @api.model
     def get_multilang_limited_value(self, langs, record, field, separator, limit=None):
+        if not record or field not in record._fields:
+            return ""
         values = []
         for lang in langs:
             values.append(record.with_context(lang=lang)[field])
