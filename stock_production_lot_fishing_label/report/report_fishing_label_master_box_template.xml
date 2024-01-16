@@ -23,10 +23,6 @@
                 t-set="count"
                 t-value="doc['label_qty'] if doc_model == 'stock.picking.line.print' else 1"
             />
-            <t
-                t-set="net_weight"
-                t-value="o['product_id'].weight_type != 'variable' and o['product_id'].net_weight or 1.0"
-            />
             <t t-foreach="count" t-as="i">
                 <div class="page" style="font-size: 16pt;">
                     <div class="row">
@@ -39,14 +35,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 text-right">
-                            <strong style="font-size: 45pt;">
-                                CAJA MASTER BOX
-                            </strong>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
+                        <div class="col-7">
                             <t t-foreach="langs" t-as="lang">
                                 <strong
                                     style="font-size: 20pt;"
@@ -54,6 +43,16 @@
                                 />
                                 <br t-if="lang != langs[-1]" />
                             </t>
+                        </div>
+                        <div class="col-5 text-right">
+                            <strong style="font-size: 45pt;">
+                                CAJA MASTER BOX
+                            </strong>
+                            <br />
+                            <strong style="font-size: 45pt;">
+                                <strong>LOT:</strong>
+                                <span t-field="doc['lot_id'].name" />
+                            </strong>
                         </div>
                     </div>
                     <div class="row">
@@ -89,42 +88,82 @@
                         t-value="env['decimal.precision'].precision_get('Product Unit of Measure')"
                     />
                     <div style="border-top: 1px solid black;" />
+                    <div class="row text-center" style="font-size: 18pt;">
+                        <div class="col-12">
+                            <table
+                                class="text-center"
+                                style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 18pt;width:100%"
+                            >
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_freezing"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_expiration"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_net_weight"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong
+                                                t-field="doc['lot_id'].packaging_date"
+                                                t-options='{"widget": "date"}'
+                                            />
+                                        </td>
+                                        <td>
+                                            <strong
+                                                t-field="doc['lot_id'].expiration_date"
+                                                t-options='{"widget": "date"}'
+                                            />
+                                        </td>
+                                        <td>
+                                            <strong><span
+                                                    t-esc="doc['net_weight']"
+                                                /> Kg</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="border-top: 1px solid black;" />
                     <div class="row">
-                        <div class="col-6">
-                            <strong>LOTS:</strong>
-                            <br />
-                            <span t-esc="', '.join([x.name for x in doc['lot_ids']])" />
-                            <br /><br />
+                        <div class="col-12">
                             <strong>PACKAGES:</strong>
-                            <br />
                             <span
                                 t-esc="', '.join([x.name for x in doc['result_package_ids']])"
                             />
                         </div>
-                        <div class="col-6">
-                            <strong>TOTAL NET WEIGHT:</strong>
-                            <br />
-                            <span t-esc="round(doc['qty_done'] * net_weight, 2)" /> Kg
-                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-6">
-                            <strong t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_freezing"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </strong>
-                            <br />
-                            <strong t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.basic_layout_fishing_label_expiration"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </strong>
-                            <br />
                             <strong t-foreach="langs" t-as="lang">
                                 <span
                                     t-call="stock_production_lot_fishing_label.label_fishing_master_box_traceability"
@@ -136,14 +175,6 @@
                             <strong t-foreach="langs" t-as="lang">
                                 <t
                                     t-call="stock_production_lot_fishing_label.label_fishing_master_box_ingredients"
-                                    t-lang="lang"
-                                />
-                                <span t-if="lang != langs[-1]"> / </span>
-                            </strong>
-                            <br />
-                            <strong t-foreach="langs" t-as="lang">
-                                <t
-                                    t-call="stock_production_lot_fishing_label.label_fishing_master_box_conservation"
                                     t-lang="lang"
                                 />
                                 <span t-if="lang != langs[-1]"> / </span>
@@ -166,6 +197,22 @@
                                 <br />
                             </t>
                             <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong t-foreach="langs" t-as="lang">
+                                <t
+                                    t-call="stock_production_lot_fishing_label.label_fishing_master_box_conservation"
+                                    t-lang="lang"
+                                />
+                                <span t-if="lang != langs[-1]"> / </span>
+                            </strong>
+                        </div>
+                        <div class="col-6">
+                            <strong
+                                t-out="'0-4ºC' if doc['product_id'].gamma_ids[:1] != env.ref('product_fishing.product_gamma_c') else '-18ºC'"
+                            />
                         </div>
                     </div>
                 </div>
