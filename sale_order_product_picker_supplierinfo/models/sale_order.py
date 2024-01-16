@@ -94,6 +94,17 @@ class SaleOrderLine(models.Model):
         for line in self:
             if not line.supplierinfo_id and not line.vendor_id:
                 continue
+            if line.state in ("sale", "done"):
+                purchase_line_id = (
+                    line.move_ids._get_moves_orig()
+                    .filtered(lambda sm: sm.state != "cancel")
+                    .move_orig_ids.purchase_line_id
+                )
+                if purchase_line_id:
+                    if line.purchase_price != purchase_line_id.price_unit:
+                        line.purchase_price = purchase_line_id.price_unit
+                    processed_lines += line
+                    continue
             supplier_info = line.supplierinfo_id or line._get_vendor_supplier_info()
             if supplier_info:
                 line.purchase_price = supplier_info.price
