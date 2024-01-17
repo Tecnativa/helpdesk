@@ -275,3 +275,16 @@ class SaleOrderLine(models.Model):
             line.is_different_price = bool(
                 float_compare(line.price_unit, line.list_price, precision_digits=digits)
             )
+
+    #  Next methods are overriden to respect the price set on picker cards
+    @api.onchange("product_uom", "product_uom_qty")
+    def product_uom_change(self):
+        if self.env.context.get("bypass_by_picker"):
+            return
+        return super().product_uom_change()
+
+    @api.onchange("product_id")
+    def product_id_change(self):
+        if self.env.context.get("bypass_by_picker"):
+            return
+        return super().product_id_change()
