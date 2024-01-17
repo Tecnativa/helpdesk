@@ -28,6 +28,7 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                     ctx[key] = this.recordData[field].res_id || this.recordData[field];
                 }
             }
+            ctx.bypass_by_picker = true;
             return ctx;
         },
         /**
@@ -180,6 +181,8 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                 });
                 const id = changes.filter((change) => change.name === "order_line")[0]
                     .value.data[0].id;
+                // Keep context to avoid loosing price_unit set as default
+                Object.assign(model.localData[id].context, ctx);
                 const idHandler = () => {
                     list._setValue({
                         operation: "DELETE",
