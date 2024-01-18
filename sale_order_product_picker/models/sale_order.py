@@ -279,12 +279,20 @@ class SaleOrderLine(models.Model):
     #  Next methods are overriden to respect the price set on picker cards
     @api.onchange("product_uom", "product_uom_qty")
     def product_uom_change(self):
-        if self.env.context.get("bypass_by_picker"):
-            return
-        return super().product_uom_change()
+        res = super().product_uom_change()
+        if (
+            self.env.context.get("price_unit_set_by_picker")
+            and "default_price_unit" in self.env.context
+        ):
+            self.price_unit = self.env.context["default_price_unit"]
+        return res
 
     @api.onchange("product_id")
     def product_id_change(self):
-        if self.env.context.get("bypass_by_picker"):
-            return
-        return super().product_id_change()
+        res = super().product_id_change()
+        if (
+            self.env.context.get("price_unit_set_by_picker")
+            and "default_price_unit" in self.env.context
+        ):
+            self.price_unit = self.env.context["default_price_unit"]
+        return res

@@ -28,7 +28,7 @@ odoo.define("sale_order_product_picker.PickerKanbanRecord", function (require) {
                     ctx[key] = this.recordData[field].res_id || this.recordData[field];
                 }
             }
-            ctx.bypass_by_picker = true;
+            ctx.price_unit_set_by_picker = true;
             return ctx;
         },
         /**
