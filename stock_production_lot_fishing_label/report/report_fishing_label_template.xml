@@ -66,6 +66,7 @@
                     <t t-set="langs" t-value="report_langs[doc['id']]" />
                     <table style="width: 100%">
                         <thead>
+                            <tr><br /></tr>
                             <tr t-if="show_client_elaborations">
                                 <td class="text-center">
                                     <strong
@@ -177,7 +178,7 @@
                                     />
                                     <table
                                         class="text-center"
-                                        style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 18pt;width:100%"
+                                        style="border-top: 1px solid black;border-bottom: 1px solid black;font-size: 18pt;width:100%;line-height:100%;"
                                     >
                                         <tbody>
                                             <tr>
