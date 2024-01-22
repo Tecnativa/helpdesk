@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="sale_product_security_price.WidgetSecurityPrice" owl="1">
+        <div class="alert alert-warning">
+            The price selected is under security price
+            <button
+                title="Raise unit price to product security price"
+                aria-label="Raise unit price to product security price"
+                class="btn btn-success"
+                t-on-click="_onClick"
+            >
+                <i class="fa fa-long-arrow-up" /> <span
+                    t-esc="security_price_monetary"
+                />
+            </button>
+        </div>
+    </t>
+</templates>
