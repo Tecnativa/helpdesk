@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-27 11:39+0000\n"
-"PO-Revision-Date: 2022-07-27 13:45+0200\n"
+"POT-Creation-Date: 2024-01-22 15:10+0000\n"
+"PO-Revision-Date: 2024-01-22 16:12+0100\n"
 "Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #. module: sale_product_security_price
 #: model:ir.model.fields,field_description:sale_product_security_price.field_product_product__security_price_margin
@@ -32,12 +32,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_product_security_price.product_template_form_view
 msgid ""
 "<span style=\"padding-left: 1em;\" groups=\"product_cost_security."
-"group_product_cost\"><i class=\"fa fa-percent\" role=\"img\" title=\"Margin"
-"\"/> Margin </span>"
+"group_product_cost\"><i class=\"fa fa-percent\" role=\"img\" "
+"title=\"Margin\"/> Margin </span>"
 msgstr ""
 "<span style=\"padding-left: 1em;\" groups=\"product_cost_security."
-"group_product_cost\"><i class=\"fa fa-percent\" role=\"img\" title=\"Margin"
-"\"/> Margen </span>"
+"group_product_cost\"><i class=\"fa fa-percent\" role=\"img\" "
+"title=\"Margin\"/> Margen </span>"
 
 #. module: sale_product_security_price
 #: model_terms:ir.ui.view,arch_db:sale_product_security_price.view_order_form
@@ -52,11 +52,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_product_security_price.field_res_config_settings__allow_custom_defaults_for_security_price
 msgid "Allow Custom Defaults For Security Price"
 msgstr "Permitir predefinir valores para precio de seguridad"
-
-#. module: sale_product_security_price
-#: model_terms:ir.ui.view,arch_db:sale_product_security_price.product_security_price_template_viw_tree
-msgid "Amount Security Price template"
-msgstr "Plantilla de precios de seguridad"
 
 #. module: sale_product_security_price
 #: model:ir.model.fields,field_description:sale_product_security_price.field_product_security_price_template__security_price
@@ -92,6 +87,11 @@ msgstr "Compañías"
 #: model:ir.model.fields,field_description:sale_product_security_price.field_product_security_price_template__company_id
 msgid "Company"
 msgstr "Compañía"
+
+#. module: sale_product_security_price
+#: model:ir.model,name:sale_product_security_price.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
 
 #. module: sale_product_security_price
 #: model:ir.model,name:sale_product_security_price.model_res_partner
@@ -182,11 +182,6 @@ msgid "Method for Security Price Computation"
 msgstr "Método para el precio de seguridad"
 
 #. module: sale_product_security_price
-#: model:ir.model,name:sale_product_security_price.model_res_config_settings
-msgid "Procurement purchase grouping settings"
-msgstr "Agrupación de la compra abastecida"
-
-#. module: sale_product_security_price
 #: model:ir.model,name:sale_product_security_price.model_product_product
 msgid "Product"
 msgstr "Producto"
@@ -207,7 +202,10 @@ msgid "Product security price template"
 msgstr "Plantilla de precios de seguridad"
 
 #. module: sale_product_security_price
+#. openerp-web
+#: code:addons/sale_product_security_price/static/src/xml/security_price_button_widget.xml:0
 #: model_terms:ir.ui.view,arch_db:sale_product_security_price.view_order_form
+#, python-format
 msgid "Raise unit price to product security price"
 msgstr "Subir el precio unitario hasta el precio de seguridad del producto"
 
@@ -302,6 +300,20 @@ msgstr "Definir factor de redondeo para el computo del precio de seguridad."
 #: model_terms:ir.ui.view,arch_db:sale_product_security_price.product_template_form_view
 msgid "Set security price"
 msgstr "Establecer precio de seguridad"
+
+#. module: sale_product_security_price
+#. openerp-web
+#: code:addons/sale_product_security_price/static/src/xml/security_price_button_widget.xml:0
+#, python-format
+msgid "The price selected is under security price"
+msgstr "El precio seleccionado está por debajo del precio de seguridad"
+
+#. module: sale_product_security_price
+#. openerp-web
+#: code:addons/sale_product_security_price/static/src/js/view_dialog.esm.js:0
+#, python-format
+msgid "The price set is under security price."
+msgstr "El precio asignado está por debajo del precio de seguridad"
 
 #. module: sale_product_security_price
 #: model:ir.model.fields,field_description:sale_product_security_price.field_res_company__value_for_default_security_price

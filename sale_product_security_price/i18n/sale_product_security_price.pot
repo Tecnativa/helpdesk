@@ -6,6 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-22 15:10+0000\n"
+"PO-Revision-Date: 2024-01-22 15:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,11 +49,6 @@ msgid "Allow Custom Defaults For Security Price"
 msgstr ""
 
 #. module: sale_product_security_price
-#: model_terms:ir.ui.view,arch_db:sale_product_security_price.product_security_price_template_viw_tree
-msgid "Amount Security Price template"
-msgstr ""
-
-#. module: sale_product_security_price
 #: model:ir.model.fields,field_description:sale_product_security_price.field_product_security_price_template__security_price
 msgid "Amount extra"
 msgstr ""
@@ -81,6 +78,11 @@ msgstr ""
 #. module: sale_product_security_price
 #: model:ir.model.fields,field_description:sale_product_security_price.field_product_security_price_template__company_id
 msgid "Company"
+msgstr ""
+
+#. module: sale_product_security_price
+#: model:ir.model,name:sale_product_security_price.model_res_config_settings
+msgid "Config Settings"
 msgstr ""
 
 #. module: sale_product_security_price
@@ -163,11 +165,6 @@ msgid "Method for Security Price Computation"
 msgstr ""
 
 #. module: sale_product_security_price
-#: model:ir.model,name:sale_product_security_price.model_res_config_settings
-msgid "Procurement purchase grouping settings"
-msgstr ""
-
-#. module: sale_product_security_price
 #: model:ir.model,name:sale_product_security_price.model_product_product
 msgid "Product"
 msgstr ""
@@ -188,7 +185,11 @@ msgid "Product security price template"
 msgstr ""
 
 #. module: sale_product_security_price
+#. openerp-web
+#: code:addons/sale_product_security_price/static/src/xml/security_price_button_widget.xml:0
+#: code:addons/sale_product_security_price/static/src/xml/security_price_button_widget.xml:0
 #: model_terms:ir.ui.view,arch_db:sale_product_security_price.view_order_form
+#, python-format
 msgid "Raise unit price to product security price"
 msgstr ""
 
@@ -280,6 +281,20 @@ msgstr ""
 #. module: sale_product_security_price
 #: model_terms:ir.ui.view,arch_db:sale_product_security_price.product_template_form_view
 msgid "Set security price"
+msgstr ""
+
+#. module: sale_product_security_price
+#. openerp-web
+#: code:addons/sale_product_security_price/static/src/xml/security_price_button_widget.xml:0
+#, python-format
+msgid "The price selected is under security price"
+msgstr ""
+
+#. module: sale_product_security_price
+#. openerp-web
+#: code:addons/sale_product_security_price/static/src/js/view_dialog.esm.js:0
+#, python-format
+msgid "The price set is under security price."
 msgstr ""
 
 #. module: sale_product_security_price
