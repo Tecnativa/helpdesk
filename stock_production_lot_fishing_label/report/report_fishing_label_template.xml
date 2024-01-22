@@ -25,6 +25,9 @@
     <template id="label_fishing_report_document_keep_at">
         <span>Keep at</span>
     </template>
+    <template id="label_fishing_report_document_elaboration_country">
+        <span>Manufacturing country</span>
+    </template>
     <template id="label_fishing_report_document_nutrition_facts">
         <div class="row">
             <t
@@ -66,7 +69,7 @@
                     <t t-set="langs" t-value="report_langs[doc['id']]" />
                     <table style="width: 100%">
                         <thead>
-                            <tr><br /></tr>
+                            <tr><td><br /></td></tr>
                             <tr t-if="show_client_elaborations">
                                 <td class="text-center">
                                     <strong
@@ -532,6 +535,33 @@
                                         >
                                             <strong
                                                 t-out="'0-4ºC' if product.gamma_ids[:1] != env.ref('product_fishing.product_gamma_c') else '-18ºC'"
+                                            />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr
+                                t-if="product.attribute_line_ids.filtered(lambda al: al.attribute_id == env.ref('stock_production_lot_fishing_info.manufacturing_country'))"
+                            >
+                                <td>
+                                    <div class="row" id="elaboration_country">
+                                        <div class="col-6">
+                                            <t t-foreach="langs" t-as="lang">
+                                                <t
+                                                    t-call="stock_production_lot_fishing_label.label_fishing_report_document_elaboration_country"
+                                                    t-lang="lang"
+                                                />
+                                                <span
+                                                    t-if="lang != langs[-1]"
+                                                > / </span>
+                                            </t>
+                                        </div>
+                                        <div
+                                            class="col-6"
+                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <strong
+                                                t-out="get_multilang_limited_value(langs, product.attribute_line_ids.filtered(lambda al: al.attribute_id == env.ref('stock_production_lot_fishing_info.manufacturing_country')).value_ids[:1], 'name', ' / ', limit=57)"
                                             />
                                         </div>
                                     </div>
