@@ -10,8 +10,10 @@ class ReportPrintBatchPickingAllMoves(models.AbstractModel):
     _description = "Report Batch Picking All Moves"
 
     def key_level_0(self, operation):
+        elevated_location = 1 if operation.location_id.posz else 0
         return (
             operation.picking_id.batch_id.id,
+            elevated_location,
             operation.move_line_ids[:1].location_id.type_goods
             or operation.location_id.type_goods,
         )
@@ -33,7 +35,12 @@ class ReportPrintBatchPickingAllMoves(models.AbstractModel):
             field_values = location.fields_get(["type_goods"])["type_goods"][
                 "selection"
             ]
-            level_0_name = dict(field_values)[location.type_goods]
+            if operation.posz:
+                level_0_name = (
+                    f"{dict(field_values)[operation.location_id.type_goods]} (Altura)"
+                )
+            else:
+                level_0_name = dict(field_values)[operation.location_id.type_goods]
         return {
             "name": level_0_name,
             "location": location,
