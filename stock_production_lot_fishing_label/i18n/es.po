@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-26 10:58+0000\n"
-"PO-Revision-Date: 2023-09-26 13:08+0200\n"
+"POT-Creation-Date: 2024-01-22 12:30+0000\n"
+"PO-Revision-Date: 2024-01-22 13:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,15 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
-
-#. module: stock_production_lot_fishing_label
-#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_master_box_report_document
-msgid ""
-"<br/><br/>\n"
-"                            <strong>PACKAGES:</strong>\n"
-"                            <br/>"
-msgstr ""
+"X-Generator: Poedit 3.4.1\n"
 
 #. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
@@ -86,6 +78,11 @@ msgid "<span>Keep at</span>"
 msgstr "<span>Mantener a</span>"
 
 #. module: stock_production_lot_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_report_document_elaboration_country
+msgid "<span>Manufacturing country</span>"
+msgstr "<span>País de elaboración</span>"
+
+#. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label_net_weight
 msgid "<span>Net Weight</span>"
 msgstr "<span>Peso neto</span>"
@@ -116,25 +113,40 @@ msgid "<span>Traceability</span>"
 msgstr "<span>Trazabilidad</span>"
 
 #. module: stock_production_lot_fishing_label
-#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_master_box_report_document
 msgid ""
 "<strong style=\"font-size: 45pt;\">\n"
-"                            CAJA MASTER BOX\n"
-"                        </strong>"
-msgstr ""
-
-#. module: stock_production_lot_fishing_label
-#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_master_box_report_document
-msgid ""
-"<strong>LOTS:</strong>\n"
+"                                CAJA MASTER BOX\n"
+"                            </strong>\n"
 "                            <br/>"
 msgstr ""
 
 #. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_master_box_report_document
-msgid ""
-"<strong>TOTAL NET WEIGHT:</strong>\n"
-"                            <br/>"
+msgid "<strong>LOT:</strong>"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_master_box_report_document
+msgid "<strong>PACKAGES:</strong>"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_move_line__barcode
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_picking_line_print__barcode
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_production_lot__barcode
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_quant__barcode
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_report_document
+msgid "Barcode"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_move_line__barcode_human_readable
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_picking_line_print__barcode_human_readable
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_production_lot__barcode_human_readable
+#: model:ir.model.fields,field_description:stock_production_lot_fishing_label.field_stock_quant__barcode_human_readable
+msgid "Barcode Human Readable"
 msgstr ""
 
 #. module: stock_production_lot_fishing_label
@@ -147,11 +159,13 @@ msgstr ""
 #: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_move_report
 #: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_quant_report
 #: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_report
+#: model:ir.actions.server,name:stock_production_lot_fishing_label.action_label_fishing_lot_report
 #: model:ir.actions.server,name:stock_production_lot_fishing_label.print_picking_label_fishing_report
 msgid "Fishing Label Impresion"
 msgstr ""
 
 #. module: stock_production_lot_fishing_label
+#: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_fishing_master_box_sqmb
 #: model:ir.actions.report,name:stock_production_lot_fishing_label.action_label_master_box_report
 msgid "Fishing Label Impresion Master Box"
 msgstr ""
@@ -180,9 +194,51 @@ msgid "Is Summary Label"
 msgstr ""
 
 #. module: stock_production_lot_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.label_fishing_master_box_report_document
+msgid "Kg"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: code:addons/stock_production_lot_fishing_label/report/label_fishing_report.py:0
+#: code:addons/stock_production_lot_fishing_label/wizards/stock_barcodes_read_picking.py:0
+#, python-format
+msgid "Master box is empty"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label_freezing
 msgid "Packed"
 msgstr "Fecha de envasado"
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_stock_picking_line_print
+msgid "Print Picking Line"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
+msgid "Product without barcode"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.filters,name:stock_production_lot_fishing_label.filter_product_one_label
+msgid "Products One Label Filter"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_stock_quant
+msgid "Quants"
+msgstr ""
 
 #. module: stock_production_lot_fishing_label
 #: model:ir.model,name:stock_production_lot_fishing_label.model_ir_actions_report
@@ -194,6 +250,11 @@ msgstr ""
 #: model:ir.model,name:stock_production_lot_fishing_label.model_report_stock_production_lot_fishing_label_label_fishing_nutri
 #: model:ir.model,name:stock_production_lot_fishing_label.model_report_stock_production_lot_fishing_label_label_master_box
 msgid "Report Fishing Label"
+msgstr ""
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_report_stock_production_lot_fishing_label_label_master_box_sqmb
+msgid "Report Fishing Label Master Box"
 msgstr ""
 
 #. module: stock_production_lot_fishing_label
@@ -215,6 +276,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_production_lot_fishing_label.basic_layout_fishing_label
 msgid "Tel."
 msgstr "Tel."
+
+#. module: stock_production_lot_fishing_label
+#: model:ir.model,name:stock_production_lot_fishing_label.model_wiz_stock_barcodes_read_picking
+msgid "Wizard to read barcode on picking"
+msgstr ""
 
 #. module: stock_production_lot_fishing_label
 #: model:ir.model,name:stock_production_lot_fishing_label.model_stock_picking_print

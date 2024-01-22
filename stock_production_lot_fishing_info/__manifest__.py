@@ -18,6 +18,7 @@
         "product_fishing",
     ],
     "data": [
+        "data/product_attribute_data.xml",
         "security/ir.model.access.csv",
         "views/stock_production_lot_view.xml",
     ],

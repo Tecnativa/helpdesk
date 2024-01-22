@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record id="manufacturing_country" model="product.attribute">
+        <field name="name">Manufacturing country</field>
+        <field name="create_variant">no_variant</field>
+        <field name="display_type">select</field>
+    </record>
+</odoo>
