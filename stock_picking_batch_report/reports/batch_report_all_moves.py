@@ -35,7 +35,7 @@ class ReportPrintBatchPickingAllMoves(models.AbstractModel):
             field_values = location.fields_get(["type_goods"])["type_goods"][
                 "selection"
             ]
-            if operation.posz:
+            if operation.location_id.posz:
                 level_0_name = (
                     f"{dict(field_values)[operation.location_id.type_goods]} (Altura)"
                 )
