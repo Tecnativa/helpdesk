@@ -222,7 +222,10 @@
                             t-foreach="doc.picking_ids.filtered('note')"
                             t-as="pick_with_note"
                         >
-                        <span t-if="not is_html_empty(pick_with_note.note)" t-field="pick_with_note.note"/>
+                        <span
+                                t-if="not is_html_empty(pick_with_note.note)"
+                                t-field="pick_with_note.note"
+                            />
                     </div>
                 </t>
             </div>

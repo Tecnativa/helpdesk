@@ -4,21 +4,73 @@
 from datetime import datetime, timedelta
 
 from odoo.exceptions import ValidationError
-
-from odoo.addons.hr_attendance_report_theoretical_time.tests.test_hr_attendance_report_theoretical_time import (  # noqa
-    TestHrAttendanceReportTheoreticalTimeBase,
-)
+from odoo.tests.common import TransactionCase
 
 
-class TestHrAttendanceReportTimeRecord(TestHrAttendanceReportTheoreticalTimeBase):
-    def setUp(self):
-        super().setUp()
-        self.hr_attendance = self.env["hr.attendance"]
-        self.AttendanceWizard = self.env["hr.attendance.time.record.report.wizard"]
-        self.department1 = self.env.ref("hr.dep_management")
-        self.department2 = self.env.ref("hr.dep_rd")
-        self.employee_1.department_id = self.department1.id
-        self.employee_2.department_id = self.department2.id
+class TestHrAttendanceReportTimeRecord(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.hr_attendance = cls.env["hr.attendance"]
+        cls.AttendanceWizard = cls.env["hr.attendance.time.record.report.wizard"]
+        cls.department1 = cls.env.ref("hr.dep_management")
+        cls.department2 = cls.env.ref("hr.dep_rd")
+        cls.calendar = cls.env["resource.calendar"].create(
+            {"name": "Test Calendar", "attendance_ids": False, "tz": "UTC"}
+        )
+        for day in range(5):  # From monday to friday
+            cls.calendar.attendance_ids = [
+                (
+                    0,
+                    0,
+                    {
+                        "name": "Attendance",
+                        "dayofweek": str(day),
+                        "hour_from": "08",
+                        "hour_to": "12",
+                    },
+                ),
+                (
+                    0,
+                    0,
+                    {
+                        "name": "Attendance",
+                        "dayofweek": str(day),
+                        "hour_from": "14",
+                        "hour_to": "18",
+                    },
+                ),
+            ]
+        cls.employee_1 = cls.env["hr.employee"].create(
+            {
+                "name": "Employee 1",
+                "resource_calendar_id": cls.calendar.id,
+            }
+        )
+        cls.employee_2 = cls.env["hr.employee"].create(
+            {
+                "name": "Employee 2",
+                "resource_calendar_id": cls.calendar.id,
+            }
+        )
+        cls.employee_1.department_id = cls.department1.id
+        cls.employee_2.department_id = cls.department2.id
+        for employee in (cls.employee_1, cls.employee_2):
+            for day in range(23, 27):
+                cls.env["hr.attendance"].create(
+                    {
+                        "employee_id": employee.id,
+                        "check_in": "1946-12-%s 08:00:00" % day,
+                        "check_out": "1946-12-%s 12:00:00" % day,
+                    }
+                )
+                cls.env["hr.attendance"].create(
+                    {
+                        "employee_id": employee.id,
+                        "check_in": "1946-12-%s 14:00:00" % day,
+                        "check_out": "1946-12-%s 18:00:00" % day,
+                    }
+                )
 
     def test_check_date_range(self):
         with self.assertRaises(ValidationError):
