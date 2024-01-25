@@ -7,7 +7,7 @@ from datetime import timedelta
 
 from odoo import api, fields, models
 from odoo.osv import expression
-from odoo.tools import float_compare
+from odoo.tools import float_compare, ormcache
 
 
 class SaleOrder(models.Model):
@@ -57,8 +57,17 @@ class SaleOrder(models.Model):
         )
         return [(f.id, f.name) for f in product_filters]
 
+    @ormcache("self.id")
+    def _get_partner_picker_field(self):
+        if self.env["ir.default"].get("sale.order", "use_delivery_address"):
+            return "partner_shipping_id"
+        else:
+            return "partner_id"
+
     def _get_picker_trigger_search_fields(self):
         return [
+            self._get_partner_picker_field(),
+            "picker_order",
             "picker_origin_data",
             "picker_filter",
             "picker_only_available",
@@ -142,13 +151,12 @@ class SaleOrder(models.Model):
             lambda sol: sol.product_id.id == picker_data["product_id"][0]
         )
 
-    @api.depends(
-        lambda s: ["partner_id", "picker_order"] + s._get_picker_trigger_search_fields()
-    )
+    @api.depends(lambda s: s._get_picker_trigger_search_fields())
     def _compute_picker_ids(self):
         for order in self:
             product_ids = order._get_picker_product_ids()
             if product_ids is None:
+                order.picker_ids = False
                 continue
             picker_data_list = getattr(
                 # Force no display archived records due we are in a computed method.
