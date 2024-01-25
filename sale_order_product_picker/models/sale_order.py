@@ -32,7 +32,7 @@ class SaleOrder(models.Model):
         store=False,
     )
     picker_only_available = fields.Boolean(string="Available", store=False)
-    use_delivery_address = fields.Boolean(store=False, default=False)
+    use_delivery_address = fields.Boolean(compute="_compute_use_delivery_address")
     picker_product_attribute_value_id = fields.Many2one(
         comodel_name="product.attribute.value",
         string="Attribute value",
@@ -46,6 +46,14 @@ class SaleOrder(models.Model):
         store=False,
     )
     product_name_search = fields.Char(string="Search product", store=False)
+
+    def _compute_use_delivery_address(self):
+        # _get_param method already cached
+        self.use_delivery_address = bool(
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("sale_order_product_picker.use_delivery_address", False)
+        )
 
     @api.model
     def _list_product_picker_filters(self):
@@ -143,7 +151,8 @@ class SaleOrder(models.Model):
         )
 
     @api.depends(
-        lambda s: ["partner_id", "picker_order"] + s._get_picker_trigger_search_fields()
+        lambda s: ["partner_id", "partner_shipping_id", "picker_order"]
+        + s._get_picker_trigger_search_fields()
     )
     def _compute_picker_ids(self):
         for order in self:
