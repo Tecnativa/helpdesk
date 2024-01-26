@@ -155,6 +155,17 @@
                     </div>
                     <div style="border-top: 1px solid black;" />
                     <div class="row">
+                        <div class="col-6" />
+                        <div class="col-6 text-center">
+                            <img
+                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('gs1_128', o['master_box_id'].name, 600, 100)"
+                                style="width:100%;height:75px;"
+                                alt="Barcode"
+                            />
+                            <span t-out="o['master_box_id'].name" />
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-12">
                             <strong>PACKAGES:</strong>
                             <span
