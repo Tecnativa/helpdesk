@@ -57,9 +57,13 @@ class SaleOrder(models.Model):
         )
         return [(f.id, f.name) for f in product_filters]
 
-    @ormcache("self.id")
+    @ormcache()
     def _get_partner_picker_field(self):
-        if self.env["ir.default"].get("sale.order", "use_delivery_address"):
+        # HACK: To avoid installation error when get default value to be used in a
+        # depends of a computed field
+        if "sale_order_product_picker" in self.env.registry._init_modules and self.env[
+            "ir.default"
+        ].get("sale.order", "use_delivery_address"):
             return "partner_shipping_id"
         else:
             return "partner_id"
@@ -126,8 +130,9 @@ class SaleOrder(models.Model):
     # TODO: Invalidate cache on product write if next line is uncommented
     # @ormcache("self.partner_id", "self.picker_filter", "self.product_name_search")
     def _get_picker_product_ids(self):
+        # [2:] to avoid partner and picker_order fields
         if not self.partner_id or not any(
-            self[f_name] for f_name in self._get_picker_trigger_search_fields()
+            self[f_name] for f_name in self._get_picker_trigger_search_fields()[2:]
         ):
             self.picker_ids = False
             return None
