@@ -14,7 +14,7 @@ export class WidgetSecurityPrice extends Component {
         );
     }
 
-    _onClick() {
+    async _onClick() {
         const record = this.props.record;
         if (record.data.security_price > record.data.price_reduce) {
             if (record.data.discount == 100) {
@@ -26,12 +26,21 @@ export class WidgetSecurityPrice extends Component {
                     },
                 });
             } else {
-                this.__owl__.parent.parentWidget.trigger_up("field_changed", {
+                const discount = record.data.discount;
+                await this.__owl__.parent.parentWidget.trigger_up("field_changed", {
                     dataPointID: record.id,
                     changes: {
                         price_unit:
                             (record.data.security_price * 100) /
                             (100 - record.data.discount),
+                    },
+                });
+                // The sol discount is reset when price unit changes.
+                // We apply the discount after update the price unit
+                this.__owl__.parent.parentWidget.trigger_up("field_changed", {
+                    dataPointID: record.id,
+                    changes: {
+                        discount: discount,
                     },
                 });
             }
