@@ -3,13 +3,18 @@
  * License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
  */
 const {Component} = owl;
+import field_utils from "web.field_utils";
 import {formatMonetary} from "@web/fields/formatters";
 import rpc from "web.rpc";
-import utils from "web.utils";
 import widgetRegistryOwl from "web.widgetRegistry";
 
 export class WidgetSecurityPrice extends Component {
-    setup() {
+    async setup() {
+        this.precision = await rpc.query({
+            model: "decimal.precision",
+            method: "precision_get",
+            args: ["Product Price"],
+        });
         this.security_price_monetary = formatMonetary(
             this.props.record.data.security_price,
             {currency_id: this.props.record.data.currency_id.res_id}
@@ -29,18 +34,16 @@ export class WidgetSecurityPrice extends Component {
                 });
             } else {
                 const discount = record.data.discount;
-                const precision = await rpc.query({
-                    model: "decimal.precision",
-                    method: "precision_get",
-                    args: ["Product Price"],
-                });
                 await this.__owl__.parent.parentWidget.trigger_up("field_changed", {
                     dataPointID: record.id,
                     changes: {
-                        price_unit: utils.round_decimals(
-                            (record.data.security_price * 100) /
-                                (100 - record.data.discount),
-                            precision
+                        price_unit: parseFloat(
+                            field_utils.format.float(
+                                (record.data.security_price * 100) /
+                                    (100 - record.data.discount),
+                                Float64Array,
+                                {digits: [0, this.precision]}
+                            )
                         ),
                     },
                 });
