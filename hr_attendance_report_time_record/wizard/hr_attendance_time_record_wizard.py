@@ -78,19 +78,15 @@ class HrAttendanceTimeRecord(models.TransientModel):
         return res
 
     def _get_work_interval_for_employee(self, employee_id, check_in, check_out):
-        employee_tz = pytz.timezone(employee_id.tz or "UTC")
-        work_interval = employee_id.resource_calendar_id._work_intervals_batch(
-            check_in.replace(tzinfo=employee_tz),
-            check_out.replace(tzinfo=employee_tz),
-            resources=employee_id.resource_id,
-            tz=employee_tz,
-        )[employee_id.resource_id.id]
-        if work_interval and work_interval._items:
-            check_in = min(map(lambda a: a[0], work_interval._items)).replace(
-                tzinfo=None
+        work_interval = employee_id.resource_id._get_work_interval(check_in, check_out)[
+            employee_id.resource_id
+        ]
+        if work_interval:
+            check_in = pytz.utc.localize(work_interval[0]).astimezone(
+                pytz.timezone(employee_id.tz or "UTC")
             )
-            check_out = max(map(lambda a: a[1], work_interval._items)).replace(
-                tzinfo=None
+            check_out = pytz.utc.localize(work_interval[1]).astimezone(
+                pytz.timezone(employee_id.tz or "UTC")
             )
         return check_in, check_out
 
@@ -103,8 +99,10 @@ class HrAttendanceTimeRecord(models.TransientModel):
         tolerance_time = self.company_id.overtime_employee_threshold
         check_theorical = check_in_theorical if is_check_in else check_out_theorical
         check = check_in if is_check_in else check_out
-        check_theorical = check_theorical.replace(tzinfo=check.tzinfo)
-        if (check + timedelta(minutes=tolerance_time)) < check_theorical:
+        check_theorical = check_theorical.astimezone(
+            pytz.timezone(employee_id.tz or "UTC")
+        ).replace(tzinfo=None)
+        if (check_theorical - timedelta(minutes=tolerance_time)) > check:
             check_theorical = check
         return check_theorical
 
@@ -129,24 +127,31 @@ class HrAttendanceTimeRecord(models.TransientModel):
                     "theorical_check_out",
                     "theorical_check_in",
                 ):
+                    attendance = attendance.with_context(tz=attendance.employee_id.tz)
+                    check_in = attendance._fields["check_in"].convert_to_export(
+                        attendance.check_in, attendance
+                    )
+                    check_out = attendance._fields["check_out"].convert_to_export(
+                        attendance.check_out, attendance
+                    )
                     if field_name == "theorical_check_out":
                         value = self._get_theorical_check_in_or_out_for_employee(
                             attendance.employee_id,
-                            attendance.check_in,
-                            attendance.check_out,
+                            check_in,
+                            check_out,
                             False,
                         )
                     if field_name == "theorical_check_in":
                         value = self._get_theorical_check_in_or_out_for_employee(
                             attendance.employee_id,
-                            attendance.check_in,
-                            attendance.check_out,
+                            check_in,
+                            check_out,
                             True,
                         )
                     elif field_name == "check_in":
-                        value = attendance.check_in
+                        value = check_in
                     elif field_name == "check_out":
-                        value = attendance.check_out if attendance.check_out else ""
+                        value = check_out
                     report.write(row_num, col_num, value, date_format)
                 elif field_name == "department_id":
                     value = (
