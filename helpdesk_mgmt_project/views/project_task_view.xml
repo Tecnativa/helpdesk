@@ -38,7 +38,7 @@
         <field name="arch" type="xml">
             <div class="oe_kanban_bottom_right" position="before">
                 <div
-                    attrs="{'invisible':[('ticket_count', '=', 0)]}"
+                    invisible="ticket_count==0"
                     groups="helpdesk_mgmt.group_helpdesk_user_own"
                 >
                     <a
