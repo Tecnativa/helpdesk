@@ -117,7 +117,7 @@ class HelpdeskTicketSla(models.Model):
         if self.state == "expired":
             return
         deadline = self.deadline
-        if self.state == "in_progress":
+        if self.state == "in_progress" and self.last_state_date:
             calendar = self.ticket_id.team_id.resource_calendar_id
             self.consumed_time += calendar.get_work_hours_count(
                 self.last_state_date, now, compute_leaves=True
