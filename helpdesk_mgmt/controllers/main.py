@@ -32,12 +32,13 @@ class HelpdeskTicketController(http.Controller):
         return werkzeug.utils.redirect("/my/ticket/" + str(ticket.id))
 
     def _get_teams(self):
+        company = request.env.company
+        team_model = http.request.env["helpdesk.ticket.team"]
+        domain = [("active", "=", True), ("show_in_portal", "=", True)]
         return (
-            http.request.env["helpdesk.ticket.team"]
-            .with_company(request.env.company.id)
-            .search([("active", "=", True), ("show_in_portal", "=", True)])
-            if http.request.env.user.company_id.helpdesk_mgmt_portal_select_team
-            else False
+            team_model.with_company(company).search(domain)
+            if company.helpdesk_mgmt_portal_select_team
+            else team_model
         )
 
     def _get_categories(self, **kw):
@@ -46,7 +47,7 @@ class HelpdeskTicketController(http.Controller):
         domain = [("active", "=", True), ("show_in_portal", "=", True)]
         return (
             category_model.with_company(company.id).search(domain)
-            if http.request.env.user.company_id.helpdesk_mgmt_portal_select_category
+            if company.helpdesk_mgmt_portal_select_category
             else category_model
         )
 
