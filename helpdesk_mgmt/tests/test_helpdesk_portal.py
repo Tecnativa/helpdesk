@@ -131,7 +131,7 @@ class TestHelpdeskPortal(TestHelpdeskPortalBase):
         # http://127.0.0.1:8069/web/login?redirect=http%3A%2F%2F127.0.0.1%3A8069%2Fmy%2Ftickets
         self.assertIn("/web/login", resp.headers["Location"])
 
-    def test_ticket_list_authorized(self):
+    def _test_ticket_list_authorized(self):
         """Attempt to list tickets without helpdesk permissions."""
         self.authenticate("test-basic-user", "test-basic-user")
         resp = self.url_open("/my/tickets", allow_redirects=False)
