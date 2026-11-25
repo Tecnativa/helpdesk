@@ -87,5 +87,6 @@ def migrate(env, version):
         ],
     )
     openupgrade.logged_query(
-        env.cr, "UPDATE helpdesk_ticket SET description = '/' WHERE description is null"
+        env.cr,
+        "UPDATE helpdesk_ticket SET description = '/' WHERE description in (NULL, '')",
     )
